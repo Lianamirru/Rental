@@ -1,0 +1,248 @@
+@keyframes fromLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-10rem); }
+  80% {
+    transform: translateX(1rem); }
+  100% {
+    opacity: 1;
+    transform: translateX(0); } }
+
+@keyframes fromRight {
+  0% {
+    opacity: 0;
+    transform: translateX(10rem); }
+  80% {
+    transform: translateX(-1rem); }
+  100% {
+    opacity: 1;
+    transform: translateX(0); } }
+
+@keyframes fromBottom {
+  0% {
+    opacity: 0;
+    transform: translateY(10rem); }
+  100% {
+    opacity: 1;
+    transform: translateY(0); } }
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit; }
+
+html {
+  font-size: 100%;
+  box-sizing: border-box; }
+
+body {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 400;
+  font-size: 2rem; }
+
+.content {
+  max-width: 130rem;
+  margin: auto; }
+
+nav {
+  background-color: #6767c1;
+  padding: 1rem; }
+
+.navigation {
+  max-width: 130rem;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
+
+a {
+  text-decoration: none; }
+
+.nav__links {
+  display: flex;
+  gap: 7rem; }
+
+.nav__link {
+  color: #ffffff; }
+  .nav__link:hover {
+    color: rgba(179, 179, 179, 0.8);
+    text-decoration: none; }
+  .nav__link--brand {
+    font-family: "Merienda", sans-serif;
+    font-size: 2.5rem;
+    color: #e27425; }
+    .nav__link--brand:hover {
+      color: #e27425; }
+
+.nav__icons {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center; }
+
+.nav__icon {
+  color: #ffffff;
+  padding-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; }
+  .nav__icon--text {
+    font-size: 1.5rem; }
+  .nav__icon:hover {
+    text-decoration: none;
+    color: rgba(179, 179, 179, 0.8); }
+
+.nav__switch {
+  margin-top: 0.2rem; }
+
+.header {
+  position: relative;
+  background-size: cover;
+  text-align: center;
+  height: 85vh; }
+
+.header__image {
+  width: 100%;
+  max-width: 130rem;
+  height: 85vh;
+  object-fit: cover;
+  opacity: 80%;
+  filter: grayscale(0.9); }
+
+.header__text-box {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%); }
+
+.header__heading--main {
+  text-transform: uppercase;
+  display: block;
+  font-weight: 300;
+  font-size: 7rem;
+  animation: fromLeft 1s ease-out;
+  color: #e27425; }
+
+.header__heading--sub {
+  text-transform: uppercase;
+  display: block;
+  font-weight: 00;
+  font-size: 3rem;
+  letter-spacing: 0.5rem;
+  margin-top: 0.5rem;
+  animation: fromRight 1s ease-out;
+  color: #e27425; }
+
+.btn {
+  padding: 1rem 3.5rem;
+  border-radius: 10rem;
+  transition: all 0.2s;
+  position: relative;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.2rem;
+  width: 15rem; }
+
+.btn:hover {
+  transform: translateY(-0.5rem);
+  box-shadow: 0 2rem 1rem rgba(0, 0, 0, 0.4);
+  color: inherit; }
+
+.btn::after {
+  content: "";
+  height: 100%;
+  width: 100%;
+  border-radius: 10rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  transition: all 0.4s; }
+
+.btn:hover::after {
+  content: "";
+  border-radius: 10rem;
+  background-color: #6767c1;
+  transform: scaleX(1.4) scaleY(1.6);
+  opacity: 0; }
+
+.btn:active {
+  transform: translateY(-0.1rem); }
+
+.btn--red {
+  background-color: #832013;
+  color: #ffffff;
+  margin-right: 4rem; }
+  .btn--red:hover {
+    color: #ffffff; }
+
+.btn--white {
+  background-color: #ffffff;
+  color: #832013;
+  border-color: #832013;
+  border-width: 0.3rem; }
+  .btn--white:hover {
+    color: #832013; }
+
+.btn--animated {
+  margin-top: 2rem;
+  animation: fromBottom 0.7s 0.4s;
+  animation-fill-mode: backwards; }
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px; }
+
+.product {
+  border: 1px solid #000000;
+  padding: 15px;
+  text-align: center; }
+
+.pagination {
+  justify-content: center;
+  margin-top: 20px; }
+
+.select-bar {
+  background-color: #e1e2ef;
+  padding: 1rem 15px;
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between; }
+
+.select-split {
+  color: #555; }
+
+.select-item {
+  cursor: pointer;
+  font-weight: 700;
+  color: #555; }
+  .select-item.active {
+    color: black; }
+
+#light {
+  background-color: #e1e2ef; }
+
+#dark {
+  background-color: #e1e2ef; }
+
+.clickable {
+  cursor: pointer; }
+
+.search {
+  max-width: 30%;
+  margin-bottom: 2rem; }
+
+.likeIcon {
+  width: 1.5rem; }
+
+.switch {
+  margin-left: auto; }
+
+.genreList {
+  list-style-type: none; }
+
+.page-item {
+  z-index: 0; }
