@@ -1,16 +1,16 @@
 import { useReducer } from "react";
 import { MovieType, SortColomnType } from "../types/movieType";
-import { GenreType } from "../types/genreType";
+import { CategoryType } from "../types/categoryType";
 import { getCurrentUser } from "./../services/authService";
 
 const user = getCurrentUser();
 
 export type MoviesStateType = {
   movies: MovieType[];
-  genres: GenreType[];
+  genres: CategoryType[];
   pageSize: number;
   currentPage: number;
-  selectedGenre: GenreType | null;
+  selectedGenre: CategoryType | null;
   sortColomn: SortColomnType;
   searchMovies: [];
   searchQuery: string;

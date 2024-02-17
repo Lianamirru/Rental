@@ -1,11 +1,11 @@
-import { GenreType } from "./genreType";
+import { CategoryType } from "./categoryType";
 
 export type MovieType = {
   _id: string;
   title: string;
   numberInStock: number;
   dailyRentalRate: number;
-  genre: GenreType;
+  genre: CategoryType;
   liked: boolean;
   likes: number;
 };

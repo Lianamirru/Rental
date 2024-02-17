@@ -36,10 +36,11 @@ import Categories from "./categories";
 import Header from "./header";
 
 const Product = ({ product }) => {
-  console.log(product);
   return (
     <div className="instrument" key={product._id}>
-      {product.title}
+      <span>
+        {product.maker} {product.model}
+      </span>
     </div>
   );
 };

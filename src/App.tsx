@@ -10,9 +10,9 @@ import LoginForm from "./components/common/loginForm";
 import LogOut from "./components/common/logout";
 import NotFound from "./components/common/notFound";
 import NavBar from "./components/navbar";
-import MovieForm from "./components/movieForm";
+// import MovieForm from "./components/movieForm";
 import MoviePage from "./components/moviePage";
-import GenresList from "./components/genresList";
+// import GenresList from "./components/genresList";
 import Instruments from "./components/instruments";
 
 import ThemeProvider, { useThemeState } from "./context/ThemeContext";
@@ -36,9 +36,9 @@ const App = () => {
               <Route path="/movies" element={<Instruments />} />
               <Route
                 path="/movies/:id"
-                element={user?.isAdmin ? <MovieForm /> : <MoviePage />}
+                // element={user?.isAdmin ? <MovieForm /> : <MoviePage />}
               />
-              <Route path="/genres" element={<GenresList />} />
+              {/* <Route path="/genres" element={<GenresList />} /> */}
               <Route path="/login" element={<LoginForm />} />
               <Route path="/register" element={<RegisterForm />} />
               <Route path="/logout" element={<LogOut />} />

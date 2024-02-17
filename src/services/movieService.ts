@@ -3,7 +3,7 @@ import apiUrl from "./config.json";
 
 import { MovieDataType, MovieType } from "../types/movieType";
 
-const apiEndpoint = apiUrl.apiUrl + "/movies";
+const apiEndpoint = apiUrl.apiUrl + "/instruments";
 
 function movieUrl(id: string) {
   return `${apiEndpoint}/${id}`;
