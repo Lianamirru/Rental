@@ -4,6 +4,10 @@ import ReactSwitch from "react-switch";
 import { getCurrentUser } from "../services/authService";
 import { useTheme } from "./../context/ThemeContext";
 
+import React, { useState } from "react";
+import { UserType } from "../types/userType";
+import DropdownMenu from "./common/dropDown";
+
 const NavBar = () => {
   const { theme, toggleTheme } = useTheme();
   const user = getCurrentUser();
@@ -36,10 +40,8 @@ const NavBar = () => {
             <i className="fa fa-shopping-cart" />
             <span className="nav__icon--text">cart</span>
           </Link>
-          <Link className="nav__icon" to={user ? "/profile" : "/login"}>
-            <i className="fa-solid fa-user" />
-            <span className="nav__icon--text">profile</span>
-          </Link>
+          <DropdownMenu />
+
           <div className="nav__icon">
             <ReactSwitch
               onColor="#e1e2ef"

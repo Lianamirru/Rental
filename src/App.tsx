@@ -11,9 +11,10 @@ import LogOut from "./components/common/logout";
 import NotFound from "./components/common/notFound";
 import NavBar from "./components/navbar";
 // import MovieForm from "./components/movieForm";
-import MoviePage from "./components/moviePage";
+import InstrumentPage from "./components/instrumentPage";
 // import GenresList from "./components/genresList";
 import Instruments from "./components/instruments";
+import Profile from "./components/common/profile";
 
 import ThemeProvider, { useThemeState } from "./context/ThemeContext";
 import { getCurrentUser } from "./services/authService";
@@ -33,18 +34,23 @@ const App = () => {
           <NavBar />
           <div className="content">
             <Routes>
-              <Route path="/movies" element={<Instruments />} />
+              <Route path="/instruments" element={<Instruments />} />
               <Route
-                path="/movies/:id"
+                path="/instruments/:id"
                 // element={user?.isAdmin ? <MovieForm /> : <MoviePage />}
+                element={<InstrumentPage />}
               />
               {/* <Route path="/genres" element={<GenresList />} /> */}
               <Route path="/login" element={<LoginForm />} />
               <Route path="/register" element={<RegisterForm />} />
               <Route path="/logout" element={<LogOut />} />
+              <Route path="/profile" element={<Profile />} />
               <Route path="/rentals/customer/:id" element={<Customer />} />
               <Route path="/rentals" element={<Rentals />} />
-              <Route path="/" element={<Navigate to="/movies" replace />} />
+              <Route
+                path="/"
+                element={<Navigate to="/instruments" replace />}
+              />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>

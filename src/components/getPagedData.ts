@@ -9,22 +9,26 @@ export function getPagedData(state: MoviesStateType) {
     instruments,
     currentPage,
     pageSize,
-    category,
+    selectedCategories,
     // sortColomn,
     searchQuery,
   } = state;
 
-  console.log(instruments);
   let filtered = instruments;
   if (searchQuery)
+    filtered = instruments.filter((i) => {
+      let fullModelName = i.maker + " " + i.model;
+      let searchQueryLower = searchQuery.toLowerCase();
+      return (
+        fullModelName.toLowerCase().startsWith(searchQueryLower) ||
+        i.model.toLowerCase().startsWith(searchQueryLower)
+      );
+    });
+  else if (selectedCategories.length >= 1)
     filtered = instruments.filter((i) =>
-      i.title.toLowerCase().startsWith(searchQuery.toLowerCase())
+      selectedCategories.includes(i.category._id)
     );
-  else
-    filtered =
-      category && category._id
-        ? instruments.filter((i) => i.category._id === category._id)
-        : instruments;
+
   // const sorted = _.orderBy(filtered, [sortColomn.path], [sortColomn.order]);
   const sorted = filtered;
   const pageInstruments = getPageItems(sorted, currentPage, pageSize);

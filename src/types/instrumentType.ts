@@ -1,14 +1,25 @@
 import { CategoryType } from "./categoryType";
 
-export type MovieType = {
+export type InstrumentType = {
   _id: string;
-  title: string;
+  type: string;
+  maker: string;
+  model: string;
+  year: number;
   numberInStock: number;
-  dailyRentalRate: number;
-  genre: CategoryType;
-  liked: boolean;
-  likes: number;
+  monthlyRentalPrice: number;
+  category: CategoryType;
+  like: boolean;
 };
+// export type MovieType = {
+//   _id: string;
+//   title: string;
+//   numberInStock: number;
+//   dailyRentalRate: number;
+//   genre: CategoryType;
+//   liked: boolean;
+//   likes: number;
+// };
 
 export type MovieDataType = {
   _id?: string;

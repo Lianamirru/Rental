@@ -272,40 +272,103 @@ a {
   gap: 20px;
 }
 
-.product {
+.instrument-card {
+  position: relative;
   border: 1px solid #000000;
   padding: 15px;
   text-align: center;
+  border-radius: 5%;
+
+  & img {
+    width: 12rem;
+  }
 }
 
+img.add-to-favorites {
+  position: absolute;
+  right: 2rem;
+  background-color: inherit;
+  width: 2.5rem;
+}
+
+.add-to-cart {
+  position: absolute;
+  right: 2rem;
+  bottom: 1rem;
+  background-color: #6767c1;
+  border-radius: 50%;
+  width: 2.5rem;
+  text-align: center;
+  color: #ffffff;
+}
 .pagination {
   // display: flex;
   justify-content: center;
   margin-top: 20px;
 }
-// select bar
 
-.select-bar {
-  background-color: $color_1;
-  padding: 1rem 15px;
-  list-style-type: none;
-  display: flex;
-  justify-content: space-between;
+/* Dropdown */
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  margin-right: 20px;
 }
 
-.select-split {
-  color: #555;
-}
-
-.select-item {
+.profile-icon {
   cursor: pointer;
-  font-weight: 700;
-  color: #555;
-
-  &.active {
-    color: darken(#555, 70%);
-  }
 }
+
+.dropdown-content {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  padding: 10px;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  text-decoration: none;
+  color: #333;
+  padding: 10px;
+  transition: background-color 0.3s;
+}
+
+.dropdown-content a:hover {
+  background-color: #f0f0f0;
+}
+
+.dropdown.open .dropdown-content {
+  display: block;
+}
+// // select bar
+
+// .select-bar {
+//   background-color: $color_1;
+//   padding: 1rem 15px;
+//   list-style-type: none;
+//   display: flex;
+//   justify-content: space-between;
+// }
+
+// .select-split {
+//   color: #555;
+// }
+
+// .select-item {
+//   cursor: pointer;
+//   font-weight: 700;
+//   color: #555;
+
+//   &.active {
+//     color: darken(#555, 70%);
+//   }
+// }
 
 //
 
@@ -324,10 +387,6 @@ a {
 .search {
   max-width: 30%;
   margin-bottom: 2rem;
-}
-
-.likeIcon {
-  width: 1.5rem;
 }
 
 .switch {

@@ -1,23 +1,23 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import { getMovie } from "../services/movieService";
+import { getInstrument } from "../services/instrumentService";
 import { logger } from "../services/logService";
 
-import { MovieType } from "../types/movieType";
+import { InstrumentType } from "../types/instrumentType";
 
-const MoviePage = () => {
-  const [movie, setMovie] = useState<MovieType | null>(null);
+const InstrumentPage = () => {
+  const [instrument, setInstrument] = useState<InstrumentType | null>(null);
 
-  const { id: movieId } = useParams();
+  const { id: instrumentId } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
       try {
-        if (movieId) {
-          const { data } = await getMovie(movieId);
-          setMovie(data);
+        if (instrumentId) {
+          const { data } = await getInstrument(instrumentId);
+          setInstrument(data);
         }
       } catch (ex: any) {
         if (ex.response && ex.response.status === 404) {
@@ -27,11 +27,11 @@ const MoviePage = () => {
         }
       }
     })();
-  }, [movieId, navigate]);
+  }, [instrumentId, navigate]);
 
   return (
     <main className="container">
-      <h1> {movie?.title}</h1>
+      <h1> {instrument?.model}</h1>
       <div className="row">
         <div className="col">img</div>
         <div className="col">
@@ -43,4 +43,4 @@ const MoviePage = () => {
   );
 };
 
-export default MoviePage;
+export default InstrumentPage;

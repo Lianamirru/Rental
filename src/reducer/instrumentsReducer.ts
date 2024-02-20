@@ -1,15 +1,25 @@
-// @ts-nocheck
-
 import { useReducer } from "react";
 import { getCurrentUser } from "../services/authService";
+import { CategoryType } from "../types/categoryType";
+import { InstrumentType } from "../types/instrumentType";
+
+export type InstrumentStateType = {
+  instruments: InstrumentType[];
+  pageSize: number;
+  currentPage: number;
+  selectedCategories: String[];
+  // sortColomn: SortColomnType;
+  searchMovies: [];
+  searchQuery: string;
+};
 
 const user = getCurrentUser();
 
-const initialState = {
+const initialState: InstrumentStateType = {
   instruments: [],
   currentPage: 1,
   pageSize: 12,
-  category: null,
+  selectedCategories: [],
   // sortColomn: { path: "title", order: "asc" },
   searchMovies: [],
   searchQuery: "",
@@ -26,7 +36,9 @@ export const REDUCER_ACTION_TYPE = {
   LIKE: "LIKE",
 };
 
-function reducer(state, action) {
+type ActionType = { type: string; payload: any };
+
+function reducer(state: typeof initialState, action: ActionType) {
   switch (action.type) {
     case REDUCER_ACTION_TYPE.FETCH_DATA:
       const instruments = action.payload;
@@ -47,9 +59,18 @@ function reducer(state, action) {
         sortColomn: action.payload,
       };
     case REDUCER_ACTION_TYPE.SELECT_CATEGORY:
+      const category = action.payload;
+      let updatedCategories = [];
+      if (state.selectedCategories.includes(category)) {
+        updatedCategories = state.selectedCategories.filter(
+          (c) => c !== category
+        );
+      } else {
+        updatedCategories = [...state.selectedCategories, action.payload];
+      }
       return {
         ...state,
-        category: action.payload,
+        selectedCategories: updatedCategories,
         currentPage: 1,
         searchQuery: "",
       };
@@ -58,30 +79,25 @@ function reducer(state, action) {
         ...state,
         currentPage: action.payload,
       };
-    case REDUCER_ACTION_TYPE.DELETE_MOVIE:
-      const movieId = action.payload;
-      const newMovies = state.movies.filter((movie) => movie._id !== movieId);
-      return { ...state, movies: newMovies };
+    // case REDUCER_ACTION_TYPE.DELETE_MOVIE:
+    //   const movieId = action.payload;
+    //   const newMovies = state.movies.filter((movie) => movie._id !== movieId);
+    //   return { ...state, movies: newMovies };
     case REDUCER_ACTION_TYPE.SET_MOVIES:
       return {
         ...state,
         movies: action.payload,
       };
     case REDUCER_ACTION_TYPE.LIKE:
-      if (!user) return { ...state };
-
-      let updatedMovies = [...state.movies];
-      const index = updatedMovies.indexOf(action.payload);
-      const movie = updatedMovies[index];
-
-      let { liked } = movie;
-      liked ? movie.likes-- : movie.likes++;
-      movie.liked = !liked;
-      updatedMovies = updatedMovies.filter((m) => m._id !== movie._id);
-
+      const updatedInstruments = state.instruments.map((instrument) =>
+        instrument._id === action.payload._id
+          ? { ...instrument, like: !instrument.like }
+          : instrument
+      );
+      console.log(updatedInstruments);
       return {
         ...state,
-        movies: [...updatedMovies, movie],
+        instruments: updatedInstruments,
       };
     default:
       throw new Error("Check reducer action type");

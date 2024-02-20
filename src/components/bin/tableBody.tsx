@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { ColomnsType, ColomnType } from "../../types/movieType";
+import { ColomnsType, ColomnType } from "../../types/instrumentType";
 
 type TableBodyProps<T> = {
   data: T[];

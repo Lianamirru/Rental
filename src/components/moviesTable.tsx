@@ -2,11 +2,14 @@
 import { Link } from "react-router-dom";
 
 import Likes from "./common/likes";
-import Table from "./common/table";
 
 import { getCurrentUser } from "./../services/authService";
 
-import { MovieType, SortColomnType, ColomnsType } from "../types/movieType";
+import {
+  MovieType,
+  SortColomnType,
+  ColomnsType,
+} from "../types/instrumentType";
 import ProtectedRoute from "./common/protectedRoute";
 import Modal from "./common/modal/modal";
 
@@ -84,12 +87,12 @@ const MoviesTable = ({
 
   return (
     <>
-      <Table
+      {/* <Table
         colomns={colomns}
         sortColomn={sortColomn}
         onSort={onSort}
         data={pageItems}
-      />
+      /> */}
       <Modal active={likeModal} setActive={setLikeModal}>
         <ProtectedRoute>
           <>Should not see this message</>

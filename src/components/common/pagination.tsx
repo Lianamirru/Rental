@@ -1,38 +1,44 @@
-import _ from "lodash";
-
 type PaginationProps = {
-  countItems: number;
+  totalCount: number;
   pageSize: number;
   currentPage: number;
-  onChangePage: (page: number) => void;
+  onPageChange: (page: number) => void;
 };
 
 const Pagination = ({
-  countItems,
-  pageSize,
   currentPage,
-  onChangePage,
+  totalCount,
+  onPageChange,
+  pageSize,
 }: PaginationProps) => {
-  const pages = Math.ceil(countItems / pageSize);
-  if (pages === 1) return null;
-  const numberOfPages = _.range(1, pages + 1);
+  const totalPages = Math.ceil(totalCount / pageSize);
+  const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
 
+  if (pages.length === 1) return null;
   return (
-    <nav>
-      <ul className="pagination clickable">
-        {numberOfPages.map((page) => (
-          <li
-            key={page}
-            className={page === currentPage ? "page-item active" : "page-item"}
-          >
-            <button onClick={() => onChangePage(page)} className="page-link">
-              {page}
-            </button>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <div className="pagination">
+      <button
+        onClick={() => onPageChange(currentPage - 1)}
+        disabled={currentPage === 1}
+      >
+        &laquo; Prev
+      </button>
+      {pages.map((page) => (
+        <button
+          key={page}
+          onClick={() => onPageChange(page)}
+          disabled={currentPage === page}
+        >
+          {page}
+        </button>
+      ))}
+      <button
+        onClick={() => onPageChange(currentPage + 1)}
+        disabled={currentPage === totalPages}
+      >
+        Next &raquo;
+      </button>
+    </div>
   );
 };
-
 export default Pagination;

@@ -26,68 +26,65 @@
 
 // };
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Search from "./common/search";
 import { useInstrumentsReducer } from "../reducer/instrumentsReducer";
 import { REDUCER_ACTION_TYPE } from "../reducer/instrumentsReducer";
-import { getMovies } from "../services/movieService";
+import { getInstruments } from "../services/instrumentService";
 import { getPagedData } from "./getPagedData";
-import Categories from "./categories";
+// import Categories from "./categories";
 import Header from "./header";
 
-const Product = ({ product }) => {
-  return (
-    <div className="instrument" key={product._id}>
-      <span>
-        {product.maker} {product.model}
-      </span>
-    </div>
-  );
-};
-const ProductsList = ({ products }) => {
-  return (
-    <div className="products">
-      {products.map((product) => (
-        <Product product={product} />
-      ))}
-    </div>
-  );
-};
+import { getCurrentUser } from "../services/authService";
+import Modal from "./common/modal/modal";
+import { getLikedInstruments, likeInstrument } from "../services/likeService";
+import { toast } from "react-toastify";
+import Pagination from "./common/pagination";
+import ProductsList from "./displayInstruments";
+
+import { getCategories } from "../services/categoryService";
 
 const Instruments = () => {
   const [state, dispatch] = useInstrumentsReducer();
   const {
     instruments,
-    category,
+    selectedCategories,
     // sortColomn,
     searchQuery,
-    currentPage,
     pageSize,
+    currentPage,
   } = state;
 
   const [instrument, setInstrument] = useState<InstrumentType | null>(null);
+  const [likeModal, setLikeModal] = useState(false);
 
-  const totalPages = Math.ceil(instruments.length / pageSize);
-  const startIndex = (currentPage - 1) * pageSize;
-  const endIndex = startIndex + pageSize;
-  const currentProducts = instruments.slice(startIndex, endIndex);
+  const user = getCurrentUser();
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data: instruments } = await getMovies();
+      const { data: instruments } = await getInstruments();
+
+      // get favourite instruments to display the right icon
+      let userInstruments;
+      const user = getCurrentUser();
+
+      if (!user) userInstruments = instruments;
+      else {
+        const { data: likedInstrumentsIds } = await getLikedInstruments();
+        userInstruments = instruments.map((instrument) => {
+          if (likedInstrumentsIds.includes(instrument._id))
+            return { ...instrument, like: true };
+          return instrument;
+        });
+      }
       dispatch({
         type: REDUCER_ACTION_TYPE.FETCH_DATA,
-        payload: instruments,
+        payload: userInstruments,
       });
     };
-    fetchData().catch(console.error);
-  }, []);
 
-  const handlePageChange = (newPage) =>
-    dispatch({
-      type: REDUCER_ACTION_TYPE.PAGE_CHANGE,
-      payload: newPage,
-    });
+    fetchData().catch(console.error);
+  }, [dispatch]);
 
   const handleSearch = (searchQuery: string) =>
     dispatch({
@@ -102,58 +99,119 @@ const Instruments = () => {
     });
   };
 
-  console.log("d", state.instruments);
-  let { pageInstruments, totalCount } = getPagedData(state);
+  const handleLike = async (instrument) => {
+    if (!user) {
+      setLikeModal(true);
+    } else {
+      const originalInstruments = instruments;
 
+      dispatch({
+        type: REDUCER_ACTION_TYPE.LIKE,
+        payload: instrument,
+      });
+
+      try {
+        await likeInstrument(instrument._id);
+      } catch (ex: any) {
+        if (ex.response && ex.response.status === 404) {
+          toast.error("unable to handle like");
+          dispatch({ type: "SET_MOVIES", payload: originalInstruments });
+        } else {
+          logger(ex);
+        }
+      }
+    }
+  };
+
+  const handlePageChange = (newPage) =>
+    dispatch({
+      type: REDUCER_ACTION_TYPE.PAGE_CHANGE,
+      payload: newPage,
+    });
+
+  const handleSort = (sortColomn: SortColomnType) => {
+    dispatch({
+      type: REDUCER_ACTION_TYPE.SORT,
+      payload: sortColomn,
+    });
+  };
+
+  let { pageInstruments, totalCount } = getPagedData(state);
+  console.log(selectedCategories);
   return (
     <div>
       <Header />
       <Search onChange={handleSearch} value={searchQuery} />
-      <div className="filter-button">Filter/Sort</div>
-      <Categories onSelect={handleSelect} category={category} />
+      <FilterPanel
+        handleCategoryChange={handleSelect}
+        selectedCategories={selectedCategories}
+      />
+
       {totalCount ? (
         <>
-          <ProductsList products={pageInstruments} />
+          <ProductsList products={pageInstruments} onLike={handleLike} />
           <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
+            totalCount={totalCount}
             onPageChange={handlePageChange}
+            currentPage={currentPage}
+            pageSize={pageSize}
           />
         </>
       ) : (
         <p>No Instruments</p>
       )}
+      {likeModal ? (
+        <Modal active={true} setActive={setLikeModal}>
+          Login to add to favourites
+        </Modal>
+      ) : null}
     </div>
   );
 };
 
-const Pagination = ({ currentPage, totalPages, onPageChange }) => {
-  const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
+const FilterPanel = ({
+  handleCategoryChange,
+  selectedCategories,
+  handleSortChange,
+  handlePriceChange,
+}) => {
+  return (
+    <div className="filter-panel">
+      <h2>Filter/Sort</h2>
+      <div>
+        <h3>Categories</h3>
+        <Categories
+          selectedCategories={selectedCategories}
+          onSelect={handleCategoryChange}
+        />
+      </div>
+    </div>
+  );
+};
+
+const Categories = ({ onSelect, selectedCategories }) => {
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    (async () => {
+      const { data } = await getCategories();
+      setCategories(data);
+    })();
+  }, []);
 
   return (
-    <div className="pagination">
-      <button
-        onClick={() => onPageChange(currentPage - 1)}
-        disabled={currentPage === 1}
-      >
-        &laquo; Prev
-      </button>
-      {pages.map((page) => (
-        <button
-          key={page}
-          onClick={() => onPageChange(page)}
-          disabled={currentPage === page}
-        >
-          {page}
-        </button>
+    <ul className="select-category">
+      {categories.map((category) => (
+        <div key={category._id}>
+          <input
+            type="checkbox"
+            id={category["category"]}
+            checked={selectedCategories.includes(category._id)}
+            onChange={() => onSelect(category._id)}
+          />
+          <label htmlFor={category["category"]}>{category["category"]}</label>
+        </div>
       ))}
-      <button
-        onClick={() => onPageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
-      >
-        Next &raquo;
-      </button>
-    </div>
+    </ul>
   );
 };
 

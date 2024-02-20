@@ -12,7 +12,7 @@ const Categories = ({
   useEffect(() => {
     (async () => {
       const { data } = await getCategories();
-      setCategories(data);
+      setCategories([...data]);
     })();
   }, []);
 

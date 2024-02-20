@@ -3,9 +3,9 @@ import apiUrl from "./config.json";
 
 const apiEndpoint = apiUrl.apiUrl + "/likes";
 
-export function likeMovie(movieId: string) {
-  return http.post(apiEndpoint + `/${movieId}`);
+export function likeInstrument(instrumentId: string) {
+  return http.post(apiEndpoint + `/${instrumentId}`);
 }
-export function getLikedMovies(): Promise<{ data: string[] }> {
+export function getLikedInstruments(): Promise<{ data: string[] }> {
   return http.get(apiEndpoint + "/");
 }

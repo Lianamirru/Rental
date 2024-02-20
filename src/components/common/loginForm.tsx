@@ -7,6 +7,7 @@ import { validateProperty, validateAll } from "../../services/validateForm";
 import schema from "../schemas/loginFormSchema";
 
 import { getCurrentUser, login } from "../../services/authService";
+import { Link } from "react-router-dom";
 
 type DataType = { username: string; password: string };
 
@@ -74,6 +75,7 @@ const LoginForm = () => {
         {renderInput("text", "username", "Username")}
         {renderInput("password", "password", "Password")}
         <Button label="Log in" disabled={!!validateAll(schema, data)} />
+        <Link to={"/register"}>Register</Link>
       </form>
     </div>
   );
