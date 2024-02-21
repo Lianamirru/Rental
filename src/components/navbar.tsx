@@ -21,17 +21,17 @@ const NavBar = () => {
           </Link>
         </div>
         <div className="nav__links">
-          <Link className="nav__link" to="/instruments?category=guitars">
+          <Link className="nav__link" to="/instruments?category=guitar">
             guitar
           </Link>
 
-          <Link className="nav__link" to="/instruments?category=guitars">
+          <Link className="nav__link" to="/instruments?category=piano">
             piano
           </Link>
-          <Link className="nav__link" to="/instruments?category=guitars">
+          <Link className="nav__link" to="/instruments?category=drums">
             drums
           </Link>
-          <Link className="nav__link" to="/instruments?category=guitars">
+          <Link className="nav__link" to="/instruments?category=">
             other instruments
           </Link>
         </div>

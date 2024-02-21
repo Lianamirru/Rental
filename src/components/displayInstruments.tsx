@@ -37,7 +37,7 @@ const Product = ({ product, onLike }: ProductProps) => {
 
 const ProductsList = ({ products, onLike }: ProductsProps) => {
   return (
-    <div className="products">
+    <div id="products">
       {products.map((product) => (
         <Product product={product} onLike={onLike} key={product._id} />
       ))}

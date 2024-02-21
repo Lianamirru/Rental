@@ -1,16 +1,15 @@
-// @ts-nocheck
-
-import _ from "lodash";
 import { getPageItems } from "./common/pageItems";
-import { MoviesStateType } from "../reducer/moviesReducer";
+import { InstrumentStateType } from "../reducer/instrumentsReducer";
+import { InstrumentType } from "../types/instrumentType";
 
-export function getPagedData(state: MoviesStateType) {
+export function getPagedData(state: InstrumentStateType) {
   const {
     instruments,
     currentPage,
     pageSize,
     selectedCategories,
-    // sortColomn,
+    selectedMakers,
+    sortByPrice,
     searchQuery,
   } = state;
 
@@ -28,9 +27,25 @@ export function getPagedData(state: MoviesStateType) {
     filtered = instruments.filter((i) =>
       selectedCategories.includes(i.category._id)
     );
-
-  // const sorted = _.orderBy(filtered, [sortColomn.path], [sortColomn.order]);
-  const sorted = filtered;
+  else if (selectedMakers.length >= 1)
+    filtered = instruments.filter((i) => selectedMakers.includes(i.maker));
+  let sorted;
+  if (sortByPrice === "" || sortByPrice === "none") {
+    sorted = filtered;
+  } else {
+    let ascending = sortByPrice === "from low to high" ? true : false;
+    sorted = sortByPriceFunc(filtered, ascending);
+  }
   const pageInstruments = getPageItems(sorted, currentPage, pageSize);
   return { pageInstruments, totalCount: filtered.length };
+}
+
+function sortByPriceFunc(instruments: InstrumentType[], ascending: boolean) {
+  instruments.sort((a, b) => {
+    const priceA = a.monthlyRentalPrice;
+    const priceB = b.monthlyRentalPrice;
+    return ascending ? priceA - priceB : priceB - priceA;
+  });
+
+  return instruments;
 }

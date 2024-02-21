@@ -26,7 +26,7 @@
 
 // };
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Search from "./common/search";
 import { useInstrumentsReducer } from "../reducer/instrumentsReducer";
 import { REDUCER_ACTION_TYPE } from "../reducer/instrumentsReducer";
@@ -43,13 +43,14 @@ import Pagination from "./common/pagination";
 import ProductsList from "./displayInstruments";
 
 import { getCategories } from "../services/categoryService";
+import { useLocation } from "react-router-dom";
+import { CategoryType } from "../types/categoryType";
 
 const Instruments = () => {
   const [state, dispatch] = useInstrumentsReducer();
   const {
     instruments,
     selectedCategories,
-    // sortColomn,
     searchQuery,
     pageSize,
     currentPage,
@@ -57,6 +58,10 @@ const Instruments = () => {
 
   const [instrument, setInstrument] = useState<InstrumentType | null>(null);
   const [likeModal, setLikeModal] = useState(false);
+
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const categoryName = queryParams.get("category");
 
   const user = getCurrentUser();
 
@@ -77,6 +82,17 @@ const Instruments = () => {
           return instrument;
         });
       }
+
+      dispatch({ type: REDUCER_ACTION_TYPE.CLEAN_SELECTED_CATEGORIES });
+      if (categoryName) {
+        const { data: categories } = await getCategories();
+        let category = categories.filter((c) => c.category === categoryName)[0];
+        dispatch({
+          type: REDUCER_ACTION_TYPE.SELECT_CATEGORY,
+          payload: category._id,
+        });
+      }
+
       dispatch({
         type: REDUCER_ACTION_TYPE.FETCH_DATA,
         payload: userInstruments,
@@ -84,7 +100,7 @@ const Instruments = () => {
     };
 
     fetchData().catch(console.error);
-  }, [dispatch]);
+  }, [dispatch, categoryName]);
 
   const handleSearch = (searchQuery: string) =>
     dispatch({
@@ -92,10 +108,18 @@ const Instruments = () => {
       payload: searchQuery,
     });
 
-  const handleSelect = (category) => {
+  const handleCategoryChange = (categoryId) => {
     dispatch({
       type: REDUCER_ACTION_TYPE.SELECT_CATEGORY,
-      payload: category,
+      payload: categoryId,
+    });
+  };
+
+  const handleMakerChange = (maker) => {
+    console.log(maker);
+    dispatch({
+      type: REDUCER_ACTION_TYPE.SELECT_MAKER,
+      payload: maker,
     });
   };
 
@@ -129,68 +153,157 @@ const Instruments = () => {
       payload: newPage,
     });
 
-  const handleSort = (sortColomn: SortColomnType) => {
+  const handleSort = (option: String) => {
     dispatch({
       type: REDUCER_ACTION_TYPE.SORT,
-      payload: sortColomn,
+      payload: option,
     });
   };
 
   let { pageInstruments, totalCount } = getPagedData(state);
-  console.log(selectedCategories);
+
   return (
     <div>
       <Header />
-      <Search onChange={handleSearch} value={searchQuery} />
-      <FilterPanel
-        handleCategoryChange={handleSelect}
-        selectedCategories={selectedCategories}
-      />
+      <div className="main">
+        <Search onChange={handleSearch} value={searchQuery} />
+        <FilterPanel
+          handleCategoryChange={handleCategoryChange}
+          handleMakerChange={handleMakerChange}
+          handleSort={handleSort}
+          selectedCategories={selectedCategories}
+          instruments={instruments}
+        />
 
-      {totalCount ? (
-        <>
-          <ProductsList products={pageInstruments} onLike={handleLike} />
-          <Pagination
-            totalCount={totalCount}
-            onPageChange={handlePageChange}
-            currentPage={currentPage}
-            pageSize={pageSize}
-          />
-        </>
-      ) : (
-        <p>No Instruments</p>
-      )}
-      {likeModal ? (
-        <Modal active={true} setActive={setLikeModal}>
-          Login to add to favourites
-        </Modal>
-      ) : null}
+        {totalCount ? (
+          <>
+            <ProductsList products={pageInstruments} onLike={handleLike} />
+            <Pagination
+              totalCount={totalCount}
+              onPageChange={handlePageChange}
+              currentPage={currentPage}
+              pageSize={pageSize}
+            />
+          </>
+        ) : (
+          <p>No Instruments</p>
+        )}
+        {likeModal ? (
+          <Modal active={true} setActive={setLikeModal}>
+            Login to add to favourites
+          </Modal>
+        ) : null}
+      </div>
     </div>
   );
 };
 
 const FilterPanel = ({
   handleCategoryChange,
+  handleMakerChange,
   selectedCategories,
-  handleSortChange,
-  handlePriceChange,
+  handleSort,
+  instruments,
 }) => {
   return (
     <div className="filter-panel">
-      <h2>Filter/Sort</h2>
-      <div>
-        <h3>Categories</h3>
-        <Categories
-          selectedCategories={selectedCategories}
-          onSelect={handleCategoryChange}
-        />
+      <Categories
+        selectedCategories={selectedCategories}
+        onSelect={handleCategoryChange}
+      />
+      <Maker instruments={instruments} onMakerChange={handleMakerChange} />
+      <FilterPrice onSort={handleSort} />
+    </div>
+  );
+};
+
+const Maker = ({ instruments, onMakerChange }) => {
+  const makersSet = new Set(instruments.map((i) => i.maker));
+  const makers = Array.from(makersSet);
+
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const toggleDropDown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  return (
+    <div className="dropdown">
+      <div onClick={toggleDropDown} className="filter-field">
+        <h3>MANUFACTURER</h3>
       </div>
+      {isDropdownOpen ? (
+        <div className="dropdown-content filter__dropdown-content">
+          {makers.map((option) => (
+            <div key={option}>
+              <input
+                type="checkbox"
+                id={option}
+                onChange={() => onMakerChange(option)}
+                className="dropdown__checkbox"
+                // checked={selectedOption === option}
+              />
+              <label className="dropdown__options" htmlFor={option}>
+                {option}
+              </label>
+            </div>
+          ))}
+        </div>
+      ) : null}
+    </div>
+  );
+};
+
+const FilterPrice = ({ onSort }) => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const toggleDropDown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  const handleSort = (option) => {
+    setSelectedOption(option);
+    onSort(option);
+  };
+
+  const options = ["from high to low", "from low to high", "none"];
+  return (
+    <div className="dropdown">
+      <div onClick={toggleDropDown}>
+        <h3>FILTER BY PRICE</h3>
+      </div>
+      {isDropdownOpen ? (
+        <div className="dropdown-content filter__dropdown-content">
+          {options.map((option) => (
+            <div key={option}>
+              <input
+                type="checkbox"
+                id={option}
+                onChange={() => handleSort(option)}
+                className="dropdown__checkbox"
+                checked={selectedOption === option}
+              />
+              <label className="dropdown__options" htmlFor={option}>
+                {option}
+              </label>
+            </div>
+          ))}
+        </div>
+      ) : null}
     </div>
   );
 };
 
 const Categories = ({ onSelect, selectedCategories }) => {
   const [categories, setCategories] = useState([]);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const toggleDropDown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
   useEffect(() => {
     (async () => {
       const { data } = await getCategories();
@@ -199,19 +312,33 @@ const Categories = ({ onSelect, selectedCategories }) => {
   }, []);
 
   return (
-    <ul className="select-category">
-      {categories.map((category) => (
-        <div key={category._id}>
-          <input
-            type="checkbox"
-            id={category["category"]}
-            checked={selectedCategories.includes(category._id)}
-            onChange={() => onSelect(category._id)}
-          />
-          <label htmlFor={category["category"]}>{category["category"]}</label>
+    <div className="dropdown">
+      <div onClick={toggleDropDown}>
+        <h3>CATEGORIES</h3>
+      </div>
+      {isDropdownOpen ? (
+        <div className="dropdown-content filter__dropdown-content">
+          {categories.map((category) => (
+            <div key={category._id}>
+              <input
+                type="checkbox"
+                id={category["category"]}
+                checked={selectedCategories.includes(category._id)}
+                onChange={() => onSelect(category._id)}
+                className="dropdown__checkbox"
+              />
+              <label
+                className="dropdown__options"
+                htmlFor={category["category"]}
+              >
+                {category["category"]}
+              </label>
+            </div>
+          ))}
+          <div />
         </div>
-      ))}
-    </ul>
+      ) : null}
+    </div>
   );
 };
 

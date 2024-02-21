@@ -8,7 +8,8 @@ export type InstrumentStateType = {
   pageSize: number;
   currentPage: number;
   selectedCategories: String[];
-  // sortColomn: SortColomnType;
+  selectedMakers: String[];
+  sortByPrice: String;
   searchMovies: [];
   searchQuery: string;
 };
@@ -20,7 +21,8 @@ const initialState: InstrumentStateType = {
   currentPage: 1,
   pageSize: 12,
   selectedCategories: [],
-  // sortColomn: { path: "title", order: "asc" },
+  selectedMakers: [],
+  sortByPrice: "",
   searchMovies: [],
   searchQuery: "",
 };
@@ -30,6 +32,8 @@ export const REDUCER_ACTION_TYPE = {
   SEARCH: "SEARCH",
   SORT: "SORT",
   SELECT_CATEGORY: "SELECT_CATEGORY",
+  SELECT_MAKER: "SELECT_MAKER",
+  CLEAN_SELECTED_CATEGORIES: "CLEAN_SELECTED_CATEGORIES",
   PAGE_CHANGE: "PAGE_CHANGE",
   DELETE_MOVIE: "DELETE_MOVIE",
   SET_MOVIES: "SET_MOVIES",
@@ -56,7 +60,7 @@ function reducer(state: typeof initialState, action: ActionType) {
     case REDUCER_ACTION_TYPE.SORT:
       return {
         ...state,
-        sortColomn: action.payload,
+        sortByPrice: action.payload,
       };
     case REDUCER_ACTION_TYPE.SELECT_CATEGORY:
       const category = action.payload;
@@ -71,6 +75,28 @@ function reducer(state: typeof initialState, action: ActionType) {
       return {
         ...state,
         selectedCategories: updatedCategories,
+        currentPage: 1,
+        searchQuery: "",
+      };
+    case REDUCER_ACTION_TYPE.SELECT_MAKER:
+      const maker = action.payload;
+      console.log(maker);
+      let updatedMakers = [];
+      if (state.selectedMakers.includes(maker)) {
+        updatedMakers = state.selectedMakers.filter((m) => m !== maker);
+      } else {
+        updatedMakers = [...state.selectedMakers, action.payload];
+      }
+      return {
+        ...state,
+        selectedMakers: updatedMakers,
+        currentPage: 1,
+        searchQuery: "",
+      };
+    case REDUCER_ACTION_TYPE.CLEAN_SELECTED_CATEGORIES:
+      return {
+        ...state,
+        selectedCategories: [],
         currentPage: 1,
         searchQuery: "",
       };
