@@ -18,9 +18,10 @@ import Profile from "./components/common/profile";
 
 import ThemeProvider, { useThemeState } from "./context/ThemeContext";
 import { getCurrentUser } from "./services/authService";
-import Rentals from "./components/rentals";
+// import Rentals from "./components/rentals";
 import RentalsProvider from "./context/RentalsContext";
 import Customer from "./components/customer";
+import Cart from "./components/cart";
 
 const App = () => {
   const [theme, toggleTheme] = useThemeState();
@@ -46,7 +47,8 @@ const App = () => {
               <Route path="/logout" element={<LogOut />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/rentals/customer/:id" element={<Customer />} />
-              <Route path="/rentals" element={<Rentals />} />
+              {/* <Route path="/rentals" element={<Rentals />} /> */}
+              <Route path="/cart" element={<Cart />} />
               <Route
                 path="/"
                 element={<Navigate to="/instruments" replace />}

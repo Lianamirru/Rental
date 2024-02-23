@@ -56,7 +56,7 @@ const Instruments = () => {
     currentPage,
   } = state;
 
-  const [instrument, setInstrument] = useState<InstrumentType | null>(null);
+  // const [instrument, setInstrument] = useState<InstrumentType | null>(null);
   const [likeModal, setLikeModal] = useState(false);
 
   const location = useLocation();
