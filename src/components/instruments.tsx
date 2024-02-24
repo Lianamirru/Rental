@@ -45,6 +45,7 @@ import ProductsList from "./displayInstruments";
 import { getCategories } from "../services/categoryService";
 import { useLocation } from "react-router-dom";
 import { CategoryType } from "../types/categoryType";
+import { getCartItems } from "../services/cartServise";
 
 const Instruments = () => {
   const [state, dispatch] = useInstrumentsReducer();
@@ -101,6 +102,14 @@ const Instruments = () => {
 
     fetchData().catch(console.error);
   }, [dispatch, categoryName]);
+
+  const [cartItemsIds, setItems] = useState<String[]>([]);
+  useEffect(() => {
+    (async () => {
+      const { data } = await getCartItems();
+      setItems(data.map((i) => i.instrument._id));
+    })();
+  }, []);
 
   const handleSearch = (searchQuery: string) =>
     dispatch({
@@ -160,6 +169,16 @@ const Instruments = () => {
     });
   };
 
+  const handleAddToCart = (instrumentId: String) => {
+    setItems([...cartItemsIds, instrumentId]);
+  };
+
+  const handleDeleteFromCart = (instrumentId: String) => {
+    const updatedCart = cartItemsIds.filter((i) => i !== instrumentId);
+    setItems(updatedCart);
+  };
+  console.log(cartItemsIds);
+
   let { pageInstruments, totalCount } = getPagedData(state);
 
   return (
@@ -177,7 +196,13 @@ const Instruments = () => {
 
         {totalCount ? (
           <>
-            <ProductsList products={pageInstruments} onLike={handleLike} />
+            <ProductsList
+              products={pageInstruments}
+              onLike={handleLike}
+              onAddToCart={handleAddToCart}
+              cartItemsIds={cartItemsIds}
+              onDeleteFromCart={handleDeleteFromCart}
+            />
             <Pagination
               totalCount={totalCount}
               onPageChange={handlePageChange}

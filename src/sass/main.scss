@@ -346,6 +346,13 @@ a {
   & img {
     width: 12rem;
   }
+
+  &__action {
+    position: relative;
+    left: 43%;
+    border: none;
+    background-color: inherit;
+  }
 }
 
 img.add-to-favorites {
@@ -356,15 +363,18 @@ img.add-to-favorites {
 }
 
 .add-to-cart {
-  position: absolute;
-  right: 2rem;
-  bottom: 1rem;
-  background-color: #6767c1;
+  background-color: grey;
+  width: 3.5rem;
+  height: 3.5rem;
   border-radius: 50%;
-  width: 2.5rem;
-  text-align: center;
-  color: #ffffff;
+  border: solid 5px;
+  justify-content: center;
 }
+
+.delete-from-cart {
+  color: #900000;
+}
+
 .pagination {
   // display: flex;
   justify-content: center;
@@ -378,7 +388,7 @@ img.add-to-favorites {
   padding: 20px;
   background-color: #f9f9f9;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  height: 100vh;
+  min-height: 100vh;
 
   &__heading {
     display: grid;
@@ -419,11 +429,11 @@ img.add-to-favorites {
 }
 
 button.cart-item__rent {
-  background-color: #3498db;
-  color: #ffffff;
+  background-color: #ffffff;
+  color: #000000;
 
   &:hover {
-    background-color: hsl(197, 87%, 31%);
+    background-color: hsl(198, 8%, 53%);
   }
 }
 

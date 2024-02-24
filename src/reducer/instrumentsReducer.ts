@@ -1,6 +1,5 @@
 import { useReducer } from "react";
 import { getCurrentUser } from "../services/authService";
-import { CategoryType } from "../types/categoryType";
 import { InstrumentType } from "../types/instrumentType";
 
 export type InstrumentStateType = {
@@ -12,6 +11,7 @@ export type InstrumentStateType = {
   sortByPrice: String;
   searchMovies: [];
   searchQuery: string;
+  cartItemsIds: String[];
 };
 
 const user = getCurrentUser();
@@ -25,6 +25,7 @@ const initialState: InstrumentStateType = {
   sortByPrice: "",
   searchMovies: [],
   searchQuery: "",
+  cartItemsIds: [],
 };
 
 export const REDUCER_ACTION_TYPE = {
@@ -38,6 +39,7 @@ export const REDUCER_ACTION_TYPE = {
   DELETE_MOVIE: "DELETE_MOVIE",
   SET_MOVIES: "SET_MOVIES",
   LIKE: "LIKE",
+  ADD_TO_CART: "ADD_TO_CART",
 };
 
 type ActionType = { type: string; payload: any };
@@ -124,6 +126,12 @@ function reducer(state: typeof initialState, action: ActionType) {
       return {
         ...state,
         instruments: updatedInstruments,
+      };
+    case REDUCER_ACTION_TYPE.ADD_TO_CART:
+      const updatedCartItems = [...state.cartItemsIds, action.payload];
+      return {
+        ...state,
+        cartItemsIds: updatedCartItems,
       };
     default:
       throw new Error("Check reducer action type");

@@ -17,6 +17,6 @@ export function addToCart(instrumentId: String) {
   return http.post(apiEndpoint + `/${instrumentId}`);
 }
 
-// export function deleteRental(id: string) {
-//   return http.delete(apiEndpoint + "/" + id);
-// }
+export function deleteFromCart(instrumentId: String) {
+  return http.delete(apiEndpoint + `/${instrumentId}`);
+}

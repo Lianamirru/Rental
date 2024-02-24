@@ -1,6 +1,14 @@
 import { useEffect, useState } from "react";
-import { CartItemType, getCartItems } from "../services/cartServise";
+import {
+  CartItemType,
+  addToCart,
+  deleteFromCart,
+  getCartItems,
+} from "../services/cartServise";
 import { InstrumentType } from "../types/instrumentType";
+import { useInstrumentsReducer } from "../reducer/instrumentsReducer";
+import { toast } from "react-toastify";
+import { logger } from "../services/logService";
 
 const Cart = () => {
   const [cartItems, setItems] = useState<CartItemType[]>([]);
@@ -12,13 +20,32 @@ const Cart = () => {
     })();
   }, []);
 
-  const handleBuy = (itemId: String) => {
-    console.log(`Buying item with id ${itemId}`);
+  const handleBuy = async (itemId: String) => {
+    // try {
+    //   await addToCart(itemId);
+    // } catch (ex: any) {
+    //   if (ex.response && ex.response.status === 404) {
+    //     toast.error("unable to handle adding to cart");
+    //   } else {
+    //     logger(ex);
+    //   }
+    // }
+    // setItems([...cartItems, item]);
   };
 
-  const handleDelete = (itemId: String) => {
-    const updatedCart = cartItems.filter((item) => item._id !== itemId);
-    setItems(updatedCart);
+  const handleDelete = async (instrumentId: String) => {
+    try {
+      await deleteFromCart(instrumentId);
+    } catch (ex: any) {
+      if (ex.response && ex.response.status === 404) {
+        toast.error("unable to handle deleting from cart");
+      } else {
+        logger(ex);
+      }
+    }
+    setItems((prevCartItems) =>
+      prevCartItems.filter((item) => item._id !== instrumentId)
+    );
   };
 
   return (
@@ -34,7 +61,7 @@ const Cart = () => {
               key={item._id}
               item={item.instrument}
               onBuy={() => handleBuy(item._id)}
-              onDelete={() => handleDelete(item._id)}
+              onDelete={() => handleDelete(item.instrument._id)}
             />
           ))
         : null}
