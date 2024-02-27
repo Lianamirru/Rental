@@ -66,6 +66,8 @@ const Instruments = () => {
 
   const user = getCurrentUser();
 
+  const [likedInstruments, setLikedInstruments] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       const { data: instruments } = await getInstruments();
@@ -76,12 +78,17 @@ const Instruments = () => {
 
       if (!user) userInstruments = instruments;
       else {
+        const likedInstruments = [];
         const { data: likedInstrumentsIds } = await getLikedInstruments();
         userInstruments = instruments.map((instrument) => {
-          if (likedInstrumentsIds.includes(instrument._id))
+          if (likedInstrumentsIds.includes(instrument._id)) {
+            likedInstruments.push(instrument);
             return { ...instrument, like: true };
-          return instrument;
+          } else {
+            return instrument;
+          }
         });
+        setLikedInstruments(likedInstruments);
       }
 
       dispatch({ type: REDUCER_ACTION_TYPE.CLEAN_SELECTED_CATEGORIES });

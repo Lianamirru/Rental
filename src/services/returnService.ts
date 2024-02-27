@@ -6,7 +6,7 @@ const apiEndpoint = apiUrl.apiUrl + "/returns";
 type ReturnType = {
   _id?: string;
   customer: { _id: string; name: string; isGold: boolean; phone: string };
-  movie: { title: string };
+  instrument: { maker: string; model: string; year: string };
   rentalFee: Number;
   dateOut: Date;
   dateReturned: Date;

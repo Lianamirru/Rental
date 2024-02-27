@@ -57,7 +57,7 @@ const DropdownMenu = () => {
           <Link to="/favorites" onClick={() => setIsDropdownOpen(false)}>
             Favorites
           </Link>
-          <Link to="/orders" onClick={() => setIsDropdownOpen(false)}>
+          <Link to="/rentals" onClick={() => setIsDropdownOpen(false)}>
             Rented Instruments
           </Link>
           <Link to="/logout">Logout</Link>

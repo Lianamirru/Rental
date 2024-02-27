@@ -1,6 +1,5 @@
 export type UserType = {
   _id: string;
-  name: string;
   email: string;
   password: string;
   isAdmin: boolean;
@@ -10,5 +9,4 @@ export type UserType = {
 export type RegisterUserType = {
   username: string;
   password: string;
-  name: string;
 };

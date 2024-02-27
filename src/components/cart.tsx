@@ -1,18 +1,22 @@
 import { useEffect, useState } from "react";
 import {
   CartItemType,
-  addToCart,
   deleteFromCart,
   getCartItems,
 } from "../services/cartServise";
 import { InstrumentType } from "../types/instrumentType";
-import { useInstrumentsReducer } from "../reducer/instrumentsReducer";
 import { toast } from "react-toastify";
 import { logger } from "../services/logService";
+import Modal from "./common/modal/modal";
+import RentalForm from "./rentalForm";
+import ProtectedRoute from "./common/protectedRoute";
 
 const Cart = () => {
   const [cartItems, setItems] = useState<CartItemType[]>([]);
-  console.log(cartItems);
+
+  const [modalActive, setModalActive] = useState(false);
+  const [instrument, setInstrument] = useState<InstrumentType | null>(null);
+
   useEffect(() => {
     (async () => {
       const { data } = await getCartItems();
@@ -20,32 +24,28 @@ const Cart = () => {
     })();
   }, []);
 
-  const handleBuy = async (itemId: String) => {
-    // try {
-    //   await addToCart(itemId);
-    // } catch (ex: any) {
-    //   if (ex.response && ex.response.status === 404) {
-    //     toast.error("unable to handle adding to cart");
-    //   } else {
-    //     logger(ex);
-    //   }
-    // }
-    // setItems([...cartItems, item]);
+  const handleRent = (instrument: InstrumentType) => {
+    setInstrument(instrument);
+    setModalActive(true);
   };
 
   const handleDelete = async (instrumentId: String) => {
+    const originalCartItems = cartItems;
+
+    setItems((prevCartItems) =>
+      prevCartItems.filter((item) => item.instrument._id !== instrumentId)
+    );
+
     try {
       await deleteFromCart(instrumentId);
     } catch (ex: any) {
       if (ex.response && ex.response.status === 404) {
-        toast.error("unable to handle deleting from cart");
+        toast.error("cartItem has already been deleted");
+        setItems(originalCartItems);
       } else {
         logger(ex);
       }
     }
-    setItems((prevCartItems) =>
-      prevCartItems.filter((item) => item._id !== instrumentId)
-    );
   };
 
   return (
@@ -60,11 +60,16 @@ const Cart = () => {
             <CartItem
               key={item._id}
               item={item.instrument}
-              onBuy={() => handleBuy(item._id)}
               onDelete={() => handleDelete(item.instrument._id)}
+              onRent={() => handleRent(item.instrument)}
             />
           ))
         : null}
+      <Modal active={modalActive} setActive={setModalActive}>
+        <ProtectedRoute>
+          <RentalForm instrument={instrument} />
+        </ProtectedRoute>
+      </Modal>
     </div>
   );
 };
@@ -73,11 +78,10 @@ export default Cart;
 
 type CartItemProps = {
   item: InstrumentType;
-  onBuy: () => void;
   onDelete: () => void;
+  onRent: () => void;
 };
-const CartItem = ({ item, onBuy, onDelete }: CartItemProps) => {
-  console.log(item);
+const CartItem = ({ item, onRent, onDelete }: CartItemProps) => {
   const { _id, maker, model, year, monthlyRentalPrice } = item;
   return (
     <div className="cart-item">
@@ -87,7 +91,9 @@ const CartItem = ({ item, onBuy, onDelete }: CartItemProps) => {
       <div className="cart-item__info">
         <h4>${monthlyRentalPrice}</h4>
         <div>
-          <button className="cart-item__rent">Rent</button>
+          <button className="cart-item__rent" onClick={onRent}>
+            Rent
+          </button>
           <button className="cart-item__delete" onClick={onDelete}>
             <i className="fa fa-trash " aria-hidden="true"></i>
           </button>

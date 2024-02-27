@@ -11,6 +11,7 @@ import * as userService from "../../services/userService";
 import { logger } from "./../../services/logService";
 
 import { RegisterUserType } from "../../types/userType";
+import { Link } from "react-router-dom";
 
 type RegisterUserTypeKeys = keyof RegisterUserType;
 
@@ -19,8 +20,8 @@ const RegisterForm = () => {
     data: RegisterUserType;
     errors: RegisterUserType;
   }>({
-    data: { username: "", password: "", name: "" },
-    errors: { username: "", password: "", name: "" },
+    data: { username: "", password: "" },
+    errors: { username: "", password: "" },
   });
 
   const { data, errors } = state;
@@ -76,12 +77,12 @@ const RegisterForm = () => {
 
   return (
     <div>
-      <h1>Sign in form</h1>
+      <h1>Register form</h1>
       <form onSubmit={handleSubmit}>
         {renderInput("text", "username", "Username")}
         {renderInput("password", "password", "Password")}
-        {renderInput("text", "name", "Name")}
         <Button label="Sign in" disabled={!!validateAll(schema, data)} />
+        <Link to={"/login"}>Log in</Link>
       </form>
     </div>
   );
