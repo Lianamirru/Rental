@@ -1,84 +1,70 @@
-import { useEffect, useState } from "react";
-import {
-  CartItemType,
-  addToCart,
-  deleteFromCart,
-  getCartItems,
-} from "../services/cartServise";
-import { InstrumentType } from "../types/instrumentType";
-import { useInstrumentsReducer } from "../reducer/instrumentsReducer";
 import { toast } from "react-toastify";
 import { logger } from "../services/logService";
-import { getLikedInstruments } from "../services/likeService";
+
+import { likeInstrument } from "../services/likeService";
+import { InstrumentType } from "../types/instrumentType";
+import { useLikedInstruments } from "../context/LikedInstrumentsContext";
 
 const Favorites = () => {
-  const [favorites, setFavorites] = useState<String[]>([]);
-  console.log("rer");
-  useEffect(() => {
-    (async () => {
-      const { data } = await getLikedInstruments();
-      setFavorites(data);
-    })();
-  }, []);
+  const { likedInstruments, handleInstrumentLike } = useLikedInstruments();
+  const displayedInstruments = likedInstruments.filter((i) => i.like === true);
 
-  //   const handleBuy = async (itemId: String) => {
-  //     // try {
-  //     //   await addToCart(itemId);
-  //     // } catch (ex: any) {
-  //     //   if (ex.response && ex.response.status === 404) {
-  //     //     toast.error("unable to handle adding to cart");
-  //     //   } else {
-  //     //     logger(ex);
-  //     //   }
-  //     // }
-  //     // setItems([...cartItems, item]);
-  //   };
+  const handleDeleteLike = async (itemId: string) => {
+    try {
+      await likeInstrument(itemId);
+    } catch (ex: any) {
+      if (ex.response && ex.response.status === 404) {
+        toast.error("unable to delete from favorites");
+      } else {
+        logger(ex);
+      }
+    }
+    handleInstrumentLike(itemId);
+  };
 
   return (
-    <div className="cart">
-      {/* <h2>Favourites</h2>
-       <div className="cart__heading">
-         <h3>Instrument</h3>
-         <h3>Price</h3>
-       </div>
-       {favorites.length >= 1 */}
-      {/* //         ? favorites.map((item) => ( */}
-      {/* //             <CartItem */}
-      {/* //               key={item._id}
-//               item={item.instrument}
-//               onBuy={() => handleBuy(item._id)}
-//               onDelete={() => handleDelete(item.instrument._id)}
-//             />
-//           ))
-//         : null} */}
+    <div className="display-items">
+      {displayedInstruments.length ? (
+        <>
+          <h2 className="display-items__heading">Favorites</h2>
+          <div className="display-items__table-heading">
+            <h3>Instrument</h3>
+            <h3>Price</h3>
+          </div>
+          {displayedInstruments.map((item) => (
+            <Item
+              key={item._id}
+              item={item}
+              onDelete={() => handleDeleteLike(item._id)}
+            />
+          ))}
+        </>
+      ) : (
+        <p>No favorite instruments</p>
+      )}
     </div>
   );
 };
 
 export default Favorites;
 
-// type CartItemProps = {
-//   item: InstrumentType;
-//   onBuy: () => void;
-//   onDelete: () => void;
-// };
-// const CartItem = ({ item, onBuy, onDelete }: CartItemProps) => {
-//   console.log(item);
-//   const { _id, maker, model, year, monthlyRentalPrice } = item;
-//   return (
-//     <div className="cart-item">
-//       <h4>
-//         {maker} {model} {year}
-//       </h4>
-//       <div className="cart-item__info">
-//         <h4>${monthlyRentalPrice}</h4>
-//         <div>
-//           <button className="cart-item__rent">Rent</button>
-//           <button className="cart-item__delete" onClick={onDelete}>
-//             <i className="fa fa-trash " aria-hidden="true"></i>
-//           </button>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
+type ItemProps = {
+  item: InstrumentType;
+  onDelete: () => void;
+};
+const Item = ({ item, onDelete }: ItemProps) => {
+  const { maker, model, year, monthlyRentalPrice } = item;
+  return (
+    <div className="items">
+      <h4>
+        {maker} {model} {year}
+      </h4>
+      <div className="items__info">
+        <h4>${monthlyRentalPrice}</h4>
+        <button className="items__delete" onClick={onDelete}>
+          <i className="fa fa-trash " aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  );
+};

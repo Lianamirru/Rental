@@ -6,43 +6,60 @@ import {
   useMemo,
   useState,
 } from "react";
-import { getRentals, RentalType } from "../services/rentalService";
 import { getCurrentUser } from "./../services/authService";
+import { InstrumentType } from "../types/instrumentType";
+import { getInstruments } from "../services/instrumentService";
+import { getLikedInstruments } from "../services/likeService";
 
-const RentalsContext = createContext<{
-  rentals: RentalType[];
-  updateRentals: (newRental: RentalType) => void;
+const LikedInstrumentsContext = createContext<{
+  likedInstruments: InstrumentType[];
+  handleInstrumentLike: (instrumentId: string) => void;
 }>({
-  rentals: [],
-  updateRentals: () => {},
+  likedInstruments: [],
+  handleInstrumentLike: () => {},
 });
 
-const RentalsProvider = ({ children }: { children: ReactNode }) => {
-  const [rentals, setRentals] = useState<RentalType[]>([]);
+const LikedInstrumentsProvider = ({ children }: { children: ReactNode }) => {
+  const [likedInstruments, setInstruments] = useState<InstrumentType[]>([]);
   const user = useMemo(() => getCurrentUser(), []);
-
+  console.log(likedInstruments);
   useEffect(() => {
     (async () => {
-      if (user)
-        try {
-          const { data: initRentals } = await getRentals();
-          setRentals(initRentals);
-        } catch (ex) {}
+      try {
+        const { data: instruments } = await getInstruments();
+        if (!user) {
+          setInstruments(instruments);
+        } else {
+          const { data: likedInstrumentsIds } = await getLikedInstruments();
+          console.log(likedInstrumentsIds);
+          const newInstruments = instruments.map((instrument) =>
+            likedInstrumentsIds.includes(instrument._id)
+              ? { ...instrument, like: true }
+              : instrument
+          );
+          setInstruments(newInstruments);
+        }
+      } catch (ex) {}
     })();
   }, [user]);
 
-  const updateRentals = (newRental: RentalType) => {
-    const updatedRentals = [...rentals];
-    updatedRentals.push(newRental);
-    setRentals(updatedRentals);
+  const handleInstrumentLike = (instrumentId: String) => {
+    const updatedInstruments = likedInstruments.map((instrument) =>
+      instrument._id === instrumentId
+        ? { ...instrument, like: !instrument.like }
+        : instrument
+    );
+    setInstruments(updatedInstruments);
   };
 
   return (
-    <RentalsContext.Provider value={{ rentals, updateRentals }}>
+    <LikedInstrumentsContext.Provider
+      value={{ likedInstruments, handleInstrumentLike }}
+    >
       {children}
-    </RentalsContext.Provider>
+    </LikedInstrumentsContext.Provider>
   );
 };
 
-export const useRentals = () => useContext(RentalsContext);
-export default RentalsProvider;
+export const useLikedInstruments = () => useContext(LikedInstrumentsContext);
+export default LikedInstrumentsProvider;

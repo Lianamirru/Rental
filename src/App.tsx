@@ -22,6 +22,7 @@ import RentalsProvider from "./context/RentalsContext";
 import Customer from "./components/customer";
 import Cart from "./components/cart";
 import Favorites from "./components/favorites";
+import LikedInstrumentsProvider from "./context/LikedInstrumentsContext";
 
 const App = () => {
   const [theme, toggleTheme] = useThemeState();
@@ -29,31 +30,33 @@ const App = () => {
   const user = getCurrentUser();
   return (
     <ThemeProvider theme={theme} toggleTheme={toggleTheme}>
-      <RentalsProvider>
-        <div id={theme} className="App">
-          <ToastContainer />
-          <NavBar />
-          <div className="content">
-            <Routes>
-              <Route path="/instruments" element={<Instruments />} />
-              <Route path="/instruments/:id" element={<InstrumentPage />} />
-              <Route path="/login" element={<LoginForm />} />
-              <Route path="/register" element={<RegisterForm />} />
-              <Route path="/logout" element={<LogOut />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/rentals/customer/:id" element={<Customer />} />
-              <Route path="/rentals" element={<Rentals />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/favorites" element={<Favorites />} />
-              <Route
-                path="/"
-                element={<Navigate to="/instruments" replace />}
-              />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </div>
+      <div id={theme} className="App">
+        <ToastContainer />
+        <NavBar />
+        <div className="content">
+          <RentalsProvider>
+            <LikedInstrumentsProvider>
+              <Routes>
+                <Route path="/instruments" element={<Instruments />} />
+                <Route path="/instruments/:id" element={<InstrumentPage />} />
+                <Route path="/login" element={<LoginForm />} />
+                <Route path="/register" element={<RegisterForm />} />
+                <Route path="/logout" element={<LogOut />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/rentals/customer/:id" element={<Customer />} />
+                <Route path="/rentals" element={<Rentals />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/favorites" element={<Favorites />} />
+                <Route
+                  path="/"
+                  element={<Navigate to="/instruments" replace />}
+                />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </LikedInstrumentsProvider>
+          </RentalsProvider>
         </div>
-      </RentalsProvider>
+      </div>
     </ThemeProvider>
   );
 };

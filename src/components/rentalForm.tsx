@@ -52,7 +52,7 @@ const RentalForm = ({ instrument }: { instrument: InstrumentType | null }) => {
   const instrumentId = instrument?._id;
   const userId = getCurrentUser()?._id;
 
-  const { rentals, updateRentals } = useRentals();
+  // const { rentals, updateRentals } = useRentals();
 
   useEffect(() => {
     (async () => {
@@ -97,7 +97,6 @@ const RentalForm = ({ instrument }: { instrument: InstrumentType | null }) => {
         ]);
       }
     })();
-    setIsSaved(false);
   }, [instrumentId, userId]);
 
   const validateInput = (name: string, value: string) => {
@@ -183,7 +182,7 @@ const RentalForm = ({ instrument }: { instrument: InstrumentType | null }) => {
       );
       setIsSaved(true);
       await deleteFromCart(instrumentId);
-      updateRentals(rental);
+      // updateRentals(rental);
     } catch (ex) {}
   };
 
@@ -198,7 +197,6 @@ const RentalForm = ({ instrument }: { instrument: InstrumentType | null }) => {
       <button
         className="form-button"
         onClick={() => {
-          // setIsSaved(false);
           navigate("/");
         }}
       >

@@ -49,22 +49,26 @@ const Cart = () => {
   };
 
   return (
-    <div className="cart">
-      <h2>Cart</h2>
-      <div className="cart__heading">
-        <h3>Instrument</h3>
-        <h3>Price</h3>
-      </div>
-      {cartItems.length >= 1
-        ? cartItems.map((item) => (
+    <div className="display-items">
+      {cartItems.length ? (
+        <>
+          <h2 className="display-items__heading">Cart</h2>
+          <div className="display-items__table-heading">
+            <h3>Instrument</h3>
+            <h3>Price</h3>
+          </div>
+          {cartItems.map((item) => (
             <CartItem
               key={item._id}
               item={item.instrument}
               onDelete={() => handleDelete(item.instrument._id)}
               onRent={() => handleRent(item.instrument)}
             />
-          ))
-        : null}
+          ))}
+        </>
+      ) : (
+        <p>No cart items</p>
+      )}
       <Modal active={modalActive} setActive={setModalActive}>
         <ProtectedRoute>
           <RentalForm instrument={instrument} />
@@ -82,19 +86,19 @@ type CartItemProps = {
   onRent: () => void;
 };
 const CartItem = ({ item, onRent, onDelete }: CartItemProps) => {
-  const { _id, maker, model, year, monthlyRentalPrice } = item;
+  const { maker, model, year, monthlyRentalPrice } = item;
   return (
-    <div className="cart-item">
+    <div className="items">
       <h4>
         {maker} {model} {year}
       </h4>
-      <div className="cart-item__info">
+      <div className="items__info">
         <h4>${monthlyRentalPrice}</h4>
         <div>
-          <button className="cart-item__rent" onClick={onRent}>
+          <button className="items__rent" onClick={onRent}>
             Rent
           </button>
-          <button className="cart-item__delete" onClick={onDelete}>
+          <button className="items__delete" onClick={onDelete}>
             <i className="fa fa-trash " aria-hidden="true"></i>
           </button>
         </div>

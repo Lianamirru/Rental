@@ -46,6 +46,7 @@ import { getCategories } from "../services/categoryService";
 import { useLocation } from "react-router-dom";
 import { CategoryType } from "../types/categoryType";
 import { getCartItems } from "../services/cartServise";
+import { useLikedInstruments } from "../context/LikedInstrumentsContext";
 
 const Instruments = () => {
   const [state, dispatch] = useInstrumentsReducer();
@@ -57,40 +58,22 @@ const Instruments = () => {
     currentPage,
   } = state;
 
-  // const [instrument, setInstrument] = useState<InstrumentType | null>(null);
+  const { likedInstruments, handleInstrumentLike } = useLikedInstruments();
+  const user = getCurrentUser();
+
   const [likeModal, setLikeModal] = useState(false);
+  const [cartItemsIds, setItems] = useState<String[]>([]);
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const categoryName = queryParams.get("category");
 
-  const user = getCurrentUser();
-
-  const [likedInstruments, setLikedInstruments] = useState([]);
-
   useEffect(() => {
+    dispatch({
+      type: REDUCER_ACTION_TYPE.FETCH_DATA,
+      payload: likedInstruments,
+    });
     const fetchData = async () => {
-      const { data: instruments } = await getInstruments();
-
-      // get favourite instruments to display the right icon
-      let userInstruments;
-      const user = getCurrentUser();
-
-      if (!user) userInstruments = instruments;
-      else {
-        const likedInstruments = [];
-        const { data: likedInstrumentsIds } = await getLikedInstruments();
-        userInstruments = instruments.map((instrument) => {
-          if (likedInstrumentsIds.includes(instrument._id)) {
-            likedInstruments.push(instrument);
-            return { ...instrument, like: true };
-          } else {
-            return instrument;
-          }
-        });
-        setLikedInstruments(likedInstruments);
-      }
-
       dispatch({ type: REDUCER_ACTION_TYPE.CLEAN_SELECTED_CATEGORIES });
       if (categoryName) {
         const { data: categories } = await getCategories();
@@ -100,23 +83,11 @@ const Instruments = () => {
           payload: category._id,
         });
       }
-
-      dispatch({
-        type: REDUCER_ACTION_TYPE.FETCH_DATA,
-        payload: userInstruments,
-      });
-    };
-
-    fetchData().catch(console.error);
-  }, [dispatch, categoryName]);
-
-  const [cartItemsIds, setItems] = useState<String[]>([]);
-  useEffect(() => {
-    (async () => {
       const { data } = await getCartItems();
       setItems(data.map((i) => i.instrument._id));
-    })();
-  }, []);
+    };
+    fetchData().catch(console.error);
+  }, [dispatch, categoryName, likedInstruments]);
 
   const handleSearch = (searchQuery: string) =>
     dispatch({
@@ -139,19 +110,14 @@ const Instruments = () => {
     });
   };
 
-  const handleLike = async (instrument) => {
+  const handleLike = async (instrumentId: String) => {
     if (!user) {
       setLikeModal(true);
     } else {
       const originalInstruments = instruments;
-
-      dispatch({
-        type: REDUCER_ACTION_TYPE.LIKE,
-        payload: instrument,
-      });
-
+      handleInstrumentLike(instrumentId);
       try {
-        await likeInstrument(instrument._id);
+        await likeInstrument(instrumentId);
       } catch (ex: any) {
         if (ex.response && ex.response.status === 404) {
           toast.error("unable to handle like");
@@ -184,7 +150,6 @@ const Instruments = () => {
     const updatedCart = cartItemsIds.filter((i) => i !== instrumentId);
     setItems(updatedCart);
   };
-  console.log(cartItemsIds);
 
   let { pageInstruments, totalCount } = getPagedData(state);
 

@@ -27,7 +27,7 @@ type ProductsProps = {
 
 type ProductProps = {
   product: InstrumentType;
-  onLike: (product: InstrumentType) => void;
+  onLike: (instrumentId: String) => void;
   onAddToCart: (product: String) => void;
   onDeleteFromCart: (product: String) => void;
   cartItemsIds: String[];
@@ -75,7 +75,7 @@ const Product = ({
 
   return (
     <div className="instrument-card" key={product._id}>
-      <Likes onClick={() => onLike(product)} like={product.like} />
+      <Likes onClick={() => onLike(product._id)} like={product.like} />
       <Link to={`/instruments/${product._id}`}>
         <img src={instrumentPhoto} alt={product.model}></img>
       </Link>
