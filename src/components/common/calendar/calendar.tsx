@@ -1,10 +1,9 @@
-import { useState, useRef, useEffect, KeyboardEvent, MouseEvent } from "react";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
+import { useState, useRef, useEffect } from "react";
 
 import { format, endOfYear } from "date-fns";
 import { DateRange } from "react-date-range";
-
-import "react-date-range/dist/styles.css";
-import "react-date-range/dist/theme/default.css";
 
 export type RangeType = {
   startDate: Date;
@@ -25,20 +24,18 @@ const Calendar = ({
   const refOne: React.MutableRefObject<null | HTMLInputElement> = useRef(null);
 
   useEffect(() => {
-    // @ts-ignore
     document.addEventListener("keydown", hideOnEscape, true);
-    //@ts-ignore
     document.addEventListener("click", hideOnClickOutside, true);
   }, []);
 
-  function hideOnEscape(e: KeyboardEvent<Document>) {
-    if (e.key === "Escape") {
+  function hideOnEscape(event: globalThis.KeyboardEvent) {
+    if (event.key === "Escape") {
       setOpen(false);
     }
   }
 
-  const hideOnClickOutside = (e: MouseEvent<Document>) => {
-    const target = e.target as HTMLElement;
+  const hideOnClickOutside = (event: globalThis.MouseEvent) => {
+    const target = event.target as HTMLElement;
     if (refOne.current && !refOne.current.contains(target)) {
       setOpen(false);
     }
@@ -47,7 +44,7 @@ const Calendar = ({
   return (
     <>
       <div className="form-group">
-        <label htmlFor={"daterange"}> Rental period </label>
+        <label htmlFor="daterange"> Rental period </label>
         <input
           value={
             range
@@ -60,10 +57,14 @@ const Calendar = ({
           readOnly
           className="inputBox form-control"
           onClick={() => setOpen((open) => !open)}
+          id="daterange"
         />
       </div>
 
-      <div style={{ display: "inline-block" }} ref={refOne}>
+      <div
+        style={{ display: "inline-block", position: "absolute" }}
+        ref={refOne}
+      >
         {open && (
           <DateRange
             onChange={onChange}

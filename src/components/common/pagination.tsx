@@ -14,7 +14,7 @@ const Pagination = ({
   const totalPages = Math.ceil(totalCount / pageSize);
   const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
 
-  if (pages.length === 1) return null;
+  if (pages.length <= 1) return null;
   return (
     <div className="pagination">
       <button
@@ -41,4 +41,5 @@ const Pagination = ({
     </div>
   );
 };
+
 export default Pagination;

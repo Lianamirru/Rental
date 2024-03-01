@@ -29,10 +29,10 @@ export function saveRental(
 
 export function getRentedDates(
   instrumentId: string
-): Promise<{ data: RentalDateType[] | [] }> {
+): Promise<{ data: RentalDateType[] }> {
   return http.get(apiEndpoint + "/?instrumentId=" + instrumentId);
 }
-export function getRentals(): Promise<{ data: RentalType[] | [] }> {
+export function getRentals(): Promise<{ data: RentalType[] }> {
   return http.get(apiEndpoint);
 }
 

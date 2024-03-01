@@ -1,20 +1,17 @@
 import { useReducer } from "react";
-import { getCurrentUser } from "../services/authService";
 import { InstrumentType } from "../types/instrumentType";
 
 export type InstrumentStateType = {
   instruments: InstrumentType[];
   pageSize: number;
   currentPage: number;
-  selectedCategories: String[];
-  selectedMakers: String[];
-  sortByPrice: String;
+  selectedCategories: string[];
+  selectedMakers: string[];
+  sortByPrice: string;
   searchMovies: [];
   searchQuery: string;
-  cartItemsIds: String[];
+  cartItemsIds: string[];
 };
-
-const user = getCurrentUser();
 
 const initialState: InstrumentStateType = {
   instruments: [],
@@ -82,7 +79,6 @@ function reducer(state: typeof initialState, action: ActionType) {
       };
     case REDUCER_ACTION_TYPE.SELECT_MAKER:
       const maker = action.payload;
-      console.log(maker);
       let updatedMakers = [];
       if (state.selectedMakers.includes(maker)) {
         updatedMakers = state.selectedMakers.filter((m) => m !== maker);
@@ -107,10 +103,6 @@ function reducer(state: typeof initialState, action: ActionType) {
         ...state,
         currentPage: action.payload,
       };
-    // case REDUCER_ACTION_TYPE.DELETE_MOVIE:
-    //   const movieId = action.payload;
-    //   const newMovies = state.movies.filter((movie) => movie._id !== movieId);
-    //   return { ...state, movies: newMovies };
     case REDUCER_ACTION_TYPE.SET_MOVIES:
       return {
         ...state,

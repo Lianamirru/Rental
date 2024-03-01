@@ -1,0 +1,74 @@
+nav {
+  background-color: $dark-grey;
+  padding: 1rem;
+}
+
+.navigation {
+  max-width: $content-width;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+a {
+  text-decoration: none;
+}
+
+.nav {
+  &__links {
+    display: flex;
+    gap: 7rem;
+  }
+
+  &__link {
+    color: $white;
+
+    &:hover {
+      color: rgba(darken($white, 30%), 0.8);
+      text-decoration: none;
+    }
+
+    &--brand {
+      font-family: "Merienda", sans-serif;
+      font-size: 2.5rem;
+      color: $light-red;
+
+      &:hover {
+        color: $light-red;
+      }
+    }
+  }
+
+  &__icons {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  &__icon {
+    color: $white;
+    padding-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &--text {
+      font-size: 1.5rem;
+    }
+
+    &:hover {
+      text-decoration: none;
+      color: rgba(darken($white, 30%), 0.8);
+    }
+  }
+
+  &__switch {
+    margin-top: 0.2rem;
+  }
+}
+
+.profile-icon {
+  cursor: pointer;
+}

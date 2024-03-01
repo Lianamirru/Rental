@@ -5,29 +5,27 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import ProtectedRoute from "./components/common/protectedRoute";
-import RegisterForm from "./components/common/registerForm";
-import LoginForm from "./components/common/loginForm";
-import LogOut from "./components/common/logout";
+import RegisterForm from "./components/forms/registerForm";
+import LoginForm from "./components/forms/loginForm";
+import LogOut from "./components/common/form-elements/logout";
 import NotFound from "./components/common/notFound";
-import NavBar from "./components/navbar";
+import NavBar from "./components/layout/navbar";
 
-import InstrumentPage from "./components/instrumentPage";
-import Instruments from "./components/instruments";
-import Profile from "./components/common/profile";
+import InstrumentPage from "./components/pages/instrumentPage";
+import Instruments from "./components/pages/instruments";
+import Profile from "./components/pages/profile";
 
 import ThemeProvider, { useThemeState } from "./context/ThemeContext";
 import { getCurrentUser } from "./services/authService";
-import Rentals from "./components/rentals";
+import Rentals from "./components/pages/rentals";
 import RentalsProvider from "./context/RentalsContext";
-import Customer from "./components/customer";
-import Cart from "./components/cart";
-import Favorites from "./components/favorites";
+import Customer from "./components/pages/customer";
+import Cart from "./components/pages/cart";
+import Favorites from "./components/pages/favorites";
 import LikedInstrumentsProvider from "./context/LikedInstrumentsContext";
 
 const App = () => {
   const [theme, toggleTheme] = useThemeState();
-
-  const user = getCurrentUser();
   return (
     <ThemeProvider theme={theme} toggleTheme={toggleTheme}>
       <div id={theme} className="App">

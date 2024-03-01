@@ -1,6 +1,7 @@
 import TextField from "@mui/material/TextField";
 
 type SearchProps = { value: string; onChange: (searchQuery: string) => void };
+
 const Search = ({ value, onChange }: SearchProps) => {
   return (
     <div className="search">

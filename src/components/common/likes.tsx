@@ -13,7 +13,7 @@ const Likes = ({ like, onClick }: LikesType) => {
     <img
       className="clickable add-to-favorites"
       src={like === true ? likedIcon : icon}
-      alt="my icon"
+      alt="like icon"
       onClick={onClick}
     />
   );

@@ -1,0 +1,68 @@
+.display-items {
+  max-width: 90rem;
+  margin: auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  min-height: 100vh;
+
+  &__heading {
+    padding: 10px 15px;
+    font-weight: 700;
+  }
+
+  &__table-heading {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    padding: 10px 15px;
+  }
+
+  .items {
+    align-items: center;
+    padding: 10px 0;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    margin-bottom: 15px;
+    padding-left: 15px;
+    background-color: #736f6f4d;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    &__info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    & button {
+      padding: 8px 15px;
+      font-size: 1.5rem;
+      border: none;
+      border-radius: 0.5rem;
+      transition: background-color 0.3s ease;
+    }
+  }
+}
+
+button.items__rent {
+  background-color: #ffffff;
+  color: #000000;
+
+  &:hover {
+    background-color: hsl(198, 8%, 53%);
+  }
+}
+
+button.items__delete {
+  background-color: inherit;
+  color: #8f0303;
+
+  &:hover {
+    background-color: hsl(0, 100%, 50%);
+  }
+}
