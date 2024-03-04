@@ -37,6 +37,7 @@ const Instruments = () => {
   const user = getCurrentUser();
 
   const [likeModal, setLikeModal] = useState(false);
+  const [cartModal, setCartModal] = useState(false);
   const [cartItemsIds, setItems] = useState<string[]>([]);
 
   const location = useLocation();
@@ -61,8 +62,10 @@ const Instruments = () => {
           payload: category._id,
         });
       }
-      const { data } = await getCartItems();
-      setItems(data.map((i) => i.instrument._id));
+      if (user) {
+        const { data } = await getCartItems();
+        setItems(data.map((i) => i.instrument._id));
+      }
     };
     fetchData().catch(console.error);
   }, [dispatch, categoryName, likedInstruments]);
@@ -120,7 +123,11 @@ const Instruments = () => {
   };
 
   const handleAddToCart = (instrumentId: string) => {
-    setItems([...cartItemsIds, instrumentId]);
+    if (!user) {
+      setCartModal(true);
+    } else {
+      setItems([...cartItemsIds, instrumentId]);
+    }
   };
 
   const handleDeleteFromCart = (instrumentId: string) => {
@@ -134,15 +141,16 @@ const Instruments = () => {
     <>
       <Header />
       <section className="main">
-        <Search onChange={handleSearch} value={searchQuery} />
-        <FilterPanel
-          handleCategoryChange={handleCategoryChange}
-          handleMakerChange={handleMakerChange}
-          handleSort={handleSort}
-          selectedCategories={selectedCategories}
-          instruments={instruments}
-        />
-
+        <div className="panel">
+          <Search onChange={handleSearch} value={searchQuery} />
+          <FilterPanel
+            handleCategoryChange={handleCategoryChange}
+            handleMakerChange={handleMakerChange}
+            handleSort={handleSort}
+            selectedCategories={selectedCategories}
+            instruments={instruments}
+          />
+        </div>
         {totalCount ? (
           <>
             <ProductsList
@@ -162,11 +170,12 @@ const Instruments = () => {
         ) : (
           <p>No Instruments</p>
         )}
-        {likeModal ? (
-          <Modal active={true} setActive={setLikeModal}>
-            Login to add to favourites
-          </Modal>
-        ) : null}
+        <Modal active={likeModal} setActive={setLikeModal}>
+          Login to add to favourites
+        </Modal>
+        <Modal active={cartModal} setActive={setCartModal}>
+          Login to add to a cart
+        </Modal>
       </section>
     </>
   );

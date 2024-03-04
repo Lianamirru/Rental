@@ -13,7 +13,7 @@
   padding-bottom: 3rem;
 
   & img {
-    width: 50%;
+    max-width: 50%;
     margin-bottom: 1rem;
   }
 
@@ -41,12 +41,11 @@ img.add-to-favorites {
 }
 
 .add-to-cart {
-  background-color: grey;
+  background-color: $clr-neutral-dark;
   border-radius: 50%;
   border: solid 3.5px;
 }
 
 .delete-from-cart {
-  color: #900000;
   font-size: 1.6rem;
 }

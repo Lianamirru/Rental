@@ -1,134 +1,71 @@
 @import "common/animation", "common/variables", "common/drop-down",
   "common/pagination", "common/modal";
 @import "components-css/navbar", "components-css/header",
-  "components-css/display-instruments", "components-css/instruments-table";
+  "components-css/display-instruments", "components-css/instruments-table",
+  "components-css/filter-panel", "components-css/form";
 
+/* reset css */
 *,
 *::after,
 *::before {
-  margin: 0;
-  padding: 0;
-  box-sizing: inherit;
-}
-
-html {
-  font-size: 100%;
   box-sizing: border-box;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  font: inherit; /* remove the style of heading elements */
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
 body {
-  font-family: "Ubuntu", sans-serif;
-  font-weight: 400;
-  font-size: 2rem;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+  font-family: $ff-body;
+  font-style: normal;
+  font-weight: $fw-regular;
+  font-size: $fs-body;
+}
+
+h2 {
+  font-size: $fs-heading-section;
+  font-weight: $fw-bold;
+  margin-bottom: $margn-bottom-heading;
 }
 
 h3 {
-  font-size: 1.7rem;
-}
-
-p {
-  font-size: 1.7rem;
+  font-size: $fs-h3;
+  font-weight: $fw-bold;
 }
 
 .content {
   max-width: $content-width;
+  padding: $padding-body;
   margin: auto;
 }
 
-.main {
-  width: 90%;
-  margin: 2rem auto;
-}
-
-// filter-panel
-.search {
-  width: 40%;
-  margin-bottom: 2rem;
-}
-
-.filter__dropdown-content {
-  left: 0;
-  right: auto;
-}
-
-.filter-panel {
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 50%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  row-gap: 1rem;
-}
-
-// button
 .btn {
-  padding: 1rem 3.5rem;
-  border-radius: 10rem;
-  transition: all 0.2s;
-  position: relative;
-  font-size: 2rem;
-  font-weight: 700;
-  letter-spacing: 0.2rem;
-  width: 15rem;
-}
-
-.btn:hover {
-  transform: translateY(-0.5rem);
-  box-shadow: 0 2rem 1rem rgba(0, 0, 0, 0.4);
-  color: inherit;
-}
-
-.btn::after {
-  content: "";
-  height: 100%;
-  width: 100%;
-  border-radius: 10rem;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  transition: all 0.4s;
-}
-
-.btn:hover::after {
-  content: "";
-  border-radius: 10rem;
-  background-color: $dark-grey;
-  transform: scaleX(1.4) scaleY(1.6);
-  opacity: 0;
-}
-
-.btn:active {
-  transform: translateY(-0.1rem);
-}
-
-.btn--red {
-  background-color: $dark-red;
-  color: $white;
-  margin-right: 4rem;
+  letter-spacing: 0.1rem;
+  background-color: $clr-accent-dark;
+  color: $clr-text-light;
+  padding: 0 0.7rem;
+  border-radius: 0.3rem;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
 
   &:hover {
-    color: $white;
+    background-color: hsl(198, 8%, 53%);
   }
 }
 
-.btn--white {
-  background-color: $white;
-  color: $dark-red;
-  border-color: $dark-red;
-  border-width: 0.3rem;
-
-  &:hover {
-    color: $dark-red;
-  }
+.fa-trash {
+  color: #900000;
 }
-
-.btn--animated {
-  margin-top: 2rem;
-  animation: fromBottom 0.7s 0.4s;
-  animation-fill-mode: backwards;
-}
-
-//

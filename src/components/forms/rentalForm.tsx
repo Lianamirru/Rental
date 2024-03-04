@@ -185,7 +185,7 @@ const RentalForm = ({ instrument }: { instrument: InstrumentType | null }) => {
     <>
       <p>Rental saved successfully!</p>
       <button
-        className="form-button"
+        className="btn"
         onClick={() => {
           navigate("/");
         }}
@@ -195,7 +195,7 @@ const RentalForm = ({ instrument }: { instrument: InstrumentType | null }) => {
     </>
   ) : (
     <form onSubmit={handleSubmit}>
-      <h1>Rental Form</h1>
+      <h2>Rental Form</h2>
       {renderSelectInput<InstrumentInRental>(
         "instrumentId",
         "Instrument",

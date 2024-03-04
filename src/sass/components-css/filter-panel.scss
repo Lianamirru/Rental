@@ -1,0 +1,31 @@
+.panel {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+  padding: 1rem 0;
+
+  h3 {
+    font-weight: $fw-regular;
+  }
+}
+.search {
+  width: 45%;
+}
+
+.filter__dropdown-content {
+  left: 0;
+  color: $clr-text-dark;
+}
+
+.filter-panel {
+  padding: 0 1rem;
+  border-radius: 4px;
+  color: $clr-text-light;
+  background-color: $clr-neutral-dark;
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem 3rem;
+}

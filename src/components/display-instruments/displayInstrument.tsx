@@ -1,9 +1,7 @@
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useState } from "react";
 
 import Likes from "../common/likes";
-import Modal from "../common/modal";
 
 import instrumentPhoto from "../../images/instrument.png";
 import { InstrumentType } from "../../types/instrumentType";
@@ -27,16 +25,13 @@ const Product = ({
   onDeleteFromCart,
   cartItemsIds,
 }: ProductProps) => {
-  const [cartModal, setCartModal] = useState(false);
   const user = getCurrentUser();
 
   const handleAddToCart = async (productId: String) => {
-    if (!user) {
-      setCartModal(true);
-    } else {
+    onAddToCart(product._id);
+    if (user) {
       try {
         await addToCart(product._id);
-        onAddToCart(product._id);
       } catch (ex: any) {
         if (ex.response && ex.response.status === 404) {
           toast.error("unable to handle adding to cart");
@@ -48,9 +43,9 @@ const Product = ({
   };
 
   const handleDeleteFromCart = async (productId: String) => {
+    onDeleteFromCart(product._id);
     try {
       await deleteFromCart(product._id);
-      onDeleteFromCart(product._id);
     } catch (ex: any) {
       if (ex.response && ex.response.status === 404) {
         toast.error("unable to handle deleting from cart");
@@ -85,11 +80,6 @@ const Product = ({
           <i className="fa fa-plus" aria-hidden="true"></i>
         </button>
       )}
-      {cartModal ? (
-        <Modal active={true} setActive={setCartModal}>
-          Login to add to a cart
-        </Modal>
-      ) : null}
     </div>
   );
 };

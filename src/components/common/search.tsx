@@ -6,6 +6,7 @@ const Search = ({ value, onChange }: SearchProps) => {
   return (
     <div className="search">
       <TextField
+        className="search-field"
         id="outlined-basic"
         variant="outlined"
         fullWidth

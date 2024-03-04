@@ -54,18 +54,19 @@ const Cart = () => {
       {cartItems.length ? (
         <>
           <h2 className="display-items__heading">Cart</h2>
-          <div className="display-items__table-heading">
+          <div className="grid cart-grid">
             <h3>Instrument</h3>
             <h3>Price</h3>
+            <h3></h3>
+            {cartItems.map((item) => (
+              <CartItem
+                key={item._id}
+                item={item.instrument}
+                onDelete={() => handleDelete(item.instrument._id)}
+                onRent={() => handleRent(item.instrument)}
+              />
+            ))}
           </div>
-          {cartItems.map((item) => (
-            <CartItem
-              key={item._id}
-              item={item.instrument}
-              onDelete={() => handleDelete(item.instrument._id)}
-              onRent={() => handleRent(item.instrument)}
-            />
-          ))}
         </>
       ) : (
         <p>No cart items</p>
@@ -87,21 +88,19 @@ type CartItemProps = {
 const CartItem = ({ item, onRent, onDelete }: CartItemProps) => {
   const { maker, model, year, monthlyRentalPrice } = item;
   return (
-    <div className="items">
-      <h4>
+    <>
+      <div>
         {maker} {model} {year}
-      </h4>
-      <div className="items__info">
-        <h4>${monthlyRentalPrice}</h4>
-        <div>
-          <button className="items__rent" onClick={onRent}>
-            Rent
-          </button>
-          <button className="items__delete" onClick={onDelete}>
-            <i className="fa fa-trash " aria-hidden="true"></i>
-          </button>
-        </div>
       </div>
-    </div>
+      <div>${monthlyRentalPrice}</div>
+      <div className="cart-buttons">
+        <button className="btn" onClick={onRent}>
+          rent
+        </button>
+        <button className="btn--delete" onClick={onDelete}>
+          <i className="fa fa-trash " aria-hidden="true"></i>
+        </button>
+      </div>
+    </>
   );
 };

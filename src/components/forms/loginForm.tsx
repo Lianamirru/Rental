@@ -70,7 +70,7 @@ const LoginForm = () => {
 
   return (
     <div>
-      <h1>Log in</h1>
+      <h2>Log in</h2>
       <form onSubmit={handleSubmit}>
         {renderInput("text", "username", "Username")}
         {renderInput("password", "password", "Password")}

@@ -1,39 +1,112 @@
-.header {
+.hero {
+  margin: -$padding-body;
+  margin-bottom: $margn-bottom-section + $padding-body;
   position: relative;
+  background-image: url("./../images/header.png");
   text-align: center;
-}
-
-.header__image {
-  width: 100%;
   height: 85vh;
-  object-fit: cover;
-  opacity: 80%;
-  filter: grayscale(0.9);
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: inherit;
+    filter: grayscale(1);
+  }
+
+  h1 {
+    filter: grayscale(0);
+    color: $clr-accent-light;
+    text-transform: uppercase;
+    text-shadow: #21015a 0 0 5px;
+  }
 }
 
-.header__text-box {
-  position: absolute;
-  top: 60%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.heading--box {
+  margin-bottom: 3rem;
 }
 
-.header__heading--main {
-  text-transform: uppercase;
-  display: block;
-  font-weight: 300;
-  font-size: 7rem;
+.heading--main {
+  font-size: $fs-heading-primary;
   animation: fromLeft 1s ease-out;
-  color: $light-red;
+  color: $clr-accent-dark;
 }
 
-.header__heading--sub {
+.heading--sub {
   text-transform: uppercase;
-  display: block;
-  font-weight: 00;
-  font-size: 3rem;
+  font-weight: $fw-bold;
+  font-size: $fs-heading-secondary;
   letter-spacing: 0.5rem;
-  margin-top: 0.5rem;
+  margin-bottom: 2rem;
   animation: fromRight 1s ease-out;
-  color: $light-red;
+}
+
+.btn-hero {
+  display: inline-block;
+  padding: 1rem;
+  border-radius: 10rem;
+  transition: all 0.2s;
+  position: relative;
+  font-size: $fs-button;
+  font-weight: 900;
+  letter-spacing: 0.3rem;
+  width: 16rem;
+
+  &:hover {
+    transform: translateY(-0.5rem);
+    box-shadow: 0 2rem 1rem rgba(0, 0, 0, 0.4);
+  }
+
+  &::after {
+    content: "";
+    height: 100%;
+    width: 100%;
+    border-radius: 10rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: all 0.4s;
+  }
+
+  &:hover::after {
+    content: "";
+    border-radius: 10rem;
+    background-color: $clr-accent-dark;
+    transform: scaleX(1.4) scaleY(1.6);
+    opacity: 0;
+  }
+
+  &:active {
+    transform: translateY(-0.1rem);
+  }
+
+  &--rent {
+    background-color: $clr-neutral-dark;
+    color: $clr-accent-light;
+    border: solid 2px white;
+    margin-right: 4rem;
+  }
+
+  &--contact {
+    background-color: $clr-accent-dark;
+    color: $clr-text-light;
+    border: solid 2px $clr-accent-dark;
+  }
+
+  &--animated {
+    margin-top: 2rem;
+    animation: fromBottom 0.7s 0.4s;
+    animation-fill-mode: backwards;
+  }
 }

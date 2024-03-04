@@ -27,17 +27,18 @@ const Favorites = () => {
       {displayedInstruments.length ? (
         <>
           <h2 className="display-items__heading">Favorites</h2>
-          <div className="display-items__table-heading">
+          <div className="grid favorites-grid">
             <h3>Instrument</h3>
             <h3>Price</h3>
+            <h3></h3>
+            {displayedInstruments.map((item) => (
+              <Item
+                key={item._id}
+                item={item}
+                onDelete={() => handleDeleteLike(item._id)}
+              />
+            ))}
           </div>
-          {displayedInstruments.map((item) => (
-            <Item
-              key={item._id}
-              item={item}
-              onDelete={() => handleDeleteLike(item._id)}
-            />
-          ))}
         </>
       ) : (
         <p>No favorite instruments</p>
@@ -56,16 +57,14 @@ type ItemProps = {
 const Item = ({ item, onDelete }: ItemProps) => {
   const { maker, model, year, monthlyRentalPrice } = item;
   return (
-    <div className="items">
-      <h4>
+    <>
+      <div>
         {maker} {model} {year}
-      </h4>
-      <div className="items__info">
-        <h4>${monthlyRentalPrice}</h4>
-        <button className="items__delete" onClick={onDelete}>
-          <i className="fa fa-trash " aria-hidden="true"></i>
-        </button>
       </div>
-    </div>
+      <div>${monthlyRentalPrice}</div>
+      <button className="btn--delete" onClick={onDelete}>
+        <i className="fa fa-trash " aria-hidden="true"></i>
+      </button>
+    </>
   );
 };

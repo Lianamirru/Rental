@@ -1,6 +1,6 @@
 nav {
-  background-color: $dark-grey;
-  padding: 1rem;
+  background-color: $clr-accent-dark;
+  padding: 0.3rem;
 }
 
 .navigation {
@@ -19,23 +19,24 @@ a {
   &__links {
     display: flex;
     gap: 7rem;
+    font-size: $fs-nav;
   }
 
   &__link {
-    color: $white;
+    color: $clr-text-light;
 
     &:hover {
-      color: rgba(darken($white, 30%), 0.8);
+      color: rgba(darken($clr-text-light, 30%), 0.8);
       text-decoration: none;
     }
 
     &--brand {
       font-family: "Merienda", sans-serif;
-      font-size: 2.5rem;
-      color: $light-red;
+      font-size: $fs-heading-section;
+      color: $clr-accent-brand;
 
       &:hover {
-        color: $light-red;
+        color: $clr-accent-brand;
       }
     }
   }
@@ -47,28 +48,65 @@ a {
   }
 
   &__icon {
-    color: $white;
-    padding-top: 0.5rem;
+    color: $clr-text-light;
     display: flex;
     flex-direction: column;
+    gap: 0.1rem;
     align-items: center;
     justify-content: center;
 
-    &--text {
-      font-size: 1.5rem;
-    }
-
     &:hover {
       text-decoration: none;
-      color: rgba(darken($white, 30%), 0.8);
+      color: rgba(darken($clr-text-light, 30%), 0.8);
+    }
+
+    & i {
+      font-size: $fs-nav;
     }
   }
 
   &__switch {
-    margin-top: 0.2rem;
+    transform: scale(0.7);
+    margin-bottom: -0.3rem;
   }
 }
 
 .profile-icon {
   cursor: pointer;
+}
+
+.menu-icon {
+  display: none;
+  font-size: 1.5em;
+  color: white;
+}
+
+@media screen and (max-width: 1300px) {
+  .nav__links {
+    gap: 3rem;
+  }
+}
+
+@media screen and (max-width: 1050px) {
+  .nav__link--other {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .nav__links {
+    display: none;
+  }
+
+  .nav__links.mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  .menu-icon {
+    display: block;
+    cursor: pointer;
+  }
 }

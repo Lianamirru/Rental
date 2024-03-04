@@ -11,12 +11,12 @@ import {
 import { getCurrentUser } from "../../services/authService";
 import { postReturn } from "../../services/returnService";
 
+const user = getCurrentUser();
+
 const Rentals = () => {
   const [modalActive, setModalActive] = useState(false);
   const [rentalFee, setRentalFee] = useState<Number>(0);
   const [rentals, setRentals] = useState<RentalType[]>([]);
-
-  const user = getCurrentUser();
 
   useEffect(() => {
     (async () => {
@@ -26,6 +26,7 @@ const Rentals = () => {
   }, []);
 
   const handleReturn = async (rental: RentalType) => {
+    setModalActive(true);
     const originalRentals = [...rentals];
     const updatedRentals = rentals.filter((rent) => rent._id !== rental._id);
     setRentals(updatedRentals);
@@ -37,67 +38,84 @@ const Rentals = () => {
       setRentals(originalRentals);
     }
   };
-  console.log(rentals);
+
   return (
-    <>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Instrument</th>
-            {user?.isAdmin ? <th>Customer</th> : null}
-            <th>Date Out</th>
-            <th>Return Date</th>
-            <th>Rental Fee</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rentals.map((rental) => (
-            <tr
-              className={
-                new Date(rental.dateReturned).getTime() <
-                new Date().setHours(0, 0, 0, 0)
-                  ? "table-warning"
-                  : ""
-              }
-              key={rental._id}
-            >
-              <td>
-                {rental.instrument.maker} {rental.instrument.model}{" "}
-                {rental.instrument.year}
-              </td>
-              {user?.isAdmin ? (
-                <td>
-                  <Link to={"/rentals/customer/" + rental.customer._id}>
-                    {rental.customer.name}
-                  </Link>
-                </td>
-              ) : null}
-              <td>{new Date(rental.dateOut).toLocaleDateString()}</td>
-              <td>{new Date(rental.dateReturned).toLocaleDateString()}</td>
-              <td>{rental.rentalFee.toString()}</td>
-              {user?.isAdmin ? (
-                <td>
-                  <button
-                    className=""
-                    onClick={async () => {
-                      await handleReturn(rental);
-                      setModalActive(true);
-                    }}
-                  >
-                    Return
-                  </button>
-                </td>
-              ) : null}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div>
+      {rentals.length ? (
+        <>
+          <h2 className="display-items__heading">Rented Instruments</h2>
+          <div className="grid rentals-grid">
+            <h3>Instrument</h3>
+            {user?.isAdmin ? <h3>Customer</h3> : null}
+            <h3>Date Out</h3>
+            <h3>Return Date</h3>
+            <h3>Rental Fee</h3>
+            <h3></h3>
+            {rentals.map((rental) => (
+              <Rental
+                key={rental._id}
+                rental={rental}
+                onReturn={() => handleReturn(rental)}
+              />
+            ))}
+          </div>
+        </>
+      ) : (
+        <p>No cart items</p>
+      )}
       <Modal active={modalActive} setActive={setModalActive}>
-        <div>
+        <div className="">
           <p>Rental is returned successfully</p>
-          <p>Rental Fee: {rentalFee.toString()}</p>
+          <p>Rental Fee: {rentalFee.toFixed(2).toString()}</p>
         </div>
       </Modal>
+    </div>
+  );
+};
+
+type RentalProps = {
+  rental: RentalType;
+  onReturn: (rental: RentalType) => void;
+};
+
+const Rental = ({ rental, onReturn }: RentalProps) => {
+  const { customer, rentalFee, dateOut, dateReturned } = rental;
+  const { maker, model, year } = rental.instrument;
+
+  const getClassName = () => {
+    return new Date(dateReturned).getTime() < new Date().setHours(0, 0, 0, 0)
+      ? "table-warning"
+      : "";
+  };
+
+  return (
+    <>
+      <div className={getClassName()}>
+        {maker} {model} {year}
+      </div>
+      {user?.isAdmin ? (
+        <div className={getClassName()}>
+          <Link
+            className="customer-link"
+            to={"/rentals/customer/" + customer._id}
+          >
+            {customer.name}
+          </Link>
+        </div>
+      ) : null}
+
+      <div className={getClassName()}>
+        {new Date(dateOut).toLocaleDateString()}
+      </div>
+      <div className={getClassName()}>
+        {new Date(dateReturned).toLocaleDateString()}
+      </div>
+      <div className={getClassName()}>{String(rentalFee.toFixed(2))}$</div>
+      {user?.isAdmin ? (
+        <button className="btn" onClick={() => onReturn(rental)}>
+          return
+        </button>
+      ) : null}
     </>
   );
 };

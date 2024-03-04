@@ -1,14 +1,51 @@
+$clr-accent-brand: #e27425;
+
+$clr-accent-light: #e2a025;
+$clr-accent-dark: #5656d9;
+
+// $clr-complementary: #1d8bda;
+// $clr-complementary1: #25e274;
+// $clr-complementary2: #7425e2;
+
+$clr-text-light: #ffffff;
+$clr-text-dark: #000000;
+
+$clr-neutral-light: #d0c5c545;
+$clr-neutral-dark: #464646d5;
+
+$ff-brand: "Merienda", cursive;
+$ff-body: "Be Vietnam Pro", sans-serif;
+
+$fw-regular: 400;
+$fw-bold: 700;
+
+$fs-300: 0.9rem;
+$fs-400: 1rem;
+$fs-500: 1.2rem;
+$fs-600: 1.5rem;
+$fs-700: 1.7rem;
+$fs-800: 2.5rem;
+$fs-900: 4.5rem;
+
+$fs-footer: $fs-300;
+$fs-body: $fs-500;
+$fs-button: $fs-600;
+$fs-nav: $fs-600;
+$fs-h3: $fs-600;
+$fs-heading-section: $fs-700;
+$fs-heading-secondary: $fs-800;
+$fs-heading-primary: $fs-900;
+
+$padding-body: 2rem;
+$margn-bottom-section: 2rem;
+$margn-bottom-heading: 1rem;
+
+@media (min-width: 5rem) {
+  $fs-body: $fs-500;
+  $fs-nav: $fs-600;
+  $fs-heading-section: $fs-700;
+  $fs-heading-secondary: $fs-800;
+  $fs-heading-primary: $fs-900;
+}
+
 $content-width: 100rem;
-
-$dark-red: #832013;
-$light-red: #e27425;
-
-// $light-red: #ff2727;
-$dark-grey: #6767c1;
-$white: #ffffff;
-$black: #000000;
-$color_1: #e1e2ef;
-$color_2: #e1e2ef;
-$color_3: #e1e2ef;
-$color_4: #e1e2ef;
-$color_5: #e1e2ef;

@@ -43,7 +43,7 @@ const Calendar = ({
 
   return (
     <>
-      <div className="form-group">
+      <div className="form-group" style={{ position: "relative" }}>
         <label htmlFor="daterange"> Rental period </label>
         <input
           value={
@@ -62,7 +62,10 @@ const Calendar = ({
       </div>
 
       <div
-        style={{ display: "inline-block", position: "absolute" }}
+        style={{
+          display: "inline-block",
+          position: "fixed",
+        }}
         ref={refOne}
       >
         {open && (

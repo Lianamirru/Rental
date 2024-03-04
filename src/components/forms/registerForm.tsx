@@ -77,7 +77,7 @@ const RegisterForm = () => {
 
   return (
     <div>
-      <h1>Register form</h1>
+      <h2>Register form</h2>
       <form onSubmit={handleSubmit}>
         {renderInput("text", "username", "Username")}
         {renderInput("password", "password", "Password")}
