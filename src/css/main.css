@@ -169,9 +169,7 @@ a {
   cursor: pointer; }
 
 .menu-icon {
-  display: none;
-  font-size: 1.5em;
-  color: white; }
+  display: none; }
 
 @media screen and (max-width: 1300px) {
   .nav__links {
@@ -193,49 +191,51 @@ a {
     display: block;
     cursor: pointer; } }
 
-.hero {
+.hero-section {
   margin: -2rem;
   margin-bottom: 4rem;
-  position: relative;
-  background-image: url("./../images/header.png");
+  position: relative; }
+  .hero-section .img {
+    background-image: url("./../images/header.png");
+    height: 85vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: relative; }
+    .hero-section .img::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: inherit;
+      filter: grayscale(1); }
+
+.heading--box {
+  overflow: hidden;
+  margin-bottom: 3rem;
+  padding-bottom: 1rem;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
   text-align: center;
-  height: 85vh;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end; }
-  .hero::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background: inherit;
-    filter: grayscale(1); }
-  .hero h1 {
-    filter: grayscale(0);
+  background-color: #d0c5c545; }
+  .heading--box h1 {
     color: #e2a025;
     text-transform: uppercase;
     text-shadow: #21015a 0 0 5px; }
-
-.heading--box {
-  margin-bottom: 3rem; }
-
-.heading--main {
-  font-size: 4.5rem;
-  animation: fromLeft 1s ease-out;
-  color: #5656d9; }
-
-.heading--sub {
-  text-transform: uppercase;
-  font-weight: 700;
-  font-size: 2.5rem;
-  letter-spacing: 0.5rem;
-  margin-bottom: 2rem;
-  animation: fromRight 1s ease-out; }
+  .heading--box .heading--main {
+    font-size: 4.5rem;
+    animation: fromLeft 1s ease-out; }
+  .heading--box .heading--sub {
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 2.5rem;
+    letter-spacing: 0.5rem;
+    margin-bottom: 4rem;
+    animation: fromRight 1s ease-out; }
 
 .btn-hero {
   display: inline-block;
@@ -278,9 +278,35 @@ a {
     color: #ffffff;
     border: solid 2px #5656d9; }
   .btn-hero--animated {
-    margin-top: 2rem;
     animation: fromBottom 0.7s 0.4s;
     animation-fill-mode: backwards; }
+
+@media screen and (max-width: 830px) {
+  .heading--box .heading--sub {
+    margin-bottom: 3rem; }
+  a.btn-hero {
+    width: 10rem;
+    padding: 0.5rem 0;
+    font-size: 1.4rem; }
+    a.btn-hero--rent {
+      margin-right: 2rem; } }
+
+@media screen and (max-width: 600px) {
+  .hero-section .img {
+    height: 50vh; }
+  .heading--box {
+    position: static;
+    background-color: #d0c5c545; }
+    .heading--box h1 {
+      color: #5656d9;
+      text-shadow: none; }
+    .heading--box .heading--main {
+      font-size: 2.5rem; }
+    .heading--box .heading--sub {
+      font-size: 1.7rem;
+      margin-bottom: 0.5rem; }
+  a.btn-hero--rent {
+    margin-right: 1rem; } }
 
 #products {
   display: grid;
@@ -295,12 +321,11 @@ a {
   border-radius: 5%;
   padding-bottom: 3rem; }
   .instrument-card img {
-    max-width: 50%;
+    max-width: 10rem;
     margin-bottom: 1rem; }
   .instrument-card__action {
     width: 2.5rem;
     height: 2.5rem;
-    font-size: 1.2rem;
     border: none;
     background-color: inherit;
     position: absolute;
@@ -310,6 +335,7 @@ a {
     margin-bottom: 1rem; }
 
 img.add-to-favorites {
+  cursor: pointer;
   position: absolute;
   right: 2rem;
   width: 2.5rem; }
@@ -374,12 +400,14 @@ img.add-to-favorites {
   margin-bottom: 3rem;
   padding: 1rem 0; }
   .panel h3 {
+    cursor: pointer;
     font-weight: 400; }
 
 .search {
   width: 45%; }
 
 .filter__dropdown-content {
+  width: 13rem;
   left: 0;
   color: #000000; }
 
@@ -464,9 +492,11 @@ html:focus-within {
 
 body {
   text-rendering: optimizeSpeed;
-  line-height: 1.5;
+  line-height: 1.5; }
+
+/* common css */
+body {
   font-family: "Be Vietnam Pro", sans-serif;
-  font-style: normal;
   font-weight: 400;
   font-size: 1.2rem; }
 
@@ -497,3 +527,15 @@ h3 {
 
 .fa-trash {
   color: #900000; }
+
+@media screen and (max-width: 1070px) {
+  html {
+    font-size: 80%; }
+  body {
+    font-size: 1.2rem; } }
+
+@media screen and (max-width: 860px) {
+  html {
+    font-size: 70%; }
+  body {
+    font-size: 1.2rem; } }

@@ -41,7 +41,7 @@ const NavBar = () => {
         </div>
 
         <div className="nav__icons">
-          <div className="menu-icon" onClick={handleToggle}>
+          <div className=" nav__icon menu-icon" onClick={handleToggle}>
             <i className="fa-solid fa-bars"></i>
           </div>
           <Link className="nav__icon" to="/cart">

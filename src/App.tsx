@@ -1,6 +1,4 @@
 import { Navigate, Routes, Route } from "react-router-dom";
-import { useState } from "react";
-
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -13,16 +11,14 @@ import NavBar from "./components/layout/navbar";
 
 import InstrumentPage from "./components/pages/instrumentPage";
 import Instruments from "./components/pages/instruments";
-import Profile from "./components/pages/profile";
 
 import ThemeProvider, { useThemeState } from "./context/ThemeContext";
-import { getCurrentUser } from "./services/authService";
 import Rentals from "./components/pages/rentals";
 import RentalsProvider from "./context/RentalsContext";
-import Customer from "./components/pages/customer";
 import Cart from "./components/pages/cart";
 import Favorites from "./components/pages/favorites";
 import LikedInstrumentsProvider from "./context/LikedInstrumentsContext";
+import Profile from "./components/page-item/profile";
 
 const App = () => {
   const [theme, toggleTheme] = useThemeState();
@@ -41,10 +37,10 @@ const App = () => {
                 <Route path="/register" element={<RegisterForm />} />
                 <Route path="/logout" element={<LogOut />} />
                 <Route path="/profile" element={<Profile />} />
-                <Route path="/rentals/customer/:id" element={<Customer />} />
+                <Route path="/rentals/customer/:id" element={<Profile />} />
                 <Route path="/rentals" element={<Rentals />} />
                 <Route path="/cart" element={<Cart />} />
-                <Route path="/favorites" element={<Favorites />} />
+                <Route path="/favorites" element={<Favorites />} />4
                 <Route
                   path="/"
                   element={<Navigate to="/instruments" replace />}

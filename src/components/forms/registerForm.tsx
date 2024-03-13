@@ -1,17 +1,20 @@
 import { useState, FormEvent, ChangeEvent } from "react";
+import { Link } from "react-router-dom";
 
-import Input from "../common/form-elements/input";
 import Button from "../common/form-elements/formButton";
 
-import { validateProperty, validateAll } from "../../services/validateForm";
+import {
+  validateProperty,
+  validateAll,
+} from "../../services/helper-functions/validateForm";
 import schema from "../schemas/registerFormSchema";
 
 import { login } from "../../services/authService";
 import * as userService from "../../services/userService";
 import { logger } from "../../services/logService";
+import { renderInput } from "../../services/helper-functions/renderInput";
 
 import { RegisterUserType } from "../../types/userType";
-import { Link } from "react-router-dom";
 
 type RegisterUserTypeKeys = keyof RegisterUserType;
 
@@ -26,7 +29,9 @@ const RegisterForm = () => {
 
   const { data, errors } = state;
 
-  const handleChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = ({
+    target,
+  }: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const updatedErrors = { ...errors };
     const updatedData = { ...data };
     const { name, value } = target;
@@ -58,29 +63,26 @@ const RegisterForm = () => {
     }
   };
 
-  const renderInput = (
-    type: "text" | "password",
-    name: RegisterUserTypeKeys,
-    label: string
-  ) => {
-    return (
-      <Input
-        type={type}
-        name={name}
-        label={label}
-        value={data[name]}
-        onChange={handleChange}
-        error={errors[name]}
-      />
-    );
-  };
-
   return (
     <div>
       <h2>Register form</h2>
       <form onSubmit={handleSubmit}>
-        {renderInput("text", "username", "Username")}
-        {renderInput("password", "password", "Password")}
+        {renderInput(
+          "username",
+          "Username",
+          "text",
+          data,
+          handleChange,
+          errors
+        )}
+        {renderInput(
+          "password",
+          "Password",
+          "password",
+          data,
+          handleChange,
+          errors
+        )}
         <Button label="Sign in" disabled={!!validateAll(schema, data)} />
         <Link to={"/login"}>Log in</Link>
       </form>

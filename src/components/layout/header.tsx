@@ -1,6 +1,7 @@
 const Header = () => {
   return (
-    <section className="hero">
+    <section className="hero-section">
+      <div className="img"></div>
       <div className="heading--box">
         <h1 className="heading--main">Find your rhythm</h1>
         <h1 className="heading--sub">Rent musical instruments</h1>

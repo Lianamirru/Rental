@@ -10,7 +10,13 @@ type InputProps = {
   placeholder?: string;
 };
 
-const Input = ({ name, label, error, onChange, ...rest }: InputProps) => {
+const InputComponent = ({
+  name,
+  label,
+  error,
+  onChange,
+  ...rest
+}: InputProps) => {
   return (
     <div className="form-group">
       <label htmlFor={name}> {label} </label>
@@ -26,4 +32,4 @@ const Input = ({ name, label, error, onChange, ...rest }: InputProps) => {
   );
 };
 
-export default Input;
+export default InputComponent;

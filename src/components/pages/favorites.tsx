@@ -4,6 +4,7 @@ import { logger } from "../../services/logService";
 import { likeInstrument } from "../../services/likeService";
 import { InstrumentType } from "../../types/instrumentType";
 import { useLikedInstruments } from "../../context/LikedInstrumentsContext";
+import Item from "../page-item/favoriteItem";
 
 const Favorites = () => {
   const { likedInstruments, handleInstrumentLike } = useLikedInstruments();
@@ -48,23 +49,3 @@ const Favorites = () => {
 };
 
 export default Favorites;
-
-type ItemProps = {
-  item: InstrumentType;
-  onDelete: () => void;
-};
-
-const Item = ({ item, onDelete }: ItemProps) => {
-  const { maker, model, year, monthlyRentalPrice } = item;
-  return (
-    <>
-      <div>
-        {maker} {model} {year}
-      </div>
-      <div>${monthlyRentalPrice}</div>
-      <button className="btn--delete" onClick={onDelete}>
-        <i className="fa fa-trash " aria-hidden="true"></i>
-      </button>
-    </>
-  );
-};

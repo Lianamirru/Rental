@@ -170,10 +170,10 @@ const Instruments = () => {
         ) : (
           <p>No Instruments</p>
         )}
-        <Modal active={likeModal} setActive={setLikeModal}>
+        <Modal active={likeModal} handleClick={() => setLikeModal(!likeModal)}>
           Login to add to favourites
         </Modal>
-        <Modal active={cartModal} setActive={setCartModal}>
+        <Modal active={cartModal} handleClick={() => setCartModal(!cartModal)}>
           Login to add to a cart
         </Modal>
       </section>

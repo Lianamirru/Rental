@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
 import Modal from "../common/modal";
+import Rental from "../page-item/rental";
 
 import {
   RentalType,
@@ -39,84 +39,35 @@ const Rentals = () => {
     }
   };
 
+  if (!rentals.length) return <p>No rented instruments</p>;
   return (
     <div>
-      {rentals.length ? (
-        <>
-          <h2 className="display-items__heading">Rented Instruments</h2>
-          <div className="grid rentals-grid">
-            <h3>Instrument</h3>
-            {user?.isAdmin ? <h3>Customer</h3> : null}
-            <h3>Date Out</h3>
-            <h3>Return Date</h3>
-            <h3>Rental Fee</h3>
-            <h3></h3>
-            {rentals.map((rental) => (
-              <Rental
-                key={rental._id}
-                rental={rental}
-                onReturn={() => handleReturn(rental)}
-              />
-            ))}
-          </div>
-        </>
-      ) : (
-        <p>No cart items</p>
-      )}
-      <Modal active={modalActive} setActive={setModalActive}>
-        <div className="">
+      <h2 className="display-items__heading">Rented Instruments</h2>
+      <div className="grid rentals-grid">
+        <h3>Instrument</h3>
+        <h3>Date Out</h3>
+        <h3>Return Date</h3>
+        <h3>Rental Fee</h3>
+        {user?.isAdmin ? <h3>Customer</h3> : <h3></h3>}
+        <h3></h3>
+        {rentals.map((rental) => (
+          <Rental
+            key={rental._id}
+            rental={rental}
+            onReturn={() => handleReturn(rental)}
+          />
+        ))}
+      </div>
+      <div onClick={() => setModalActive(!modalActive)}>
+        <Modal
+          active={modalActive}
+          handleClick={() => setModalActive(!modalActive)}
+        >
           <p>Rental is returned successfully</p>
           <p>Rental Fee: {rentalFee.toFixed(2).toString()}</p>
-        </div>
-      </Modal>
+        </Modal>
+      </div>
     </div>
-  );
-};
-
-type RentalProps = {
-  rental: RentalType;
-  onReturn: (rental: RentalType) => void;
-};
-
-const Rental = ({ rental, onReturn }: RentalProps) => {
-  const { customer, rentalFee, dateOut, dateReturned } = rental;
-  const { maker, model, year } = rental.instrument;
-
-  const getClassName = () => {
-    return new Date(dateReturned).getTime() < new Date().setHours(0, 0, 0, 0)
-      ? "table-warning"
-      : "";
-  };
-
-  return (
-    <>
-      <div className={getClassName()}>
-        {maker} {model} {year}
-      </div>
-      {user?.isAdmin ? (
-        <div className={getClassName()}>
-          <Link
-            className="customer-link"
-            to={"/rentals/customer/" + customer._id}
-          >
-            {customer.name}
-          </Link>
-        </div>
-      ) : null}
-
-      <div className={getClassName()}>
-        {new Date(dateOut).toLocaleDateString()}
-      </div>
-      <div className={getClassName()}>
-        {new Date(dateReturned).toLocaleDateString()}
-      </div>
-      <div className={getClassName()}>{String(rentalFee.toFixed(2))}$</div>
-      {user?.isAdmin ? (
-        <button className="btn" onClick={() => onReturn(rental)}>
-          return
-        </button>
-      ) : null}
-    </>
   );
 };
 

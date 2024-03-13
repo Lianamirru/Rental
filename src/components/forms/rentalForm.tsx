@@ -1,14 +1,9 @@
 import { useState, useEffect, FormEvent, ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
-import Input from "../common/form-elements/input";
-import SelectInput from "../common/form-elements/selectInput";
 import Button from "../common/form-elements/formButton";
 import Calendar, { RangeType } from "../common/calendar/calendar";
 import PhoneInput from "../common/form-elements/phoneInput";
-
-import { getDisabledDates } from "../common/calendar/getDisabledDates";
-import { getFirstFreeDay } from "../common/calendar/getFirstFreeDay";
 
 import {
   editCustomer,
@@ -16,40 +11,45 @@ import {
   saveCustomer,
 } from "../../services/userService";
 import { getInstruments } from "../../services/instrumentService";
-import { getRentedDates, saveRental } from "../../services/rentalService";
+import { saveRental } from "../../services/rentalService";
 import { getCurrentUser } from "../../services/authService";
 import { deleteFromCart } from "../../services/cartServise";
 
-import { validateProperty, validateAll } from "../../services/validateForm";
+import {
+  validateAll,
+  validateInput,
+} from "../../services/helper-functions/validateForm";
+import {
+  renderInput,
+  renderSelectInput,
+} from "../../services/helper-functions/renderInput";
+import { useRentedDates } from "../../services/customHooks/getRentedDates";
+
 import schema from "../schemas/rentalFormSchema";
 import { InstrumentType } from "../../types/instrumentType";
 
-const RentalForm = ({ instrument }: { instrument: InstrumentType | null }) => {
-  const [instruments, setInstruments] = useState<InstrumentInRental[]>([]);
-  const [data, setData] = useState({
-    instrumentId: "",
-    customerName: "",
-  });
-  const [phone, setPhone] = useState("");
+const RentalForm = ({ instrument }: { instrument: InstrumentType }) => {
+  const curInstrumentId = instrument._id;
 
-  const [rentedDates, setRentedDates] = useState<Date[]>([]);
-  const [range, setRange] = useState<RangeType[]>([
-    {
-      startDate: new Date(),
-      endDate: new Date(),
-      key: "selection",
-    },
-  ]);
+  const [instruments, setInstruments] = useState<InstrumentInRental[]>([]);
+
+  const [customerData, setCustomerData] = useState({
+    customerName: "",
+    phoneNumber: "",
+    instrumentId: "",
+  });
+  const { customerName, phoneNumber, instrumentId } = customerData;
 
   const [errors, setErrors] = useState({
     customerName: "",
-    phone: "",
+    phoneNumber: "",
     instrumentId: "",
   });
-  const [isSaved, setIsSaved] = useState(false);
 
-  const instrumentId = instrument?._id;
+  const [isSaved, setIsSaved] = useState(false);
   const userId = getCurrentUser()?._id;
+
+  const { rentedDates, range, setRange } = useRentedDates(instrumentId);
 
   useEffect(() => {
     (async () => {
@@ -65,114 +65,45 @@ const RentalForm = ({ instrument }: { instrument: InstrumentType | null }) => {
 
       const { data: customer } = await getCustomer(userId);
       if (customer) {
-        const { name: customerName, phone } = customer;
-        setData((data) => ({ ...data, customerName }));
-        setPhone(phone);
-      }
-
-      setData((data) => ({ ...data, instrumentId: instrumentId ?? "" }));
-
-      if (instrumentId) {
-        const { data } = await getRentedDates(instrumentId);
-        const rentedPeriods = data.map((rental) => {
-          const startDate = new Date(rental.dateOut);
-          startDate.setHours(0, 0, 0, 0);
-          const endDate = new Date(rental.dateReturned);
-          endDate.setHours(0, 0, 0, 0);
-
-          return { startDate, endDate };
-        });
-        const rentedDates = getDisabledDates(rentedPeriods);
-        setRentedDates(rentedDates);
-        const firstFreeDay = getFirstFreeDay(rentedDates);
-        setRange([
-          {
-            startDate: firstFreeDay,
-            endDate: firstFreeDay,
-            key: "selection",
-          },
-        ]);
+        const { name: customerName, phone: phoneNumber } = customer;
+        setCustomerData((data) => ({ ...data, customerName }));
+        setCustomerData((data) => ({ ...data, phoneNumber }));
       }
     })();
-  }, [instrumentId, userId]);
-
-  const validateInput = (name: string, value: string) => {
-    const nameKey = name as DataTypeKeys;
-
-    const updatedErrors = { ...errors };
-    const errorMessage = validateProperty(schema, { name, value });
-    if (errorMessage) updatedErrors[nameKey] = errorMessage;
-    else delete updatedErrors[nameKey];
-    setErrors(updatedErrors);
-  };
+    setCustomerData((data) => ({ ...data, instrumentId: curInstrumentId }));
+  }, [curInstrumentId]);
 
   const handleChange = ({
     target,
   }: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = target;
-    const nameKey = name as DataTypeKeys;
-    const updatedData = { ...data };
+    const nameKey = name as InputKeys;
+
+    const updatedData = { ...customerData };
     updatedData[nameKey] = value;
 
-    setData(updatedData);
-    validateInput(name, value);
+    setCustomerData(updatedData);
+    setErrors(validateInput(errors, schema, name, value));
   };
-
-  const renderInput = (
-    name: DataTypeKeys,
-    label: string,
-    type: "text" | "number" | "tel"
-  ) => {
-    return (
-      <Input
-        type={type}
-        name={name}
-        label={label}
-        value={data[name]}
-        onChange={handleChange}
-        error={errors[name]}
-      />
-    );
-  };
-
-  function renderSelectInput<T extends InstrumentInRental>(
-    name: DataTypeKeys,
-    label: string,
-    options: T[]
-  ): JSX.Element {
-    return (
-      <SelectInput
-        name={name}
-        label={label}
-        value={data[name]}
-        onChange={handleChange}
-        error={errors[name]}
-        options={options}
-      />
-    );
-  }
-
-  const navigate = useNavigate();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const { customerName, instrumentId } = data;
     const { data: customer } = await getCustomer(userId);
     let customerId: string;
     if (!customer) {
-      const { data } = await saveCustomer(userId, customerName, phone);
+      const { data } = await saveCustomer(userId, customerName, phoneNumber);
       customerId = data;
     } else {
-      customerId = customer._id;
-      if (customer.name !== customerName || customer.phone !== phone) {
-        await editCustomer(customer._id, userId, customerName, phone);
+      if (JSON.stringify(customer) !== JSON.stringify(customerData)) {
+        await editCustomer(customer._id, userId, customerName, phoneNumber);
       }
+      customerId = customer._id;
     }
     const { startDate: dateOut, endDate: dateReturned } = range[0];
     try {
       await saveRental(customerId, instrumentId, dateOut, dateReturned);
-      setIsSaved(true);
       await deleteFromCart(instrumentId);
+      setIsSaved(true);
     } catch (ex) {}
   };
 
@@ -181,58 +112,64 @@ const RentalForm = ({ instrument }: { instrument: InstrumentType | null }) => {
     setRange(range);
   };
 
-  return isSaved ? (
-    <>
-      <p>Rental saved successfully!</p>
-      <button
-        className="btn"
-        onClick={() => {
-          navigate("/");
-        }}
-      >
-        Continue
-      </button>
-    </>
-  ) : (
+  const navigate = useNavigate();
+  const handleRefresh = () => {
+    navigate("/");
+  };
+
+  if (isSaved)
+    return (
+      <>
+        <p>Rental saved successfully!</p>
+        <button className="btn" onClick={handleRefresh}>
+          Continue
+        </button>
+      </>
+    );
+
+  return (
     <form onSubmit={handleSubmit}>
       <h2>Rental Form</h2>
-      {renderSelectInput<InstrumentInRental>(
+      {renderSelectInput(
         "instrumentId",
         "Instrument",
-        instruments
+        instruments as [],
+        customerData,
+        handleChange,
+        errors
       )}
       <Calendar
         range={range}
         onChange={handleDateSelect}
         disabledDates={rentedDates}
       />
-      {renderInput("customerName", "Name", "text")}
+      {renderInput(
+        "customerName",
+        "Name",
+        "text",
+        customerData,
+        handleChange,
+        errors
+      )}
       <PhoneInput
-        phone={phone}
+        phone={customerData.phoneNumber}
         onChange={(value) => {
-          setPhone(value || "");
-          validateInput("phone", value?.toString() || "");
+          setCustomerData((data) => ({ ...data, phoneNumber: value || "" }));
+          validateInput(errors, schema, "phoneNumber", value?.toString() || "");
         }}
-        error={errors["phone"]}
+        error={errors["phoneNumber"]}
       />
-      <Button
-        label="Save"
-        disabled={!!validateAll(schema, { ...data, phone })}
-      />
+      <Button label="Save" disabled={!!validateAll(schema, customerData)} />
     </form>
   );
 };
 
 export default RentalForm;
 
-type DataTypeKeys = keyof {
-  instrumentId: string;
+type InputKeys = keyof {
   customerName: string;
+  phoneNumber: string;
+  instrumentId: string;
 };
 
 type InstrumentInRental = { _id: string; name: string };
-
-export type RentedDates = {
-  dateOut: Date;
-  dateReturned: Date;
-}[];

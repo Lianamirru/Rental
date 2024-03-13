@@ -12,15 +12,14 @@
   border-radius: 5%;
   padding-bottom: 3rem;
 
-  & img {
-    max-width: 50%;
+  img {
+    max-width: 10rem;
     margin-bottom: 1rem;
   }
 
   &__action {
     width: 2.5rem;
     height: 2.5rem;
-    font-size: 1.2rem;
     border: none;
     background-color: inherit;
     position: absolute;
@@ -35,6 +34,7 @@
 
 // icons
 img.add-to-favorites {
+  cursor: pointer;
   position: absolute;
   right: 2rem;
   width: 2.5rem;

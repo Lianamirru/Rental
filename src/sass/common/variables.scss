@@ -37,15 +37,7 @@ $fs-heading-secondary: $fs-800;
 $fs-heading-primary: $fs-900;
 
 $padding-body: 2rem;
-$margn-bottom-section: 2rem;
-$margn-bottom-heading: 1rem;
-
-@media (min-width: 5rem) {
-  $fs-body: $fs-500;
-  $fs-nav: $fs-600;
-  $fs-heading-section: $fs-700;
-  $fs-heading-secondary: $fs-800;
-  $fs-heading-primary: $fs-900;
-}
+$margin-bottom-section: 2rem;
+$margin-bottom-heading: 1rem;
 
 $content-width: 100rem;

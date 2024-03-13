@@ -1,13 +1,16 @@
 import { useState, FormEvent, ChangeEvent } from "react";
+import { Link } from "react-router-dom";
 
-import Input from "../common/form-elements/input";
 import Button from "../common/form-elements/formButton";
 
-import { validateProperty, validateAll } from "../../services/validateForm";
+import {
+  validateProperty,
+  validateAll,
+} from "../../services/helper-functions/validateForm";
 import schema from "../schemas/loginFormSchema";
 
-import { getCurrentUser, login } from "../../services/authService";
-import { Link } from "react-router-dom";
+import { login } from "../../services/authService";
+import { renderInput } from "../../services/helper-functions/renderInput";
 
 type DataType = { username: string; password: string };
 
@@ -19,7 +22,9 @@ const LoginForm = () => {
 
   const { data, errors } = state;
 
-  const handleChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = ({
+    target,
+  }: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const updatedErrors = { ...errors };
     const updatedData = { ...data };
     const { name, value } = target;
@@ -36,12 +41,6 @@ const LoginForm = () => {
     event.preventDefault();
     try {
       await login(data.username, data.password);
-      if (getCurrentUser()?.isAdmin) {
-        // redirect admins to movie form they have been to
-        window.location.replace("/");
-      } else {
-        window.location.replace("/");
-      }
     } catch (ex: any) {
       if (ex.response && ex.response.status === 400) {
         const updatedErrors = { ...errors };
@@ -49,31 +48,29 @@ const LoginForm = () => {
         setState({ ...state, errors: updatedErrors });
       }
     }
-  };
-
-  const renderInput = (
-    type: "text" | "password",
-    name: keyof DataType,
-    label: string
-  ) => {
-    return (
-      <Input
-        type={type}
-        name={name}
-        label={label}
-        value={data[name]}
-        onChange={handleChange}
-        error={errors[name]}
-      />
-    );
+    window.location.replace("/");
   };
 
   return (
     <div>
       <h2>Log in</h2>
       <form onSubmit={handleSubmit}>
-        {renderInput("text", "username", "Username")}
-        {renderInput("password", "password", "Password")}
+        {renderInput(
+          "username",
+          "Username",
+          "text",
+          data,
+          handleChange,
+          errors
+        )}
+        {renderInput(
+          "password",
+          "Password",
+          "password",
+          data,
+          handleChange,
+          errors
+        )}
         <Button label="Log in" disabled={!!validateAll(schema, data)} />
         <Link to={"/register"}>Register</Link>
       </form>

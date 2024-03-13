@@ -12,32 +12,38 @@ import { getInstruments } from "../services/instrumentService";
 import { getLikedInstruments } from "../services/likeService";
 
 const LikedInstrumentsContext = createContext<{
+  instruments: InstrumentType[];
   likedInstruments: InstrumentType[];
   handleInstrumentLike: (instrumentId: string) => void;
 }>({
+  instruments: [],
   likedInstruments: [],
   handleInstrumentLike: () => {},
 });
 
 const LikedInstrumentsProvider = ({ children }: { children: ReactNode }) => {
-  const [likedInstruments, setInstruments] = useState<InstrumentType[]>([]);
+  const [instruments, setInstruments] = useState<InstrumentType[]>([]);
+  const [likedInstruments, setLikedInstruments] = useState<InstrumentType[]>(
+    []
+  );
   const user = useMemo(() => getCurrentUser(), []);
-  console.log(likedInstruments);
+
   useEffect(() => {
     (async () => {
       try {
         const { data: instruments } = await getInstruments();
+        setInstruments(instruments);
+
         if (!user) {
-          setInstruments(instruments);
+          setLikedInstruments(instruments);
         } else {
           const { data: likedInstrumentsIds } = await getLikedInstruments();
-          console.log(likedInstrumentsIds);
           const newInstruments = instruments.map((instrument) =>
             likedInstrumentsIds.includes(instrument._id)
               ? { ...instrument, like: true }
               : instrument
           );
-          setInstruments(newInstruments);
+          setLikedInstruments(newInstruments);
         }
       } catch (ex) {}
     })();
@@ -49,12 +55,12 @@ const LikedInstrumentsProvider = ({ children }: { children: ReactNode }) => {
         ? { ...instrument, like: !instrument.like }
         : instrument
     );
-    setInstruments(updatedInstruments);
+    setLikedInstruments(updatedInstruments);
   };
 
   return (
     <LikedInstrumentsContext.Provider
-      value={{ likedInstruments, handleInstrumentLike }}
+      value={{ instruments, likedInstruments, handleInstrumentLike }}
     >
       {children}
     </LikedInstrumentsContext.Provider>

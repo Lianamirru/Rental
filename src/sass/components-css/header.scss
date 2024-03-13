@@ -1,54 +1,59 @@
-.hero {
+.hero-section {
   margin: -$padding-body;
-  margin-bottom: $margn-bottom-section + $padding-body;
+  margin-bottom: $margin-bottom-section + $padding-body;
   position: relative;
-  background-image: url("./../images/header.png");
-  text-align: center;
-  height: 85vh;
-  background-repeat: no-repeat;
-  background-size: cover;
 
-  background-position: center;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
+  .img {
+    background-image: url("./../images/header.png");
+    height: 85vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: relative;
 
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background: inherit;
-    filter: grayscale(1);
-  }
-
-  h1 {
-    filter: grayscale(0);
-    color: $clr-accent-light;
-    text-transform: uppercase;
-    text-shadow: #21015a 0 0 5px;
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: inherit;
+      filter: grayscale(1);
+    }
   }
 }
 
 .heading--box {
+  overflow: hidden;
   margin-bottom: 3rem;
-}
+  padding-bottom: 1rem;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  background-color: $clr-neutral-light;
 
-.heading--main {
-  font-size: $fs-heading-primary;
-  animation: fromLeft 1s ease-out;
-  color: $clr-accent-dark;
-}
+  h1 {
+    color: $clr-accent-light;
+    text-transform: uppercase;
+    text-shadow: #21015a 0 0 5px;
+  }
 
-.heading--sub {
-  text-transform: uppercase;
-  font-weight: $fw-bold;
-  font-size: $fs-heading-secondary;
-  letter-spacing: 0.5rem;
-  margin-bottom: 2rem;
-  animation: fromRight 1s ease-out;
+  .heading--main {
+    font-size: $fs-heading-primary;
+    animation: fromLeft 1s ease-out;
+  }
+
+  .heading--sub {
+    text-transform: uppercase;
+    font-weight: $fw-bold;
+    font-size: $fs-heading-secondary;
+    letter-spacing: 0.5rem;
+    margin-bottom: 4rem;
+    animation: fromRight 1s ease-out;
+  }
 }
 
 .btn-hero {
@@ -105,8 +110,54 @@
   }
 
   &--animated {
-    margin-top: 2rem;
     animation: fromBottom 0.7s 0.4s;
     animation-fill-mode: backwards;
+  }
+}
+
+@media screen and (max-width: 830px) {
+  .heading--box {
+    .heading--sub {
+      margin-bottom: 3rem;
+    }
+  }
+
+  a.btn-hero {
+    width: 10rem;
+    padding: 0.5rem 0;
+    font-size: 1.4rem;
+
+    &--rent {
+      margin-right: 2rem;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .hero-section .img {
+    height: 50vh;
+  }
+
+  .heading--box {
+    position: static;
+    background-color: $clr-neutral-light;
+    h1 {
+      color: $clr-accent-dark;
+      text-shadow: none;
+    }
+    .heading--main {
+      font-size: $fs-heading-secondary;
+    }
+
+    .heading--sub {
+      font-size: $fs-heading-section;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  a.btn-hero {
+    &--rent {
+      margin-right: 1rem;
+    }
   }
 }

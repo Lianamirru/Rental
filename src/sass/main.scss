@@ -29,8 +29,11 @@ html:focus-within {
 body {
   text-rendering: optimizeSpeed;
   line-height: 1.5;
+}
+
+/* common css */
+body {
   font-family: $ff-body;
-  font-style: normal;
   font-weight: $fw-regular;
   font-size: $fs-body;
 }
@@ -38,7 +41,7 @@ body {
 h2 {
   font-size: $fs-heading-section;
   font-weight: $fw-bold;
-  margin-bottom: $margn-bottom-heading;
+  margin-bottom: $margin-bottom-heading;
 }
 
 h3 {
@@ -68,4 +71,29 @@ h3 {
 
 .fa-trash {
   color: #900000;
+}
+
+@media screen and (max-width: 1070px) {
+  html {
+    font-size: 80%;
+  }
+
+  body {
+    font-size: $fs-body;
+  }
+}
+
+@media screen and (max-width: 860px) {
+  html {
+    font-size: 70%;
+  }
+  body {
+    font-size: $fs-body;
+  }
+}
+
+@media screen and (max-width: 730px) {
+  html {
+    // font-size: 90%;
+  }
 }
