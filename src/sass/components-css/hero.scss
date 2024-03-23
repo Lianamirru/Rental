@@ -58,7 +58,7 @@
 
 .btn-hero {
   display: inline-block;
-  padding: 1rem;
+  padding: 0.5em;
   border-radius: 10rem;
   transition: all 0.2s;
   position: relative;
@@ -119,12 +119,16 @@
   .heading--box {
     .heading--sub {
       margin-bottom: 3rem;
+      font-size: 2rem;
+    }
+
+    .heading--main {
+      font-size: 4rem;
     }
   }
 
   a.btn-hero {
-    width: 10rem;
-    padding: 0.5rem 0;
+    width: 12rem;
     font-size: 1.4rem;
 
     &--rent {
@@ -133,25 +137,27 @@
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 670px) {
   .hero-section .img {
-    height: 50vh;
+    height: 40vh;
   }
 
   .heading--box {
     position: static;
     background-color: $clr-neutral-light;
-    h1 {
+
+    .heading--main,
+    .heading--sub {
       color: $clr-accent-dark;
       text-shadow: none;
     }
-    .heading--main {
-      font-size: $fs-heading-secondary;
-    }
 
+    .heading--main {
+      font-size: 2.5rem;
+    }
     .heading--sub {
-      font-size: $fs-heading-section;
-      margin-bottom: 0.5rem;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
     }
   }
 

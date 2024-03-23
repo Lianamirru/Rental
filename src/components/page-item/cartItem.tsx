@@ -14,14 +14,12 @@ const CartItem = ({ item, onRent, onDelete }: CartItemProps) => {
         {maker} {model} {year}
       </div>
       <div>${monthlyRentalPrice}</div>
-      <div className="cart-buttons">
-        <button className="btn" onClick={onRent}>
-          rent
-        </button>
-        <button className="btn--delete" onClick={onDelete}>
-          <i className="fa fa-trash " aria-hidden="true"></i>
-        </button>
-      </div>
+      <button className="btn btn--rent" onClick={onRent}>
+        rent
+      </button>
+      <button className="btn--delete" onClick={onDelete}>
+        <i className="fa fa-trash " aria-hidden="true"></i>
+      </button>
     </>
   );
 };

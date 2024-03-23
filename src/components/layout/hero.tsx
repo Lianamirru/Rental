@@ -1,4 +1,4 @@
-const Header = () => {
+const Hero = () => {
   return (
     <section className="hero-section">
       <div className="img"></div>
@@ -22,4 +22,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Hero;

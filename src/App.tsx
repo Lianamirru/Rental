@@ -27,7 +27,7 @@ const App = () => {
       <div id={theme} className="App">
         <ToastContainer />
         <NavBar />
-        <div className="content">
+        <main className="container">
           <RentalsProvider>
             <LikedInstrumentsProvider>
               <Routes>
@@ -40,7 +40,7 @@ const App = () => {
                 <Route path="/rentals/customer/:id" element={<Profile />} />
                 <Route path="/rentals" element={<Rentals />} />
                 <Route path="/cart" element={<Cart />} />
-                <Route path="/favorites" element={<Favorites />} />4
+                <Route path="/favorites" element={<Favorites />} />
                 <Route
                   path="/"
                   element={<Navigate to="/instruments" replace />}
@@ -49,7 +49,7 @@ const App = () => {
               </Routes>
             </LikedInstrumentsProvider>
           </RentalsProvider>
-        </div>
+        </main>
       </div>
     </ThemeProvider>
   );

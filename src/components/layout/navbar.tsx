@@ -14,42 +14,60 @@ const NavBar = () => {
   };
 
   return (
-    <nav>
-      <div className="navigation">
-        <div>
-          <Link className="nav__link nav__link--brand" to="/">
-            Hit Factory
-          </Link>
-        </div>
+    <header className="header">
+      <nav className="navigation">
+        <Link className="nav__link nav__link--brand" to="/">
+          Hit Factory
+        </Link>
 
-        <div className={`nav__links ${isOpen ? "mobile" : ""}`}>
-          <Link className="nav__link" to="/instruments?category=guitar">
-            guitar
-          </Link>
-          <Link className="nav__link" to="/instruments?category=piano">
-            piano
-          </Link>
-          <Link className="nav__link" to="/instruments?category=drums">
-            drums
-          </Link>
-          <Link
-            className="nav__link nav__link--other"
-            to="/instruments?category="
+        <div className="nav-links-wrapper">
+          <button
+            className="nav__icon menu-icon"
+            onClick={handleToggle}
+            aria-controls="instrument-links"
+            aria-expanded={isOpen}
           >
-            other instruments
-          </Link>
+            <i className="fa-solid fa-bars" aria-hidden="true"></i>
+            <span className="visually-hidden">Instruments' Categories</span>
+          </button>
+          <div className={`nav-links ${isOpen ? "mobile" : ""}`}>
+            <ul id="instrument-links" role="list">
+              <li>
+                <Link className="nav__link" to="/instruments?category=guitar">
+                  guitar
+                </Link>
+              </li>
+              <li>
+                <Link className="nav__link" to="/instruments?category=piano">
+                  piano
+                </Link>
+              </li>
+              <li>
+                <Link className="nav__link" to="/instruments?category=drums">
+                  drums
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="nav__link nav__link--other"
+                  to="/instruments?category="
+                >
+                  other instruments
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
 
-        <div className="nav__icons">
-          <div className=" nav__icon menu-icon" onClick={handleToggle}>
-            <i className="fa-solid fa-bars"></i>
-          </div>
-          <Link className="nav__icon" to="/cart">
-            <i className="fa fa-shopping-cart" />
-            <span className="nav__icon--text">cart</span>
-          </Link>
+        <div className="nav-icons">
+          <button>
+            <Link to="/cart" className="nav__icon">
+              <i className="fa fa-shopping-cart" />
+              <span className="nav__icon--text">cart</span>
+            </Link>
+          </button>
           <DropdownMenu />
-          <div className="nav__icon">
+          <button className="nav__icon">
             <ReactSwitch
               onColor="#e1e2ef"
               offColor="#05204a"
@@ -57,11 +75,11 @@ const NavBar = () => {
               onChange={toggleTheme}
               checked={theme === "dark"}
             />
-            <span className="nav__icon--text">mode</span>
-          </div>
+            <span className="nav__icon--text nav__switch--text">mode</span>
+          </button>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </header>
   );
 };
 

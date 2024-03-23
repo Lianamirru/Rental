@@ -52,7 +52,6 @@ const Cart = () => {
     }
   };
 
-
   if (!cartItems.length) return <p>No cart items</p>;
   return (
     <div className="display-items">
@@ -61,6 +60,8 @@ const Cart = () => {
         <h3>Instrument</h3>
         <h3>Price</h3>
         <h3></h3>
+        <h3></h3>
+
         {cartItems.map((item) => (
           <CartItem
             key={item._id}

@@ -1,8 +1,7 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { E164Number } from "libphonenumber-js";
 
 import PhoneInput from "../common/form-elements/phoneInput";
-import Modal from "../common/modal";
 import Button from "../common/form-elements/formButton";
 
 import { getCurrentUser } from "../../services/authService";
@@ -10,7 +9,7 @@ import {
   CustomerType,
   editCustomer,
   getCustomer,
-  getCustomerById,
+  saveCustomer,
 } from "../../services/userService";
 import {
   validateAll,
@@ -39,7 +38,6 @@ const CustomerForm = ({ customer }: CustomerFormProps) => {
     phoneNumber: "",
   });
   const { customerName, phoneNumber } = data;
-  console.log(customer?.name);
 
   const [errors, setErrors] = useState({
     customerName: "",
@@ -68,15 +66,26 @@ const CustomerForm = ({ customer }: CustomerFormProps) => {
     setErrors(validateInput(errors, schema, name, value));
   };
 
+  const handlePhoneChange = (value: E164Number | undefined) => {
+    setData((data) => ({ ...data, phoneNumber: value || "" }));
+    setErrors(
+      validateInput(errors, schema, "phoneNumber", value?.toString() || "")
+    );
+  };
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    window.location.reload();
     const { data: customer } = await getCustomer(user?._id);
-    if (JSON.stringify(customer) !== JSON.stringify(data)) {
-      try {
-        await editCustomer(customer._id, userId, customerName, phoneNumber);
-      } catch (ex) {}
-    }
+    try {
+      if (!customer) {
+        await saveCustomer(user?._id, customerName, phoneNumber);
+      } else {
+        if (JSON.stringify(customer) !== JSON.stringify(data)) {
+          await editCustomer(customer._id, userId, customerName, phoneNumber);
+          window.location.reload();
+        }
+      }
+    } catch (ex) {}
   };
 
   return (
@@ -84,11 +93,8 @@ const CustomerForm = ({ customer }: CustomerFormProps) => {
       <h2>Customer Form</h2>
       {renderInput("customerName", "Name", "text", data, handleChange, errors)}
       <PhoneInput
-        phone={data.phoneNumber}
-        onChange={(value) => {
-          setData((prev) => ({ ...prev, phoneNumber: value || "" }));
-          validateInput(errors, schema, "phoneNumber", value?.toString() || "");
-        }}
+        phone={phoneNumber}
+        onChange={(value) => handlePhoneChange(value)}
         error={errors["phoneNumber"]}
       />
       <Button label="Save" disabled={!!validateAll(schema, data)} />

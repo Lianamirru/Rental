@@ -39,7 +39,7 @@ const DropdownMenu = () => {
   };
 
   return (
-    <div className="dropdown" ref={dropdownRef}>
+    <button className="dropdown" ref={dropdownRef}>
       <div className="profile-icon" onClick={toggleDropdown}>
         {!user ? (
           <Link className="nav__icon" to={"/login"}>
@@ -50,20 +50,31 @@ const DropdownMenu = () => {
         )}
       </div>
       {isDropdownOpen && (
-        <div className="dropdown-content">
-          <Link to="/profile" onClick={() => setIsDropdownOpen(false)}>
-            Profile Information
-          </Link>
-          <Link to="/favorites" onClick={() => setIsDropdownOpen(false)}>
-            Favorites
-          </Link>
-          <Link to="/rentals" onClick={() => setIsDropdownOpen(false)}>
-            Rented Instruments
-          </Link>
-          <Link to="/logout">Logout</Link>
-        </div>
+        <ul className="dropdown-content">
+          <li onClick={() => setIsDropdownOpen(false)}>
+            <Link to="/profile">
+              <p className="drop-down-item">Profile Information</p>
+            </Link>
+          </li>
+          <li onClick={() => setIsDropdownOpen(false)}>
+            <Link to="/favorites">
+              <p className="drop-down-item">Favorites</p>
+            </Link>
+          </li>
+          <li onClick={() => setIsDropdownOpen(false)}>
+            <Link to="/rentals">
+              <p className="drop-down-item">Rented Instruments</p>
+            </Link>
+          </li>
+
+          <li>
+            <Link to="/logout">
+              <p className="drop-down-item">Logout</p>
+            </Link>
+          </li>
+        </ul>
       )}
-    </div>
+    </button>
   );
 };
 

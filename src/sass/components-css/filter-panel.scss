@@ -2,13 +2,9 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 3rem;
-  padding: 1rem 0;
-
-  h3 {
-    cursor: pointer;
-    font-weight: $fw-regular;
-  }
+  padding: 1em 0;
 }
+
 .search {
   width: 45%;
 }
@@ -22,12 +18,16 @@
 .filter-panel {
   padding: 0 1rem;
   border-radius: 4px;
-  color: $clr-text-light;
-  background-color: $clr-neutral-dark;
+  color: $clr-neutral-dark;
+  background-color: $clr-neutral-light;
   width: 50%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   gap: 1rem 3rem;
+
+  p {
+    font-weight: $fw-bold;
+  }
 }

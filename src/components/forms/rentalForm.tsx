@@ -1,5 +1,6 @@
 import { useState, useEffect, FormEvent, ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { E164Number } from "libphonenumber-js";
 
 import Button from "../common/form-elements/formButton";
 import Calendar, { RangeType } from "../common/calendar/calendar";
@@ -86,6 +87,13 @@ const RentalForm = ({ instrument }: { instrument: InstrumentType }) => {
     setErrors(validateInput(errors, schema, name, value));
   };
 
+  const handlePhoneChange = (value: E164Number | undefined) => {
+    setCustomerData((data) => ({ ...data, phoneNumber: value || "" }));
+    setErrors(
+      validateInput(errors, schema, "phoneNumber", value?.toString() || "")
+    );
+  };
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const { data: customer } = await getCustomer(userId);
@@ -153,10 +161,7 @@ const RentalForm = ({ instrument }: { instrument: InstrumentType }) => {
       )}
       <PhoneInput
         phone={customerData.phoneNumber}
-        onChange={(value) => {
-          setCustomerData((data) => ({ ...data, phoneNumber: value || "" }));
-          validateInput(errors, schema, "phoneNumber", value?.toString() || "");
-        }}
+        onChange={(value) => handlePhoneChange(value)}
         error={errors["phoneNumber"]}
       />
       <Button label="Save" disabled={!!validateAll(schema, customerData)} />

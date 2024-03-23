@@ -28,9 +28,9 @@ const SelectCategory = ({ onSelect, selectedCategories }: CategoriesProps) => {
 
   return (
     <div className="dropdown">
-      <div onClick={toggleDropDown}>
-        <h3>CATEGORIES</h3>
-      </div>
+      <button onClick={toggleDropDown}>
+        <p className="filter-panel-text">CATEGORIES</p>
+      </button>
       {isDropdownOpen ? (
         <div className="dropdown-content filter__dropdown-content">
           {categories.map((category) => (

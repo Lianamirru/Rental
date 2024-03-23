@@ -41,6 +41,7 @@ const LoginForm = () => {
     event.preventDefault();
     try {
       await login(data.username, data.password);
+      window.location.replace("/");
     } catch (ex: any) {
       if (ex.response && ex.response.status === 400) {
         const updatedErrors = { ...errors };
@@ -48,7 +49,6 @@ const LoginForm = () => {
         setState({ ...state, errors: updatedErrors });
       }
     }
-    window.location.replace("/");
   };
 
   return (

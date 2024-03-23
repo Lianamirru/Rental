@@ -6,8 +6,9 @@ import Search from "../common/search";
 import Modal from "../common/modal";
 import Pagination from "../common/pagination";
 
-import Header from "../layout/header";
+import Hero from "../layout/hero";
 import ProductsList from "../display-instruments/displayInstruments";
+import FilterPanel from "../filter-panel/filterPanel";
 
 import {
   REDUCER_ACTION_TYPE,
@@ -21,7 +22,6 @@ import { getCategories } from "../../services/categoryService";
 import { getCartItems } from "../../services/cartServise";
 import { getPagedData } from "../display-instruments/getPagedData";
 import { logger } from "../../services/logService";
-import FilterPanel from "../filter-panel/filterPanel";
 
 const Instruments = () => {
   const [state, dispatch] = useInstrumentsReducer();
@@ -139,8 +139,8 @@ const Instruments = () => {
 
   return (
     <>
-      <Header />
-      <section className="main">
+      <Hero />
+      <section className="instruments-section">
         <div className="panel">
           <Search onChange={handleSearch} value={searchQuery} />
           <FilterPanel

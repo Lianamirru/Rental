@@ -18,9 +18,9 @@ const Maker = ({ instruments, onMakerChange }: MakerProps) => {
 
   return (
     <div className="dropdown">
-      <div onClick={toggleDropDown} className="filter-field">
-        <h3>MANUFACTURER</h3>
-      </div>
+      <button onClick={toggleDropDown} className="filter-field">
+        <p className="filter-panel-text">MANUFACTURER</p>
+      </button>
       {isDropdownOpen ? (
         <div className="dropdown-content filter__dropdown-content">
           {makers.map((option) => (

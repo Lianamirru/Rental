@@ -16,9 +16,9 @@ const FilterPrice = ({ onSort }: { onSort: (oprion: string) => void }) => {
   const options = ["from high to low", "from low to high", "none"];
   return (
     <div className="dropdown">
-      <div onClick={toggleDropDown}>
-        <h3>FILTER BY PRICE</h3>
-      </div>
+      <button onClick={toggleDropDown}>
+        <p className="filter-panel-text">FILTER BY PRICE</p>
+      </button>
       {isDropdownOpen ? (
         <div className="dropdown-content filter__dropdown-content">
           {options.map((option) => (

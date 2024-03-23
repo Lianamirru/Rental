@@ -14,7 +14,7 @@
 
 .btn--delete {
   width: 2rem;
-  border: none;
+  background-color: transparent;
   margin-left: auto;
 
   &:hover {
@@ -47,11 +47,11 @@
 }
 
 .cart-grid {
-  grid-template-columns: 4fr 2fr 1fr;
+  grid-template-columns: 4fr 2fr 0fr 0fr;
 }
 
-.cart-buttons {
-  margin-left: auto;
+.btn--rent {
+  margin-right: 5px;
 }
 
 /* favorites table */
