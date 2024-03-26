@@ -41,9 +41,10 @@ img.add-to-favorites {
 }
 
 .add-to-cart {
-  background-color: $clr-neutral-dark;
+  background-color: $clr-neutral-light;
+  color: $clr-neutral-dark;
   border-radius: 50%;
-  border: solid 3.5px;
+  border: solid 3.5px $clr-neutral-dark;
 }
 
 .delete-from-cart {

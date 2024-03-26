@@ -34,12 +34,12 @@ const RentalForm = ({ instrument }: { instrument: InstrumentType }) => {
 
   const [instruments, setInstruments] = useState<InstrumentInRental[]>([]);
 
-  const [customerData, setCustomerData] = useState({
+  const [rentalData, setrentalData] = useState({
     customerName: "",
     phoneNumber: "",
     instrumentId: "",
   });
-  const { customerName, phoneNumber, instrumentId } = customerData;
+  const { customerName, phoneNumber, instrumentId } = rentalData;
 
   const [errors, setErrors] = useState({
     customerName: "",
@@ -67,11 +67,11 @@ const RentalForm = ({ instrument }: { instrument: InstrumentType }) => {
       const { data: customer } = await getCustomer(userId);
       if (customer) {
         const { name: customerName, phone: phoneNumber } = customer;
-        setCustomerData((data) => ({ ...data, customerName }));
-        setCustomerData((data) => ({ ...data, phoneNumber }));
+        setrentalData((data) => ({ ...data, customerName }));
+        setrentalData((data) => ({ ...data, phoneNumber }));
       }
     })();
-    setCustomerData((data) => ({ ...data, instrumentId: curInstrumentId }));
+    setrentalData((data) => ({ ...data, instrumentId: curInstrumentId }));
   }, [curInstrumentId]);
 
   const handleChange = ({
@@ -80,15 +80,15 @@ const RentalForm = ({ instrument }: { instrument: InstrumentType }) => {
     const { name, value } = target;
     const nameKey = name as InputKeys;
 
-    const updatedData = { ...customerData };
+    const updatedData = { ...rentalData };
     updatedData[nameKey] = value;
 
-    setCustomerData(updatedData);
+    setrentalData(updatedData);
     setErrors(validateInput(errors, schema, name, value));
   };
 
   const handlePhoneChange = (value: E164Number | undefined) => {
-    setCustomerData((data) => ({ ...data, phoneNumber: value || "" }));
+    setrentalData((data) => ({ ...data, phoneNumber: value || "" }));
     setErrors(
       validateInput(errors, schema, "phoneNumber", value?.toString() || "")
     );
@@ -102,7 +102,7 @@ const RentalForm = ({ instrument }: { instrument: InstrumentType }) => {
       const { data } = await saveCustomer(userId, customerName, phoneNumber);
       customerId = data;
     } else {
-      if (JSON.stringify(customer) !== JSON.stringify(customerData)) {
+      if (JSON.stringify(customer) !== JSON.stringify(rentalData)) {
         await editCustomer(customer._id, userId, customerName, phoneNumber);
       }
       customerId = customer._id;
@@ -142,7 +142,7 @@ const RentalForm = ({ instrument }: { instrument: InstrumentType }) => {
         "instrumentId",
         "Instrument",
         instruments as [],
-        customerData,
+        rentalData,
         handleChange,
         errors
       )}
@@ -155,16 +155,16 @@ const RentalForm = ({ instrument }: { instrument: InstrumentType }) => {
         "customerName",
         "Name",
         "text",
-        customerData,
+        rentalData,
         handleChange,
         errors
       )}
       <PhoneInput
-        phone={customerData.phoneNumber}
+        phone={rentalData.phoneNumber}
         onChange={(value) => handlePhoneChange(value)}
         error={errors["phoneNumber"]}
       />
-      <Button label="Save" disabled={!!validateAll(schema, customerData)} />
+      <Button label="Save" disabled={!!validateAll(schema, rentalData)} />
     </form>
   );
 };

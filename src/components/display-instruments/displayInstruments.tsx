@@ -6,7 +6,7 @@ type ProductsProps = {
   onLike: (instrumentId: string) => void;
   onAddToCart: (instrumentId: string) => void;
   onDeleteFromCart: (instrumentId: string) => void;
-  cartItemsIds: String[];
+  cartItemsIds: string[];
 };
 
 const ProductsList = ({

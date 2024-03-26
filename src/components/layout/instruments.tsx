@@ -6,7 +6,6 @@ import Search from "../common/search";
 import Modal from "../common/modal";
 import Pagination from "../common/pagination";
 
-import Hero from "../layout/hero";
 import ProductsList from "../display-instruments/displayInstruments";
 import FilterPanel from "../filter-panel/filterPanel";
 
@@ -138,46 +137,44 @@ const Instruments = () => {
   let { pageInstruments, totalCount } = getPagedData(state);
 
   return (
-    <>
-      <Hero />
-      <section className="instruments-section">
-        <div className="panel">
-          <Search onChange={handleSearch} value={searchQuery} />
-          <FilterPanel
-            handleCategoryChange={handleCategoryChange}
-            handleMakerChange={handleMakerChange}
-            handleSort={handleSort}
-            selectedCategories={selectedCategories}
-            instruments={instruments}
+    <section className="instruments-section">
+      <h2>Instruments to rent</h2>
+      <div className="panel">
+        <Search onChange={handleSearch} value={searchQuery} />
+        <FilterPanel
+          handleCategoryChange={handleCategoryChange}
+          handleMakerChange={handleMakerChange}
+          handleSort={handleSort}
+          selectedCategories={selectedCategories}
+          instruments={instruments}
+        />
+      </div>
+      {totalCount ? (
+        <>
+          <ProductsList
+            products={pageInstruments}
+            onLike={handleLike}
+            onAddToCart={handleAddToCart}
+            cartItemsIds={cartItemsIds}
+            onDeleteFromCart={handleDeleteFromCart}
           />
-        </div>
-        {totalCount ? (
-          <>
-            <ProductsList
-              products={pageInstruments}
-              onLike={handleLike}
-              onAddToCart={handleAddToCart}
-              cartItemsIds={cartItemsIds}
-              onDeleteFromCart={handleDeleteFromCart}
-            />
-            <Pagination
-              totalCount={totalCount}
-              onPageChange={handlePageChange}
-              currentPage={currentPage}
-              pageSize={pageSize}
-            />
-          </>
-        ) : (
-          <p>No Instruments</p>
-        )}
-        <Modal active={likeModal} handleClick={() => setLikeModal(!likeModal)}>
-          Login to add to favourites
-        </Modal>
-        <Modal active={cartModal} handleClick={() => setCartModal(!cartModal)}>
-          Login to add to a cart
-        </Modal>
-      </section>
-    </>
+          <Pagination
+            totalCount={totalCount}
+            onPageChange={handlePageChange}
+            currentPage={currentPage}
+            pageSize={pageSize}
+          />
+        </>
+      ) : (
+        <p>No Instruments</p>
+      )}
+      <Modal active={likeModal} handleClick={() => setLikeModal(!likeModal)}>
+        Login to add to favourites
+      </Modal>
+      <Modal active={cartModal} handleClick={() => setCartModal(!cartModal)}>
+        Login to add to a cart
+      </Modal>
+    </section>
   );
 };
 

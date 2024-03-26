@@ -2,7 +2,8 @@
   "common/pagination", "common/modal";
 @import "components-css/navbar", "components-css/hero",
   "components-css/display-instruments", "components-css/instruments-table",
-  "components-css/filter-panel", "components-css/form", "components-css/profile";
+  "components-css/filter-panel", "components-css/form", "components-css/profile",
+  "components-css/slider", "components-css/footer";
 
 /* reset css */
 *,
@@ -38,10 +39,19 @@ body {
   font-size: $fs-body;
 }
 
+section {
+  margin-bottom: $margin-bottom-section;
+}
+
 h2 {
   font-size: $fs-heading-section;
   font-weight: $fw-bold;
+  text-align: center;
   margin-bottom: $margin-bottom-heading;
+  background-image: linear-gradient(90deg, $clr-accent-light, $clr-text-dark);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
 }
 
 h3 {
@@ -59,6 +69,10 @@ button {
   max-width: $content-width;
   padding: $padding-body;
   margin: auto;
+}
+
+main {
+  min-height: 90vh;
 }
 
 .btn {

@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Buffer } from "buffer";
 
 import Likes from "../common/likes";
 
-import instrumentPhoto from "../../images/instrument.png";
 import { InstrumentType } from "../../types/instrumentType";
 
 import { getCurrentUser } from "../../services/authService";
@@ -15,7 +15,7 @@ type ProductProps = {
   onLike: (instrumentId: string) => void;
   onAddToCart: (instrumentId: string) => void;
   onDeleteFromCart: (instrumentId: string) => void;
-  cartItemsIds: String[];
+  cartItemsIds: string[];
 };
 
 const Product = ({
@@ -27,11 +27,11 @@ const Product = ({
 }: ProductProps) => {
   const user = getCurrentUser();
 
-  const handleAddToCart = async (productId: String) => {
-    onAddToCart(product._id);
+  const handleAddToCart = async (productId: string) => {
+    onAddToCart(productId);
     if (user) {
       try {
-        await addToCart(product._id);
+        await addToCart(productId);
       } catch (ex: any) {
         if (ex.response && ex.response.status === 404) {
           toast.error("unable to handle adding to cart");
@@ -42,10 +42,10 @@ const Product = ({
     }
   };
 
-  const handleDeleteFromCart = async (productId: String) => {
-    onDeleteFromCart(product._id);
+  const handleDeleteFromCart = async (productId: string) => {
+    onDeleteFromCart(productId);
     try {
-      await deleteFromCart(product._id);
+      await deleteFromCart(productId);
     } catch (ex: any) {
       if (ex.response && ex.response.status === 404) {
         toast.error("unable to handle deleting from cart");
@@ -54,6 +54,11 @@ const Product = ({
       }
     }
   };
+
+  const buffer = Buffer.from(product.image.data);
+  const instrumentPhoto = `data:${
+    product.image.contentType
+  };base64,${buffer.toString("base64")}`;
 
   return (
     <div className="instrument-card" key={product._id}>

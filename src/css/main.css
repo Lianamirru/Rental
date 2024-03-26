@@ -124,7 +124,7 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 1.5rem; }
+  font-size: 1.4rem; }
 
 .nav-links ul {
   display: flex;
@@ -141,7 +141,7 @@ a {
     text-decoration: none; }
   .nav__link--brand {
     font-family: "Merienda", sans-serif;
-    font-size: 1.7rem;
+    font-size: 2.2rem;
     color: #e27425; }
     .nav__link--brand:hover {
       color: #e27425; }
@@ -157,7 +157,7 @@ a {
     text-decoration: none;
     color: rgba(179, 179, 179, 0.8); }
   .nav__icon i {
-    font-size: 1.5rem; }
+    font-size: 1.4rem; }
   .nav__icon span {
     font-size: 1rem; }
 
@@ -208,7 +208,7 @@ a {
 
 .hero-section {
   margin: -2rem;
-  margin-bottom: 4rem;
+  margin-bottom: 5rem;
   position: relative; }
   .hero-section .img {
     background-image: url("./../images/header.png");
@@ -258,7 +258,7 @@ a {
   border-radius: 10rem;
   transition: all 0.2s;
   position: relative;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 900;
   letter-spacing: 0.3rem;
   width: 16rem; }
@@ -359,9 +359,10 @@ img.add-to-favorites {
   width: 2.5rem; }
 
 .add-to-cart {
-  background-color: #464646d5;
+  background-color: #d0c5c545;
+  color: #464646d5;
   border-radius: 50%;
-  border: solid 3.5px; }
+  border: solid 3.5px #464646d5; }
 
 .delete-from-cart {
   font-size: 1.6rem; }
@@ -491,6 +492,59 @@ form a {
 .profile-section button {
   margin-top: 1rem; }
 
+.profile-info {
+  display: grid;
+  justify-content: center; }
+
+.slider {
+  max-width: 100ch;
+  text-align: center;
+  padding-bottom: 4rem;
+  text-wrap: balance; }
+  .slider img {
+    display: block;
+    margin: auto;
+    width: 30%; }
+  .slider h3 {
+    margin: 1rem 0; }
+
+.primary-footer {
+  padding-top: 1rem;
+  background-color: #5656d9; }
+
+.primary-footer-wrapper {
+  max-width: 100rem;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  gap: 15rem; }
+
+.primary-footer-logo-social ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem; }
+
+.footer-nav {
+  columns: 2;
+  gap: 13rem; }
+  .footer-nav a {
+    color: #a6a6a6; }
+  .footer-nav li {
+    padding-bottom: 1.6rem; }
+    .footer-nav li:last-child {
+      padding-bottom: 0rem; }
+
+@media screen and (max-width: 50em) {
+  .footer-nav {
+    columns: 1; }
+    .footer-nav li {
+      padding-bottom: 1rem; }
+      .footer-nav li:last-child {
+        padding-bottom: 1rem; }
+  .primary-footer-logo-social ul {
+    gap: 1rem; } }
+
 /* reset css */
 *,
 *::after,
@@ -520,13 +574,21 @@ body {
   font-weight: 400;
   font-size: 1.2rem; }
 
+section {
+  margin-bottom: 5rem; }
+
 h2 {
-  font-size: 1.7rem;
+  font-size: 2.2rem;
   font-weight: 700;
-  margin-bottom: 1rem; }
+  text-align: center;
+  margin-bottom: 3rem;
+  background-image: linear-gradient(90deg, #e2a025, #000000);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent; }
 
 h3 {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 700; }
 
 button {
@@ -538,6 +600,9 @@ button {
   max-width: 100rem;
   padding: 2rem;
   margin: auto; }
+
+main {
+  min-height: 90vh; }
 
 .btn {
   letter-spacing: 0.1rem;

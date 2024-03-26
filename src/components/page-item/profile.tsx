@@ -32,30 +32,33 @@ const Profile = () => {
   }, [id]);
 
   return (
-    <div className="profile-section">
-      {customer ? (
-        <>
-          <div>Name: {customer?.name}</div>
-          <div>Phone Number: {customer?.phone}</div>
-        </>
-      ) : null}
+    <section className="profile-section">
+      <h2>Profile</h2>
+      <div className="profile-info">
+        {customer ? (
+          <>
+            <p>Name: {customer?.name}</p>
+            <p>Phone Number: {customer?.phone}</p>
+          </>
+        ) : null}
 
-      <div>Email: {user?.email}</div>
-      <button
-        onClick={() => {
-          setModalActive(!modalActive);
-        }}
-        className="btn"
-      >
-        Edit Profile Information
-      </button>
+        <p>Email: {user?.email}</p>
+        <button
+          onClick={() => {
+            setModalActive(!modalActive);
+          }}
+          className="btn"
+        >
+          Edit Profile Information
+        </button>
+      </div>
       <Modal
         active={modalActive}
         handleClick={() => setModalActive(!modalActive)}
       >
         <CustomerForm customer={customer} />
       </Modal>
-    </div>
+    </section>
   );
 };
 

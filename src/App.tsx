@@ -10,7 +10,7 @@ import NotFound from "./components/common/notFound";
 import NavBar from "./components/layout/navbar";
 
 import InstrumentPage from "./components/pages/instrumentPage";
-import Instruments from "./components/pages/instruments";
+import LandingPage from "./components/pages/landingPage";
 
 import ThemeProvider, { useThemeState } from "./context/ThemeContext";
 import Rentals from "./components/pages/rentals";
@@ -19,9 +19,11 @@ import Cart from "./components/pages/cart";
 import Favorites from "./components/pages/favorites";
 import LikedInstrumentsProvider from "./context/LikedInstrumentsContext";
 import Profile from "./components/page-item/profile";
+import Footer from "./components/layout/footer";
 
 const App = () => {
   const [theme, toggleTheme] = useThemeState();
+
   return (
     <ThemeProvider theme={theme} toggleTheme={toggleTheme}>
       <div id={theme} className="App">
@@ -31,7 +33,7 @@ const App = () => {
           <RentalsProvider>
             <LikedInstrumentsProvider>
               <Routes>
-                <Route path="/instruments" element={<Instruments />} />
+                <Route path="/instruments" element={<LandingPage />} />
                 <Route path="/instruments/:id" element={<InstrumentPage />} />
                 <Route path="/login" element={<LoginForm />} />
                 <Route path="/register" element={<RegisterForm />} />
@@ -50,6 +52,7 @@ const App = () => {
             </LikedInstrumentsProvider>
           </RentalsProvider>
         </main>
+        <Footer />
       </div>
     </ThemeProvider>
   );
