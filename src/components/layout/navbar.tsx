@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { HashLink } from "react-router-hash-link";
 import ReactSwitch from "react-switch";
 
 import { useTheme } from "../../context/ThemeContext";
@@ -8,6 +9,7 @@ import DropdownMenu from "./dropDown";
 const NavBar = () => {
   const { theme, toggleTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
+  const [active, setActive] = useState("");
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
@@ -16,9 +18,9 @@ const NavBar = () => {
   return (
     <header className="header">
       <nav className="navigation">
-        <Link className="nav__link nav__link--brand" to="/">
+        <HashLink className="nav__link nav__link--brand" to="/">
           Hit Factory
-        </Link>
+        </HashLink>
 
         <div className="nav-links-wrapper">
           <button
@@ -33,27 +35,48 @@ const NavBar = () => {
           <div className={`nav-links ${isOpen ? "mobile" : ""}`}>
             <ul id="instrument-links" role="list">
               <li>
-                <Link className="nav__link" to="/instruments?category=guitar">
+                <HashLink
+                  smooth
+                  className="nav__link"
+                  data-active={"guitar" === active}
+                  to="/instruments?category=guitar#instruments-section"
+                  onClick={() => setActive("guitar")}
+                >
                   guitar
-                </Link>
+                </HashLink>
               </li>
               <li>
-                <Link className="nav__link" to="/instruments?category=piano">
+                <HashLink
+                  smooth
+                  className="nav__link"
+                  data-active={"piano" === active}
+                  to="/instruments?category=piano#instruments-section"
+                  onClick={() => setActive("piano")}
+                >
                   piano
-                </Link>
+                </HashLink>
               </li>
               <li>
-                <Link className="nav__link" to="/instruments?category=drums">
+                <HashLink
+                  smooth
+                  className="nav__link"
+                  data-active={"drums" === active}
+                  to="/instruments?category=drums#instruments-section"
+                  onClick={() => setActive("drums")}
+                >
                   drums
-                </Link>
+                </HashLink>
               </li>
               <li>
-                <Link
+                <HashLink
+                  smooth
                   className="nav__link nav__link--other"
-                  to="/instruments?category="
+                  data-active={"others" === active}
+                  to="/instruments?category=#instruments-section"
+                  onClick={() => setActive("others")}
                 >
                   other instruments
-                </Link>
+                </HashLink>
               </li>
             </ul>
           </div>
@@ -61,10 +84,10 @@ const NavBar = () => {
 
         <div className="nav-icons">
           <button>
-            <Link to="/cart" className="nav__icon">
+            <HashLink to="/cart" className="nav__icon">
               <i className="fa fa-shopping-cart" />
               <span className="nav__icon--text">cart</span>
-            </Link>
+            </HashLink>
           </button>
           <DropdownMenu />
           <button className="nav__icon">

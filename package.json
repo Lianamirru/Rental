@@ -31,6 +31,7 @@
     "react-navbar": "^3.0.0",
     "react-phone-number-input": "^3.2.20",
     "react-router-dom": "^6.4.5",
+    "react-router-hash-link": "^2.4.3",
     "react-scripts": "5.0.1",
     "react-switch": "^7.0.0",
     "react-toastify": "^9.1.1",
@@ -65,6 +66,7 @@
   "devDependencies": {
     "@types/jquery": "^3.5.16",
     "@types/react-date-range": "^1.4.4",
+    "@types/react-router-hash-link": "^2.4.9",
     "@webpack-cli/generators": "^3.0.1",
     "file-loader": "^6.2.0",
     "node-sass": "^9.0.0",

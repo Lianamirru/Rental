@@ -10,6 +10,20 @@
   display: flex;
   justify-content: center;
   gap: 15rem;
+
+  p {
+    color: rgb(166, 166, 166);
+  }
+
+  a,
+  i {
+    color: rgb(211, 211, 211);
+  }
+
+  i:hover,
+  a:hover {
+    color: rgb(255, 255, 255);
+  }
 }
 
 .primary-footer-logo-social ul {
@@ -22,10 +36,6 @@
 .footer-nav {
   columns: 2;
   gap: 13rem;
-
-  a {
-    color: rgb(166, 166, 166);
-  }
 
   li {
     padding-bottom: 1.6rem;

@@ -21,60 +21,54 @@ a {
   gap: clamp(1rem, 6vw, 7rem);
 }
 
+.nav__link {
+  color: $clr-text-light;
+}
+
+.nav__link[data-active="true"] {
+  color: rgba(darken($clr-text-light, 30%), 0.8);
+}
+
+.nav__link--brand,
+.nav__link--brand:hover {
+  font-family: "Merienda", sans-serif;
+  font-size: $fs-heading-section;
+  color: $clr-accent-brand;
+}
+
 .nav-icons {
   display: flex;
   gap: 1rem;
 }
 
-.nav {
-  &__link {
-    color: $clr-text-light;
+.nav__icon {
+  color: $clr-text-light;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  align-items: center;
+  justify-content: center;
 
-    &:hover {
-      color: rgba(darken($clr-text-light, 30%), 0.8);
-      text-decoration: none;
-    }
-
-    &--brand {
-      font-family: "Merienda", sans-serif;
-      font-size: $fs-heading-section;
-      color: $clr-accent-brand;
-
-      &:hover {
-        color: $clr-accent-brand;
-      }
-    }
+  &:hover {
+    text-decoration: none;
+    color: rgba(darken($clr-text-light, 30%), 0.8);
   }
 
-  &__icon {
-    color: $clr-text-light;
-    display: flex;
-    flex-direction: column;
-    gap: 0.1rem;
-    align-items: center;
-    justify-content: center;
-
-    &:hover {
-      text-decoration: none;
-      color: rgba(darken($clr-text-light, 30%), 0.8);
-    }
-
-    i {
-      font-size: $fs-nav;
-    }
-
-    span {
-      font-size: 1rem;
-    }
+  i {
+    font-size: $fs-nav;
   }
 
-  &__switch {
-    transform: scale(0.7);
+  span {
+    font-size: 1rem;
+  }
+}
 
-    &--text {
-      position: relative;
-      bottom: 0.1em;
-    }
+.nav__switch {
+  transform: scale(0.7);
+
+  &--text {
+    position: relative;
+    bottom: 0.1em;
   }
 }
 

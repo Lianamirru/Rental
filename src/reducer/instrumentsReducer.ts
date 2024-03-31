@@ -16,7 +16,7 @@ export type InstrumentStateType = {
 const initialState: InstrumentStateType = {
   instruments: [],
   currentPage: 1,
-  pageSize: 12,
+  pageSize: 8,
   selectedCategories: [],
   selectedMakers: [],
   sortByPrice: "",

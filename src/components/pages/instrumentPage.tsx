@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { Buffer } from "buffer";
 
 import { getInstrument } from "../../services/instrumentService";
 import { logger } from "../../services/logService";
@@ -8,6 +9,14 @@ import { InstrumentType } from "../../types/instrumentType";
 
 const InstrumentPage = () => {
   const [instrument, setInstrument] = useState<InstrumentType | null>(null);
+
+  let instrumentPhoto = "";
+  if (instrument) {
+    const buffer = Buffer.from(instrument.image.data);
+    instrumentPhoto = `data:${
+      instrument.image.contentType
+    };base64,${buffer.toString("base64")}`;
+  }
 
   const { id: instrumentId } = useParams();
   const navigate = useNavigate();
@@ -31,14 +40,17 @@ const InstrumentPage = () => {
 
   return (
     <main className="container">
-      <h1> {instrument?.model}</h1>
-      <div className="row">
-        <div className="col">img</div>
-        <div className="col">
-          <p> description</p>
+      <section className="instrument-section">
+        <h2>Instrument Info</h2>
+        <div className="instrument-info">
+          <img
+            className="instrument-photo"
+            src={instrumentPhoto}
+            alt={"instrument-photo"}
+          ></img>
+          <p>{instrument?.description}</p>
         </div>
-      </div>
-      <div>reviews</div>
+      </section>
     </main>
   );
 };

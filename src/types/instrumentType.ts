@@ -11,4 +11,5 @@ export type InstrumentType = {
   category: CategoryType;
   like: boolean;
   image: { data: ArrayBuffer; contentType: string };
+  description: string;
 };

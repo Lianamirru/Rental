@@ -63,8 +63,15 @@ const Product = ({
   return (
     <div className="instrument-card" key={product._id}>
       <Likes onClick={() => onLike(product._id)} like={product.like} />
-      <Link to={`/instruments/${product._id}`}>
-        <img src={instrumentPhoto} alt={product.model}></img>
+      <Link
+        onClick={() => window.scrollTo(0, 0)}
+        to={`/instruments/${product._id}`}
+      >
+        <img
+          className="instrument-photo"
+          src={instrumentPhoto}
+          alt={product.model}
+        ></img>
       </Link>
       <h3>
         {product.maker} {product.model}

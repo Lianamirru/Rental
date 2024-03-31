@@ -17,7 +17,7 @@ const ProductsList = ({
   onAddToCart,
 }: ProductsProps) => {
   return (
-    <div id="products">
+    <div id="products" className="products">
       {products.map((product) => (
         <Product
           product={product}

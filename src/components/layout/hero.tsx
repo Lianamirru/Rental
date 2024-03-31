@@ -6,7 +6,7 @@ const Hero = () => {
         <h1 className="heading--main">Find your rhythm</h1>
         <h1 className="heading--sub">Rent musical instruments</h1>
         <a
-          href="#instruments"
+          href="#instruments-section"
           className="btn-hero btn-hero--rent btn-hero--animated"
         >
           rent

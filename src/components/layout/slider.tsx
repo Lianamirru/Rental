@@ -66,7 +66,7 @@ const Slider = () => {
   }, []);
 
   return (
-    <section className="slider-section">
+    <section id="slider-section">
       <h2>What they've said</h2>
       <Swiper
         modules={[Navigation, Pagination, A11y]}

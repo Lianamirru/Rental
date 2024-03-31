@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className="primary-footer ">
+    <footer className="primary-footer" id="footer">
       <div className="primary-footer-wrapper">
         <div className="primary-footer-logo-social">
           <ul className="social-list" role="list" aria-label="Social links">
@@ -32,20 +32,20 @@ const Footer = () => {
               <a href="#">Home</a>
             </li>
             <li>
-              <a href="#">Pricing</a>
+              <a href="#instruments-section">Instruments</a>
             </li>
             <li>
-              <a href="#">Instruments</a>
+              <a href="#about-section">About Us</a>
             </li>
             <li>
-              <a href="#">About Us</a>
+              <a href="#slider-section">Reviews</a>
             </li>
-            <li>
-              <a href="#">Reviews</a>
-            </li>
-
             <li>
               <a href="#">Privacy Policy</a>
+            </li>
+            <li>
+              <p>Contact us</p>
+              <p>+3821778897</p>
             </li>
           </ul>
         </nav>

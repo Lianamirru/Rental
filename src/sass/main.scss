@@ -3,7 +3,8 @@
 @import "components-css/navbar", "components-css/hero",
   "components-css/display-instruments", "components-css/instruments-table",
   "components-css/filter-panel", "components-css/form", "components-css/profile",
-  "components-css/slider", "components-css/footer";
+  "components-css/slider", "components-css/footer", "components-css/about",
+  "components-css/instrument-page";
 
 /* reset css */
 *,
@@ -15,7 +16,7 @@
 * {
   margin: 0;
   padding: 0;
-  font: inherit; /* remove the style of heading elements */
+  font: inherit;
 }
 
 ul,
@@ -52,6 +53,10 @@ h2 {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   -moz-text-fill-color: transparent;
+}
+
+form h2 {
+  margin-bottom: 0;
 }
 
 h3 {
@@ -105,4 +110,10 @@ main {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+.even-columns {
+  display: grid;
+  grid-auto-flow: column;
+  gap: 2rem;
 }

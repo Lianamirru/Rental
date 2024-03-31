@@ -1,0 +1,22 @@
+.instrument-info {
+  max-width: 50em;
+  display: flex;
+  margin: auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+
+  img {
+    width: 30rem;
+  }
+
+  p {
+    max-width: 30ch;
+  }
+}
+
+@media (max-width: 60em) {
+  .instrument-info {
+    flex-direction: column;
+  }
+}

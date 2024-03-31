@@ -137,7 +137,7 @@ const Instruments = () => {
   let { pageInstruments, totalCount } = getPagedData(state);
 
   return (
-    <section className="instruments-section">
+    <section id="instruments-section">
       <h2>Instruments to rent</h2>
       <div className="panel">
         <Search onChange={handleSearch} value={searchQuery} />

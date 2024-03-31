@@ -11,7 +11,6 @@ import {
 } from "../../services/cartServise";
 import { logger } from "../../services/logService";
 import { InstrumentType } from "../../types/instrumentType";
-import { useNavigate } from "react-router-dom";
 import CartItem from "../page-item/cartItem";
 
 const Cart = () => {
@@ -19,7 +18,6 @@ const Cart = () => {
 
   const [modalActive, setModalActive] = useState(false);
   const [instrument, setInstrument] = useState<InstrumentType | null>(null);
-  console.log(instrument);
 
   useEffect(() => {
     (async () => {
