@@ -37,7 +37,7 @@ export function getPagedData(state: InstrumentStateType) {
     sorted = sortByPriceFunc(filtered, ascending);
   }
   const pageInstruments = getPageItems(sorted, currentPage, pageSize);
-  return { pageInstruments, totalCount: filtered.length };
+  return { filtered, pageInstruments, totalCount: filtered.length };
 }
 
 function sortByPriceFunc(instruments: InstrumentType[], ascending: boolean) {

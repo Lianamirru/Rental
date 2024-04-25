@@ -33,6 +33,7 @@ const Instruments = () => {
   } = state;
 
   const { likedInstruments, handleInstrumentLike } = useLikedInstruments();
+
   const user = getCurrentUser();
 
   const [likeModal, setLikeModal] = useState(false);
@@ -108,11 +109,19 @@ const Instruments = () => {
     }
   };
 
-  const handlePageChange = (newPage: number) =>
+  const handlePageChange = (
+    newPage: number,
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    const section = document.getElementById("instruments-section");
+    if (section) {
+      section.scrollIntoView({ block: "start" });
+    }
     dispatch({
       type: REDUCER_ACTION_TYPE.PAGE_CHANGE,
       payload: newPage,
     });
+  };
 
   const handleSort = (option: string) => {
     dispatch({

@@ -49,7 +49,7 @@ const LikedInstrumentsProvider = ({ children }: { children: ReactNode }) => {
     })();
   }, [user]);
 
-  const handleInstrumentLike = (instrumentId: String) => {
+  const handleInstrumentLike = (instrumentId: string) => {
     const updatedInstruments = likedInstruments.map((instrument) =>
       instrument._id === instrumentId
         ? { ...instrument, like: !instrument.like }

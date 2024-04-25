@@ -12,20 +12,19 @@
 .filter__dropdown-content {
   width: 13rem;
   left: 0;
-  color: $clr-text-dark;
 }
 
 .filter-panel {
   padding: 0 1rem;
   border-radius: 4px;
-  color: $clr-neutral-dark;
-  background-color: $clr-neutral-light;
   width: 50%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   gap: 1rem 3rem;
+  background-color: #f8f9fa; /* Light background color */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
   p {
     font-weight: $fw-bold;

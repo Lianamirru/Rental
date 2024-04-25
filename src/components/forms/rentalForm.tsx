@@ -14,7 +14,7 @@ import {
 import { getInstruments } from "../../services/instrumentService";
 import { saveRental } from "../../services/rentalService";
 import { getCurrentUser } from "../../services/authService";
-import { deleteFromCart } from "../../services/cartServise";
+import { CartItemType, deleteFromCart } from "../../services/cartServise";
 
 import {
   validateAll,
@@ -29,7 +29,13 @@ import { useRentedDates } from "../../services/customHooks/getRentedDates";
 import schema from "../schemas/rentalFormSchema";
 import { InstrumentType } from "../../types/instrumentType";
 
-const RentalForm = ({ instrument }: { instrument: InstrumentType }) => {
+const RentalForm = ({
+  instrument,
+  cartItems,
+}: {
+  instrument: InstrumentType;
+  cartItems: CartItemType[];
+}) => {
   const curInstrumentId = instrument._id;
 
   const [instruments, setInstruments] = useState<InstrumentInRental[]>([]);
@@ -110,7 +116,10 @@ const RentalForm = ({ instrument }: { instrument: InstrumentType }) => {
     const { startDate: dateOut, endDate: dateReturned } = range[0];
     try {
       await saveRental(customerId, instrumentId, dateOut, dateReturned);
-      await deleteFromCart(instrumentId);
+      console.log(cartItems);
+      if (cartItems.some((item) => item.instrument._id === instrumentId)) {
+        await deleteFromCart(instrumentId);
+      }
       setIsSaved(true);
     } catch (ex) {}
   };

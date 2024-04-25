@@ -1,3 +1,5 @@
+import { HashLink } from "react-router-hash-link";
+
 const Hero = () => {
   return (
     <section className="hero-section">
@@ -5,18 +7,20 @@ const Hero = () => {
       <div className="heading--box">
         <h1 className="heading--main">Find your rhythm</h1>
         <h1 className="heading--sub">Rent musical instruments</h1>
-        <a
-          href="#instruments-section"
+        <HashLink
+          smooth
+          to="#instruments-section"
           className="btn-hero btn-hero--rent btn-hero--animated"
         >
           rent
-        </a>
-        <a
-          href="#footer"
+        </HashLink>
+        <HashLink
+          smooth
+          to="#footer"
           className="btn-hero btn-hero--contact btn-hero--animated"
         >
           contact
-        </a>
+        </HashLink>
       </div>
     </section>
   );

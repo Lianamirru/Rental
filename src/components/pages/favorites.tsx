@@ -22,28 +22,25 @@ const Favorites = () => {
     }
     handleInstrumentLike(itemId);
   };
+  if (!displayedInstruments.length) return <p>No favorite instruments</p>;
 
   return (
     <div className="display-items">
-      {displayedInstruments.length ? (
-        <>
-          <h2 className="display-items__heading">Favorites</h2>
-          <div className="grid favorites-grid">
-            <h3>Instrument</h3>
-            <h3>Price</h3>
-            <h3></h3>
-            {displayedInstruments.map((item) => (
-              <Item
-                key={item._id}
-                item={item}
-                onDelete={() => handleDeleteLike(item._id)}
-              />
-            ))}
-          </div>
-        </>
-      ) : (
-        <p>No favorite instruments</p>
-      )}
+      <>
+        <h2 className="display-items__heading">Favorites</h2>
+        <div className="grid favorites-grid">
+          <h3>Instrument</h3>
+          <h3>Price</h3>
+          <h3></h3>
+          {displayedInstruments.map((item) => (
+            <Item
+              key={item._id}
+              item={item}
+              onDelete={() => handleDeleteLike(item._id)}
+            />
+          ))}
+        </div>
+      </>
     </div>
   );
 };

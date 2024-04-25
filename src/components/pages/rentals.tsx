@@ -26,7 +26,6 @@ const Rentals = () => {
   }, []);
 
   const handleReturn = async (rental: RentalType) => {
-    setModalActive(true);
     const originalRentals = [...rentals];
     const updatedRentals = rentals.filter((rent) => rent._id !== rental._id);
     setRentals(updatedRentals);
@@ -34,6 +33,7 @@ const Rentals = () => {
       await deleteRental(rental._id);
       const { data: returnedRental } = await postReturn(rental);
       setRentalFee(returnedRental.rentalFee);
+      setModalActive(true);
     } catch (ex) {
       setRentals(originalRentals);
     }

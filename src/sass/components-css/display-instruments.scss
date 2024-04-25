@@ -7,11 +7,14 @@
 }
 
 .instrument-card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
   position: relative;
-  border: 1px solid #000000;
   text-align: center;
-  border-radius: 5%;
   padding-bottom: 3rem;
+
+  &:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2); /* Adjust hover shadow values as needed */
+  }
 
   .instrument-photo {
     margin-top: 2rem;
@@ -27,7 +30,7 @@
     border: none;
     background-color: inherit;
     position: absolute;
-    right: 2rem;
+    right: 1rem;
     cursor: pointer;
   }
 
@@ -41,13 +44,12 @@ img.add-to-favorites {
   cursor: pointer;
   position: absolute;
   top: 1rem;
-  right: 2rem;
+  right: 1rem;
   width: 2.5rem;
 }
 
 .add-to-cart {
   bottom: 1rem;
-  background-color: $clr-neutral-light;
   color: $clr-neutral-dark;
   border-radius: 50%;
   border: solid 3.5px $clr-neutral-dark;

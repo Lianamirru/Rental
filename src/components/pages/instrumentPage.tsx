@@ -39,7 +39,6 @@ const InstrumentPage = () => {
   }, [instrumentId, navigate]);
 
   return (
-    <main className="container">
       <section className="instrument-section">
         <h2>Instrument Info</h2>
         <div className="instrument-info">
@@ -51,7 +50,6 @@ const InstrumentPage = () => {
           <p>{instrument?.description}</p>
         </div>
       </section>
-    </main>
   );
 };
 

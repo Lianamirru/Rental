@@ -73,7 +73,7 @@ const Cart = () => {
         active={modalActive}
         handleClick={() => setModalActive(!modalActive)}
       >
-        {instrument && <RentalForm instrument={instrument} />}
+        {instrument && <RentalForm cartItems={cartItems} instrument={instrument} />}
       </Modal>
     </div>
   );

@@ -2,7 +2,10 @@ type PaginationProps = {
   totalCount: number;
   pageSize: number;
   currentPage: number;
-  onPageChange: (page: number) => void;
+  onPageChange: (
+    page: number,
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => void;
 };
 
 const Pagination = ({
@@ -18,7 +21,7 @@ const Pagination = ({
   return (
     <div className="pagination">
       <button
-        onClick={() => onPageChange(currentPage - 1)}
+        onClick={(event) => onPageChange(currentPage - 1, event)}
         disabled={currentPage === 1}
       >
         &laquo; Prev
@@ -26,14 +29,14 @@ const Pagination = ({
       {pages.map((page) => (
         <button
           key={page}
-          onClick={() => onPageChange(page)}
+          onClick={(event) => onPageChange(page, event)}
           disabled={currentPage === page}
         >
           {page}
         </button>
       ))}
       <button
-        onClick={() => onPageChange(currentPage + 1)}
+        onClick={(event) => onPageChange(currentPage + 1, event)}
         disabled={currentPage === totalPages}
       >
         Next &raquo;
