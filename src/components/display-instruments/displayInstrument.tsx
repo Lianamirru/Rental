@@ -82,7 +82,7 @@ const Product = ({
           className="instrument-card__action delete-from-cart"
           onClick={() => handleDeleteFromCart(product._id)}
         >
-          <i className="fa fa-trash " aria-hidden="true"></i>
+          <i className="fa fa-trash" aria-hidden="true"></i>
         </button>
       ) : (
         <button

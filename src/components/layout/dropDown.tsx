@@ -32,7 +32,7 @@ const DropdownMenu = () => {
   const renderIcon = () => {
     return (
       <>
-        <i className="fa-solid fa-user " />
+        <i className="fa fa-user"></i>
         <span className="nav__icon--text">profile</span>
       </>
     );
