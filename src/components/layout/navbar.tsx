@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { useState } from "react";
 import { HashLink } from "react-router-hash-link";
 import ReactSwitch from "react-switch";
@@ -90,7 +89,7 @@ const NavBar = () => {
             </HashLink>
           </button>
           <DropdownMenu />
-          <button className="nav__icon">
+          <button className="nav__icon nav__icon--switch">
             <ReactSwitch
               onColor="#e1e2ef"
               offColor="#05204a"

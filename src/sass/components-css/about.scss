@@ -27,7 +27,7 @@
     content: "0" counter(count);
     color: $clr-accent-dark;
     font-weight: $fw-bold;
-    background-color: rgb(242, 183, 73);
+    background-color: $clr-neutral-dark;
     padding: 0 1em;
     border-radius: 100vw;
   }
@@ -45,7 +45,7 @@
     grid-column: 1 / -1;
   }
 
-  .even-columns {
+  div.even-columns {
     grid-auto-flow: row;
   }
 }

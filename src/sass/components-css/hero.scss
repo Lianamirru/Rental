@@ -98,8 +98,8 @@
 
   &--rent {
     background-color: $clr-neutral-dark;
-    color: $clr-accent-light;
-    border: solid 2px white;
+    color: $clr-accent-dark;
+    border: solid 2px $clr-text-light;
     margin-right: 4rem;
   }
 
