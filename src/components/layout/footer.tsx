@@ -6,22 +6,22 @@ const Footer = () => {
           <ul className="social-list" role="list" aria-label="Social links">
             <li>
               <a aria-label="facebook" href="#">
-                <i className="social-icon fa fa-brands fa-facebook"></i>
+                <i className="fa fa-facebook"></i>
               </a>
             </li>
             <li>
               <a aria-label="youtube" href="#">
-                <i className="social-icon fa fa-brands fa-youtube"></i>
+                <i className="fa fa-youtube"></i>
               </a>
             </li>
             <li>
               <a aria-label="twitter" href="#">
-                <i className="social-icon fa fa-brands fa-square-twitter"></i>
+                <i className="fa fa-twitter"></i>
               </a>
             </li>
             <li>
               <a aria-label="instragram" href="#">
-                <i className="social-icon fa fa-brands fa-instagram"></i>
+                <i className="fa fa-instagram"></i>
               </a>
             </li>
           </ul>

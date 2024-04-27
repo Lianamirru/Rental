@@ -57,6 +57,7 @@ const RentalForm = ({
   const userId = getCurrentUser()?._id;
 
   const { rentedDates, range, setRange } = useRentedDates(instrumentId);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -102,6 +103,7 @@ const RentalForm = ({
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsLoading(true);
     const { data: customer } = await getCustomer(userId);
     let customerId: string;
     if (!customer) {
@@ -116,12 +118,14 @@ const RentalForm = ({
     const { startDate: dateOut, endDate: dateReturned } = range[0];
     try {
       await saveRental(customerId, instrumentId, dateOut, dateReturned);
-      console.log(cartItems);
       if (cartItems.some((item) => item.instrument._id === instrumentId)) {
         await deleteFromCart(instrumentId);
       }
       setIsSaved(true);
-    } catch (ex) {}
+    } catch (ex) {
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleDateSelect = (item: { selection: RangeType }) => {
@@ -173,7 +177,10 @@ const RentalForm = ({
         onChange={(value) => handlePhoneChange(value)}
         error={errors["phoneNumber"]}
       />
-      <Button label="Save" disabled={!!validateAll(schema, rentalData)} />
+      <Button
+        label={isLoading ? "Loading..." : "Submit"}
+        disabled={!!validateAll(schema, rentalData) || isLoading}
+      />
     </form>
   );
 };
