@@ -1,7 +1,7 @@
 import http from "../services/httpService";
-import apiUrl from "./config.json";
+import { API_URL } from "./consts";
 
-const apiEndpoint = apiUrl.apiUrl + "/returns";
+const apiEndpoint = API_URL + "/returns";
 
 type ReturnType = {
   _id?: string;

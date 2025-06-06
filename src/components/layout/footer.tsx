@@ -26,29 +26,30 @@ const Footer = () => {
             </li>
           </ul>
         </div>
-        <nav className="footer-nav">
-          <ul aria-label="Footer" role="list">
-            <li>
-              <a href="#">Home</a>
-            </li>
-            <li>
-              <a href="#instruments-section">Instruments</a>
-            </li>
-            <li>
-              <a href="#about-section">About Us</a>
-            </li>
-            <li>
-              <a href="#slider-section">Reviews</a>
-            </li>
-            <li>
-              <a href="#">Privacy Policy</a>
-            </li>
-            <li>
-              <p>Contact us</p>
-              <p>+3821778897</p>
-            </li>
-          </ul>
-        </nav>
+        {/* <ul className="footer-nav" aria-label="Footer" role="list"> */}
+        <ul className="footer-nav">
+          <li>
+            <a href="#">Home</a>
+          </li>
+          <li>
+            <a href="#instruments-section">Instruments</a>
+          </li>
+          <li>
+            <a href="#about-section">About Us</a>
+          </li>
+        </ul>
+        <ul className="footer-nav">
+          <li>
+            <a href="#slider-section">Reviews</a>
+          </li>
+          <li>
+            <a href="#">Privacy Policy</a>
+          </li>
+          <li>
+            <p>Contact us</p>
+            <p>+3821778897</p>
+          </li>
+        </ul>
       </div>
     </footer>
   );

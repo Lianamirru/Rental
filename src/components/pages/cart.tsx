@@ -50,7 +50,6 @@ const Cart = () => {
     }
   };
 
-  if (!cartItems.length) return <p>No cart items</p>;
   return (
     <div className="display-items">
       <h2 className="display-items__heading">Cart</h2>
@@ -59,7 +58,7 @@ const Cart = () => {
         <h3>Price</h3>
         <h3></h3>
         <h3></h3>
-
+        {cartItems.length === 0 && <p>Cart is empty</p>}
         {cartItems.map((item) => (
           <CartItem
             key={item._id}
@@ -73,7 +72,9 @@ const Cart = () => {
         active={modalActive}
         handleClick={() => setModalActive(!modalActive)}
       >
-        {instrument && <RentalForm cartItems={cartItems} instrument={instrument} />}
+        {instrument && (
+          <RentalForm cartItems={cartItems} instrument={instrument} />
+        )}
       </Modal>
     </div>
   );

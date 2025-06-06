@@ -1,8 +1,8 @@
 import http from "./httpService";
-import apiUrl from "./config.json";
+import { API_URL } from "./consts";
 import { InstrumentType } from "../types/instrumentType";
 
-const apiEndpoint = apiUrl.apiUrl + "/instruments";
+const apiEndpoint = API_URL + "/instruments";
 
 function movieUrl(id: string) {
   return `${apiEndpoint}/${id}`;
@@ -15,4 +15,3 @@ export function getInstruments(): Promise<{ data: InstrumentType[] }> {
 export function getInstrument(id: string): Promise<{ data: InstrumentType }> {
   return http.get(movieUrl(id));
 }
-

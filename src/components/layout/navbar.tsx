@@ -89,7 +89,7 @@ const NavBar = () => {
             </HashLink>
           </button>
           <DropdownMenu />
-          <button className="nav__icon nav__icon--switch">
+          {/* <button className="nav__icon nav__icon--switch">
             <ReactSwitch
               onColor="#e1e2ef"
               offColor="#05204a"
@@ -98,7 +98,7 @@ const NavBar = () => {
               checked={theme === "dark"}
             />
             <span className="nav__icon--text nav__switch--text">mode</span>
-          </button>
+          </button> */}
         </div>
       </nav>
     </header>

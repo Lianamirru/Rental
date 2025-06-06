@@ -4,12 +4,11 @@
 }
 
 .primary-footer-wrapper {
-  max-width: $content-width;
+  max-width: 80%;
   margin: auto;
+  justify-content: space-between;
 
   display: flex;
-  justify-content: center;
-  gap: 15rem;
 
   p {
     color: rgb(166, 166, 166);
@@ -34,9 +33,6 @@
 }
 
 .footer-nav {
-  columns: 2;
-  gap: 13rem;
-
   li {
     padding-bottom: 1.6rem;
 
@@ -48,8 +44,6 @@
 
 @media screen and (max-width: 50em) {
   .footer-nav {
-    columns: 1;
-
     li {
       padding-bottom: 1rem;
 

@@ -1,8 +1,8 @@
 import http from "../services/httpService";
 import { InstrumentType } from "../types/instrumentType";
-import apiUrl from "./config.json";
+import { API_URL } from "./consts";
 
-const apiEndpoint = apiUrl.apiUrl + "/cart";
+const apiEndpoint = API_URL + "/cart";
 
 export type CartItemType = {
   _id: string;

@@ -1,9 +1,9 @@
 import http from "./httpService";
-import apiUrl from "./config.json";
+import { API_URL } from "./consts";
 
 import { CategoryType, CategoryDataType } from "../types/categoryType";
 
-const apiEndpoint = apiUrl.apiUrl + "/categories";
+const apiEndpoint = API_URL + "/categories";
 
 export function getCategories(): Promise<{ data: CategoryType[] }> {
   return http.get<CategoryType[]>(apiEndpoint);

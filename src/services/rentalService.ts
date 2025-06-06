@@ -1,7 +1,7 @@
 import http from "../services/httpService";
-import apiUrl from "./config.json";
+import { API_URL } from "./consts";
 
-const apiEndpoint = apiUrl.apiUrl + "/rentals";
+const apiEndpoint = API_URL + "/rentals";
 
 type RentalDateType = { dateOut: Date; dateReturned: Date };
 export type RentalType = {

@@ -4,12 +4,13 @@
   position: relative;
 
   .img {
-    background-image: url("./../images/header.png");
-    height: 85vh;
+    background-image: url("./../images/hero.jpg");
+    height: 80vh;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     position: relative;
+    opacity: 0.7;
 
     &::before {
       content: "";
@@ -19,7 +20,7 @@
       bottom: 0;
       left: 0;
       background: inherit;
-      filter: grayscale(1);
+      // filter: grayscale(1);
     }
   }
 }
@@ -33,7 +34,21 @@
   left: 0;
   right: 0;
   text-align: center;
-  background-color: $clr-neutral-light;
+  background-color: transparent;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: black;
+    opacity: 0.3;
+    z-index: 0;
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
 
   h1 {
     color: $clr-accent-light;

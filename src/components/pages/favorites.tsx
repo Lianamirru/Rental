@@ -22,7 +22,6 @@ const Favorites = () => {
     }
     handleInstrumentLike(itemId);
   };
-  if (!displayedInstruments.length) return <p>No favorite instruments</p>;
 
   return (
     <div className="display-items">
@@ -32,6 +31,7 @@ const Favorites = () => {
           <h3>Instrument</h3>
           <h3>Price</h3>
           <h3></h3>
+          {displayedInstruments.length === 0 && <p>No favorites</p>}
           {displayedInstruments.map((item) => (
             <Item
               key={item._id}

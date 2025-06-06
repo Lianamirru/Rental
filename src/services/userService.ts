@@ -1,9 +1,9 @@
 import http from "../services/httpService";
-import apiUrl from "./config.json";
+import { API_URL } from "./consts";
 
 import { RegisterUserType } from "../types/userType";
 
-const apiEndpoint = apiUrl.apiUrl;
+const apiEndpoint = API_URL;
 
 export function register(user: RegisterUserType) {
   return http.post(apiEndpoint + "/users", {

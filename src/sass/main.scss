@@ -19,6 +19,9 @@
   font: inherit;
 }
 
+html {
+  font-size: 80%;
+}
 ul,
 ol {
   list-style: none;
@@ -67,7 +70,7 @@ button {
 }
 
 .container {
-  max-width: $content-width;
+  // max-width: $content-width;
   padding: $padding-body;
   margin: auto;
 }

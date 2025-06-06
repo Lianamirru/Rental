@@ -1,7 +1,7 @@
 import http from "../services/httpService";
-import apiUrl from "./config.json";
+import { API_URL } from "./consts";
 
-const apiEndpoint = apiUrl.apiUrl + "/likes";
+const apiEndpoint = API_URL + "/likes";
 
 export function likeInstrument(instrumentId: string) {
   return http.post(apiEndpoint + `/${instrumentId}`);
