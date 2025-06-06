@@ -8,7 +8,6 @@ export type InstrumentStateType = {
   selectedCategories: string[];
   selectedMakers: string[];
   sortByPrice: string;
-  searchMovies: [];
   searchQuery: string;
   cartItemsIds: string[];
 };
@@ -20,7 +19,6 @@ const initialState: InstrumentStateType = {
   selectedCategories: [],
   selectedMakers: [],
   sortByPrice: "",
-  searchMovies: [],
   searchQuery: "",
   cartItemsIds: [],
 };
@@ -33,8 +31,7 @@ export const REDUCER_ACTION_TYPE = {
   SELECT_MAKER: "SELECT_MAKER",
   CLEAN_SELECTED_CATEGORIES: "CLEAN_SELECTED_CATEGORIES",
   PAGE_CHANGE: "PAGE_CHANGE",
-  DELETE_MOVIE: "DELETE_MOVIE",
-  SET_MOVIES: "SET_MOVIES",
+  SET_INSTRUMENTS: "SET_INSTRUMENTS",
   LIKE: "LIKE",
   ADD_TO_CART: "ADD_TO_CART",
 };
@@ -103,10 +100,10 @@ function reducer(state: typeof initialState, action: ActionType) {
         ...state,
         currentPage: action.payload,
       };
-    case REDUCER_ACTION_TYPE.SET_MOVIES:
+    case REDUCER_ACTION_TYPE.SET_INSTRUMENTS:
       return {
         ...state,
-        movies: action.payload,
+        instruments: action.payload,
       };
     case REDUCER_ACTION_TYPE.LIKE:
       const updatedInstruments = state.instruments.map((instrument) =>

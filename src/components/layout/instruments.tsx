@@ -101,7 +101,7 @@ const Instruments = () => {
       } catch (ex: any) {
         if (ex.response && ex.response.status === 404) {
           toast.error("unable to handle like");
-          dispatch({ type: "SET_MOVIES", payload: originalInstruments });
+          dispatch({ type: "SET_INSTRUMENTS", payload: originalInstruments });
         } else {
           logger(ex);
         }

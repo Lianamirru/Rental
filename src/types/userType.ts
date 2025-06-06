@@ -3,7 +3,6 @@ export type UserType = {
   email: string;
   password: string;
   isAdmin: boolean;
-  likedMoviesIds: string[];
 };
 
 export type RegisterUserType = {

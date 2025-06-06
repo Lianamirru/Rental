@@ -4,7 +4,7 @@ import { InstrumentType } from "../types/instrumentType";
 
 const apiEndpoint = API_URL + "/instruments";
 
-function movieUrl(id: string) {
+function instrumentUrl(id: string) {
   return `${apiEndpoint}/${id}`;
 }
 
@@ -13,5 +13,5 @@ export function getInstruments(): Promise<{ data: InstrumentType[] }> {
 }
 
 export function getInstrument(id: string): Promise<{ data: InstrumentType }> {
-  return http.get(movieUrl(id));
+  return http.get(instrumentUrl(id));
 }
