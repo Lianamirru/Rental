@@ -1,7 +1,7 @@
 import { MouseEventHandler } from "react";
 
-import icon from "../../images/heart.png";
-import likedIcon from "../../images/heart-clicked.png";
+import icon from "../../public/images/heart.png";
+import likedIcon from "../../public/images/heart-clicked.png";
 
 type LikesType = {
   like: boolean;

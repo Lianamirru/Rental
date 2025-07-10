@@ -1,4 +1,4 @@
-import http from "../services/httpService";
+import http from "./httpService";
 import { API_URL } from "./consts";
 
 const apiEndpoint = API_URL + "/likes";

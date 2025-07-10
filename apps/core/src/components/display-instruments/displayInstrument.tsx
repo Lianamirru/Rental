@@ -1,9 +1,7 @@
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Buffer } from "buffer";
-
-import Likes from "../common/likes";
-
+import { Likes } from "@packages/ui-kit";
 import { InstrumentType } from "../../types/instrumentType";
 
 import { getCurrentUser } from "../../services/authService";

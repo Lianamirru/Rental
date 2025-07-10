@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 import { getRentals, RentalType } from "../services/rentalService";
-import { getCurrentUser } from "./../services/authService";
+import { getCurrentUser } from "../services/authService";
 
 const RentalsContext = createContext<{
   rentals: RentalType[];

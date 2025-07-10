@@ -6,7 +6,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { getCurrentUser } from "./../services/authService";
+import { getCurrentUser } from "../services/authService";
 import { InstrumentType } from "../types/instrumentType";
 import { getInstruments } from "../services/instrumentService";
 import { getLikedInstruments } from "../services/likeService";

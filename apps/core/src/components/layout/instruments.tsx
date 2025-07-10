@@ -144,7 +144,7 @@ const Instruments = () => {
   };
 
   let { pageInstruments, totalCount } = getPagedData(state);
-
+  console.log(pageInstruments);
   return (
     <section id="instruments-section">
       <h2>Instruments to rent</h2>

@@ -1,4 +1,4 @@
-import http from "../services/httpService";
+import http from "./httpService";
 import { API_URL } from "./consts";
 import jwtDecode from "jwt-decode";
 import { UserType } from "../types/userType";

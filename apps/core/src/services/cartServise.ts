@@ -1,4 +1,4 @@
-import http from "../services/httpService";
+import http from "./httpService";
 import { InstrumentType } from "../types/instrumentType";
 import { API_URL } from "./consts";
 
