@@ -7,36 +7,31 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
-import avatarEdd from "../../images/avatar-edd.png";
-import avatarKate from "../../images/avatar-kate.png";
-import avatarLinda from "../../images/avatar-linda.png";
-import avatarTony from "../../images/avatar-tony.png";
-
 const sliderData = [
   {
     id: 1,
-    avatar: avatarKate,
+    avatar: "/images/avatar-kate.png",
     name: "Kate Harmon",
     review:
       "I rented a guitar from this service and it was fantastic! Great customer support and top-quality instruments.",
   },
   {
     id: 2,
-    avatar: avatarTony,
+    avatar: "/images/avatar-tony.png",
     name: "Tony Tempo",
     review:
       "As a beginner, I found the instrument rental process straightforward and the rental fees reasonable. Highly recommended!",
   },
   {
     id: 3,
-    avatar: avatarLinda,
+    avatar: "/images/avatar-linda.png",
     name: "Linda Fuerd",
     review:
       "I've been renting instruments from this service for years now, and they never disappoint. The instruments are always well-maintained and ready to play.",
   },
   {
     id: 4,
-    avatar: avatarEdd,
+    avatar: "/images/avatar-edd.png",
     name: "Edd Crein",
     review:
       "Excellent service! The team was very helpful in assisting me in selecting the right instrument for my needs. Will definitely rent from them again.",

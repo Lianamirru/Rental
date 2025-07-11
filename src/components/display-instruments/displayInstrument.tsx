@@ -1,9 +1,8 @@
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Buffer } from "buffer";
-import { Likes } from "@packages/ui-kit";
 import { InstrumentType } from "../../types/instrumentType";
-
+import Likes from "./likes";
 import { getCurrentUser } from "../../services/authService";
 import { addToCart, deleteFromCart } from "../../services/cartServise";
 import { logger } from "../../services/logService";

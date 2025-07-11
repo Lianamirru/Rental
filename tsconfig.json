@@ -106,5 +106,5 @@
     "noImplicitThis": true,
     "alwaysStrict": true
   },
-  "include": ["src", "../../packages/ui-kit/src/components/hero.tsx"]
+  "include": ["src", "public/images"]
 }
